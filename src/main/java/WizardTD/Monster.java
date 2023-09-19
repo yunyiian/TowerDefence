@@ -1,4 +1,7 @@
 package WizardTD;
+import processing.core.PImage;
+import processing.core.PApplet;
+
 
 public class Monster {
     private String type;
