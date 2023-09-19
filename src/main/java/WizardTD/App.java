@@ -32,6 +32,12 @@ public class App extends PApplet {
 	// Feel free to add any additional methods or attributes you want. Please put classes in different files.
      // The board instance.
     private Board board;
+    private TopBar topBar;
+    private Sidebar sidebar;
+    int initialMana;
+    public static final int INITIAL_MANA_CAP = 1000;
+    private WaveManager waveManager;  // Manage the waves and spawning of monsters
+    private List<Monster> activeMonsters = new ArrayList<>();  // List to store all the active monsters
 
     public App() {
         this.configPath = "config.json";
@@ -51,6 +57,11 @@ public class App extends PApplet {
 	@Override
     public void setup() {
         frameRate(FPS);
+        JSONObject config = loadJSONObject(configPath);
+        initialMana = config.getInt("initial_mana");
+        topBar = new TopBar(WIDTH, TOPBAR, initialMana);
+        sidebar = new Sidebar(SIDEBAR, HEIGHT);
+        waveManager = new WaveManager(loadJSONObject(configPath), this);
 
         // Load images during setup
 		// Eg:
@@ -96,10 +107,42 @@ public class App extends PApplet {
     /**
      * Draw all elements in the game by current frame.
      */
-	@Override
     public void draw() {
         background(255); // Clear the background.
-        board.render(this); // render the board
+        
+        // Render the top bar
+        topBar.render(this);
+        
+        // Render the board
+        board.render(this);
+        
+        // Render the sidebar
+        sidebar.render(this);
+
+        // Update and render monsters
+        updateMonsters();
+        renderMonsters();
+    }
+    private void updateMonsters() {
+        // Update the WaveManager to check if new monsters should be spawned
+        List<Monster> newMonsters = waveManager.update();
+        activeMonsters.addAll(newMonsters);
+
+        // Move each active monster
+        Iterator<Monster> iterator = activeMonsters.iterator();
+        while (iterator.hasNext()) {
+            Monster monster = iterator.next();
+            monster.move(board);
+            if (monster.hasReachedEnd() || monster.isDead()) {
+                iterator.remove();
+            }
+        }
+    }
+
+    private void renderMonsters() {
+        for (Monster monster : activeMonsters) {
+            monster.render(this);
+        }
     }
 
     public static void main(String[] args) {

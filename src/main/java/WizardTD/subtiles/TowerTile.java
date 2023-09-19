@@ -5,7 +5,7 @@ import processing.core.PApplet;
 public class TowerTile extends Tile {
 
     public TowerTile(PApplet app) {
-        image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/tower0.png");  // Load the default tower image.
+        image = app.loadImage("src/main/resources/WizardTD/tower0.png");
     }
 
     @Override
@@ -13,4 +13,3 @@ public class TowerTile extends Tile {
         app.image(image, x, y);
     }
 }
-

@@ -5,7 +5,7 @@ import processing.core.PApplet;
 public class GrassTile extends Tile {
 
     public GrassTile(PApplet app) {
-        image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/grass.png");
+        image = app.loadImage("src/main/resources/WizardTD/grass.png");
     }
 
     @Override

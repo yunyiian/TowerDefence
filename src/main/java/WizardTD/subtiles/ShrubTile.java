@@ -5,7 +5,7 @@ import processing.core.PApplet;
 public class ShrubTile extends Tile {
 
     public ShrubTile(PApplet app) {
-        image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/shrub.png");
+        image = app.loadImage("src/main/resources/WizardTD/shrub.png");
     }
 
     @Override

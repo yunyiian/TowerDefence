@@ -18,52 +18,65 @@ public class PathTile extends Tile {
 
     public void decidePathImage(PApplet app) {
         // Set the default image first
-        image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/beetle.png");
+        image = app.loadImage("src/main/resources/WizardTD/beetle.png");
         boolean leftIsPath = board.isPathTile(x - 1, y);
         boolean rightIsPath = board.isPathTile(x + 1, y);
         boolean topIsPath = board.isPathTile(x, y - 1);
         boolean bottomIsPath = board.isPathTile(x, y + 1);
         
+        int adjacentPaths = 0;
+        if (leftIsPath) adjacentPaths++;
+        if (rightIsPath) adjacentPaths++;
+        if (topIsPath) adjacentPaths++;
+        if (bottomIsPath) adjacentPaths++;
+
+        if (adjacentPaths == 1) {
+            if (leftIsPath || rightIsPath) {
+                image = app.loadImage("src/main/resources/WizardTD/path0.png");
+            } else {
+                image = app.loadImage("src/main/resources/WizardTD/path0.png");
+                image = ((App) app).rotateImageByDegrees(image, 90);
+            }
+            return;
+        }
         // Cross Junction
         if (leftIsPath && rightIsPath && topIsPath && bottomIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path3.png");
+            image = app.loadImage("src/main/resources/WizardTD/path3.png");
         } 
         // T-Junctions
         else if (leftIsPath && rightIsPath && topIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path2.png");
-        } else if (leftIsPath && rightIsPath && bottomIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path2.png");
+            image = app.loadImage("src/main/resources/WizardTD/path2.png");
             image = ((App) app).rotateImageByDegrees(image, 180);
+        } else if (leftIsPath && rightIsPath && bottomIsPath) {
+            image = app.loadImage("src/main/resources/WizardTD/path2.png");
         } else if (topIsPath && bottomIsPath && leftIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path2.png");
-            image = ((App) app).rotateImageByDegrees(image, -90);
-        } else if (topIsPath && bottomIsPath && rightIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path2.png");
+            image = app.loadImage("src/main/resources/WizardTD/path2.png");
             image = ((App) app).rotateImageByDegrees(image, 90);
+        } else if (topIsPath && bottomIsPath && rightIsPath) {
+            image = app.loadImage("src/main/resources/WizardTD/path2.png");
+            image = ((App) app).rotateImageByDegrees(image, -90);
         } 
         // Corners
         else if (topIsPath && leftIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path1.png");
-            image = ((App) app).rotateImageByDegrees(image, -90);
-        } else if (topIsPath && rightIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path1.png");
-        } else if (bottomIsPath && leftIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path1.png");
-            image = ((App) app).rotateImageByDegrees(image, 180);
-        } else if (bottomIsPath && rightIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path1.png");
+            image = app.loadImage("src/main/resources/WizardTD/path1.png");
             image = ((App) app).rotateImageByDegrees(image, 90);
+        } else if (topIsPath && rightIsPath) {
+            image = app.loadImage("src/main/resources/WizardTD/path1.png");
+            image = ((App) app).rotateImageByDegrees(image, 180);
+        } else if (bottomIsPath && leftIsPath) {
+            image = app.loadImage("src/main/resources/WizardTD/path1.png");
+        } else if (bottomIsPath && rightIsPath) {
+            image = app.loadImage("src/main/resources/WizardTD/path1.png");
+            image = ((App) app).rotateImageByDegrees(image, -90);
         } 
         // Straight paths
         else if (leftIsPath && rightIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path0.png");
+            image = app.loadImage("src/main/resources/WizardTD/path0.png");
         } else if (topIsPath && bottomIsPath) {
-            image = app.loadImage("/Users/ianchang/Desktop/scaffold/src/main/resources/WizardTD/path0.png");
+            image = app.loadImage("src/main/resources/WizardTD/path0.png");
             image = ((App) app).rotateImageByDegrees(image, 90);
         }
     }
-
-    
 
     @Override
     public void render(int x, int y, PApplet app) {
