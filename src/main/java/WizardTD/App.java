@@ -125,7 +125,7 @@ public class App extends PApplet {
     }
     private void updateMonsters() {
         // Update the WaveManager to check if new monsters should be spawned
-        List<Monster> newMonsters = waveManager.update();
+        waveManager.update();
         activeMonsters.addAll(newMonsters);
 
         // Move each active monster

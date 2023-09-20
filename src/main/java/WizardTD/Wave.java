@@ -23,13 +23,13 @@ public class Wave {
 
     public void update() {
         for (Monster monster : monsters) {
-            monster.update();
+            //monster.update();
         }
     }
 
     public void render() {
         for (Monster monster : monsters) {
-            monster.render();
+            monster.render(app);
         }
     }
 }
