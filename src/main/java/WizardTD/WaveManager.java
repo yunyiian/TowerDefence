@@ -5,7 +5,7 @@ import processing.data.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import WizardTD.Wave;
 public class WaveManager {
 
     private List<Wave> waves;
@@ -16,7 +16,7 @@ public class WaveManager {
         JSONArray waveConfigs = config.getJSONArray("waves");
         for (int i = 0; i < waveConfigs.size(); i++) {
             JSONObject waveConfig = waveConfigs.getJSONObject(i);
-            Wave wave = new Wave(waveConfig);
+            Wave wave = new Wave(waveConfig, yourPAppletInstance);
             waves.add(wave);
         }
         this.currentWaveIndex = 0;

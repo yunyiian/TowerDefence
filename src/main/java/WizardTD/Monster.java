@@ -12,6 +12,7 @@ public class Monster {
     private int x, y;  // Position of the monster on the board
     private PImage monsterImage;
     private PImage[] deathAnimation = new PImage[4];
+    private PApplet app;
 
     // Constructor to initialize the monster attributes
     public Monster(String type, int hp, double speed, double armour, int manaGainedOnKill) {

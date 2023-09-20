@@ -9,6 +9,7 @@ import processing.core.PImage;
 public class PathTile extends Tile {
     private int x, y; // tile position on the board
     private Board board;
+    private PImage image;
 
     public PathTile(int x, int y, PApplet app, Board board) {
         this.x = x;
