@@ -1,42 +1,36 @@
 package WizardTD;
 
+import processing.core.PApplet;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import WizardTD.Wave;
 public class WaveManager {
+    private PApplet app;
+    private JSONObject waveConfig;
+    private Wave[] waves;
 
-    private List<Wave> waves;
-    private int currentWaveIndex;
+    public WaveManager(JSONObject waveConfig, PApplet app) {
+        this.waveConfig = waveConfig;
+        this.app = app;
 
-    public WaveManager(JSONObject config) {
-        this.waves = new ArrayList<>();
-        JSONArray waveConfigs = config.getJSONArray("waves");
-        for (int i = 0; i < waveConfigs.size(); i++) {
-            JSONObject waveConfig = waveConfigs.getJSONObject(i);
-            Wave wave = new Wave(waveConfig, yourPAppletInstance);
-            waves.add(wave);
+        JSONArray wavesConfig = waveConfig.getJSONArray("waves");
+        this.waves = new Wave[wavesConfig.size()];
+
+        for (int i = 0; i < wavesConfig.size(); i++) {
+            JSONObject singleWaveConfig = wavesConfig.getJSONObject(i);
+            this.waves[i] = new Wave(singleWaveConfig, app);
         }
-        this.currentWaveIndex = 0;
     }
 
-    public Wave getCurrentWave() {
-        if (currentWaveIndex < waves.size()) {
-            return waves.get(currentWaveIndex);
+    public void update() {
+        for (Wave wave : waves) {
+            wave.update();
         }
-        return null;
     }
 
-    public void moveToNextWave() {
-        currentWaveIndex++;
+    public void render() {
+        for (Wave wave : waves) {
+            wave.render();
+        }
     }
-
-    public List<Monster> update() {
-        // Update the state of the wave and return a list of new monsters to be spawned.
-        // For now, I'll return an empty list as a placeholder.
-        return new ArrayList<>();
-    }
-    // Additional methods to manage waves can be added here.
 }
