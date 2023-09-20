@@ -2,23 +2,6 @@ package WizardTD;
 import processing.core.PImage;
 import processing.core.PApplet;
 
-
-public class Monster {
-    private String type;
-    private int hp;
-    private double speed;
-    private double armour;
-    private int manaGainedOnKill;
-    private int x, y;  // Position of the monster on the board
-    private PImage monsterImage;
-    private PImage[] deathAnimation = new PImage[4];
-    private PApplet app;
-
-package WizardTD;
-import processing.core.PImage;
-import processing.core.PApplet;
-
-
 public class Monster {
     private String type;
     private int hp;
@@ -31,15 +14,15 @@ public class Monster {
     private PApplet app;
 
     // Constructor to initialize the monster attributes
-    public Monster(String type, int hp, double speed, double armour, int manaGainedOnKill) {
-        this.type = type;
-        this.hp = hp;
-        this.speed = speed;
-        this.armour = armour;
-        this.manaGainedOnKill = manaGainedOnKill;
+    public Monster(JSONObject monsterConfig, PApplet app) {
+        this.app = app;
+        this.type = monsterConfig.getString("type");
+        this.hp = monsterConfig.getInt("hp");
+        this.speed = monsterConfig.getDouble("speed");
+        this.armour = monsterConfig.getDouble("armour");
+        this.manaGainedOnKill = monsterConfig.getInt("manaGainedOnKill");
         this.x = 0;  // Starting position, you might want to adjust this
         this.y = 0;
-        this.app = app;
         
         this.monsterImage = app.loadImage("WizardTD/gremlin.png");
         for (int i = 0; i < 4; i++) {
