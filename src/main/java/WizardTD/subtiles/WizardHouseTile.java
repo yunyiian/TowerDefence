@@ -1,5 +1,5 @@
 package WizardTD.subtiles;
-
+import WizardTD.Tile;
 import processing.core.PApplet;
 import processing.core.PImage;
 import WizardTD.App;

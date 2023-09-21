@@ -35,9 +35,10 @@ public class App extends PApplet {
     private TopBar topBar;
     private Sidebar sidebar;
     int initialMana;
-    public static final int INITIAL_MANA_CAP = 1000;
-    private WaveManager waveManager;  // Manage the waves and spawning of monsters
-    private List<Monster> activeMonsters = new ArrayList<>();  // List to store all the active monsters
+    int initialManaCap;
+    int manaGainedPerSecond;
+    Monster monster;
+
 
     public App() {
         this.configPath = "config.json";
@@ -59,9 +60,10 @@ public class App extends PApplet {
         frameRate(FPS);
         JSONObject config = loadJSONObject(configPath);
         initialMana = config.getInt("initial_mana");
-        topBar = new TopBar(WIDTH, TOPBAR, initialMana);
+        initialManaCap = config.getInt("initial_mana_cap");
+        manaGainedPerSecond = config.getInt("initial_mana_gained_per_second");
+        topBar = new TopBar(WIDTH, TOPBAR, initialMana, initialManaCap);
         sidebar = new Sidebar(SIDEBAR, HEIGHT);
-        waveManager = new WaveManager(loadJSONObject(configPath), this);
 
         // Load images during setup
 		// Eg:
@@ -70,7 +72,8 @@ public class App extends PApplet {
         // loadImage("src/main/resources/WizardTD/tower2.png");
 
         board = new Board(); // initialize the board
-        board.loadLayout("/Users/ianchang/desktop/scaffold/level1.txt", this);  // load the layout from the file
+        board.loadLayout("/Users/ianchang/desktop/scaffold/level2.txt", this);  // load the layout from the file
+        monster = new Monster(board, this);
     }
 
     /**
@@ -110,40 +113,24 @@ public class App extends PApplet {
     public void draw() {
         background(255); // Clear the background.
         
-        // Render the top bar
-        topBar.render(this);
         
         // Render the board
         board.render(this);
         
+        monster.move();
+        monster.render(this);
+
         // Render the sidebar
         sidebar.render(this);
 
-        // Update and render monsters
-        updateMonsters();
-        renderMonsters();
-    }
-    private void updateMonsters() {
-        // Update the WaveManager to check if new monsters should be spawned
-        waveManager.update();
-        activeMonsters.addAll(newMonsters);
+        // Render the top bar
+        topBar.render(this);
 
-        // Move each active monster
-        Iterator<Monster> iterator = activeMonsters.iterator();
-        while (iterator.hasNext()) {
-            Monster monster = iterator.next();
-            monster.move(board);
-            if (monster.hasReachedEnd() || monster.isDead()) {
-                iterator.remove();
-            }
-        }
+        topBar.updateMana(manaGainedPerSecond / (float)FPS); 
+
+        board.renderWizardHouse(this);
     }
 
-    private void renderMonsters() {
-        for (Monster monster : activeMonsters) {
-            monster.render(this);
-        }
-    }
 
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");

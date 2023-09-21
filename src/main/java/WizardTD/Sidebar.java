@@ -19,7 +19,7 @@ public class Sidebar {
     }
 
     public void render(PApplet app) {
-        app.fill(245, 222, 179);  // Beige color for the sidebar
+        app.fill(app.color(0x83, 0x74, 0x4A));
         // The x-coordinate is the total width minus the sidebar width
         // The y-coordinate starts from the height of the top bar
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);

@@ -1,4 +1,4 @@
-package WizardTD.subtiles;
+package WizardTD;
 
 import processing.core.PApplet;
 import processing.core.PImage;

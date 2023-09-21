@@ -8,30 +8,29 @@ import processing.core.PImage;
 
 public class Board {
     private static Tile[][] tiles = new Tile[20][20]; // 20x20 board
-    private List<Monster> monsters = new ArrayList<>(); 
 
     public void loadLayout(String filename, App app) {  // Change PApplet to App
         String[] lines = app.loadStrings(filename);
         
-        // First, initialize all the tiles
-        for (int i = 0; i < lines.length; i++) {
-            for (int j = 0; j < lines[i].length(); j++) {
-                char c = lines[i].charAt(j);
+        for (int i = 0; i < 20; i++) { // always 20 rows
+            for (int j = 0; j < 20; j++) { // always 20 columns
+                char c = ' '; // default to GrassTile
+                if (i < lines.length && j < lines[i].length()) { // if within bounds of the line
+                    c = lines[i].charAt(j);
+                }    
                 switch (c) {
                     case 'S':
                         tiles[i][j] = new ShrubTile(app);
-                        break;
-                    case ' ':
-                        tiles[i][j] = new GrassTile(app);
                         break;
                     case 'X':
                         tiles[i][j] = new PathTile(j, i, app, this);
                         break;
                     case 'W':
-                        tiles[i][j] = new GrassTile(app);
                         tiles[i][j] = new WizardHouseTile(app, j, i, this); 
                         break;
-                    // Add more cases if needed.
+                    default:
+                        tiles[i][j] = new GrassTile(app);
+                        break;
                 }
             }
         }
@@ -57,43 +56,33 @@ public class Board {
     public void render(PApplet app) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                if (!(tiles[i][j] instanceof WizardHouseTile)) {  // Render all tiles except WizardHouseTile first
+                if (!(tiles[i][j] instanceof WizardHouseTile)) {
                     tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);
                 }
             }
         }
+    }
+        
+    public void renderWizardHouse(PApplet app) {
+        GrassTile grass = new GrassTile(app); // Create an instance of GrassTile
+
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j] instanceof WizardHouseTile) {  // Now render only WizardHouseTile
+                if (tiles[i][j] instanceof WizardHouseTile) {
+                    // First, render the GrassTile at the same position
+                    grass.render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);
+
+                    // Then, render the WizardHouseTile on top of it
                     tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);
                 }
             }
         }
-        // Render monsters
-        for (Monster monster : monsters) {
-            monster.render(app);
-        }
-    }
-    
-    public Tile getNextPathTile(int x, int y) {
-        // Logic to get the next X tile for a monster
-        // For simplicity, let's say the next tile is to the right
-        if (isPathTile(x + 1, y)) {
-            return tiles[y][x + 1];
-        }
-        // You can add more logic to handle other directions
-        return null;
     }
 
-    public void addMonster(Monster monster) {
-        this.monsters.add(monster);
+    public Tile[][] getTiles() {
+        return tiles;
     }
 
-    public void updateMonsters() {
-        for (Monster monster : monsters) {
-            monster.move(this);
-        }
-    }
     
     
 }

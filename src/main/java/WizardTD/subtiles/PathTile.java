@@ -1,5 +1,5 @@
 package WizardTD.subtiles;
-
+import WizardTD.Tile;
 import WizardTD.Board;
 import WizardTD.App;
 
