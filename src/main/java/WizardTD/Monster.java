@@ -13,6 +13,9 @@ public class Monster {
     private int x, y;  // Position of the monster
     private Board board;
     private String direction = "";  // Can be "up", "down", "left", "right"
+    List<String> pathToWizard;
+    int pathIndex = 0;
+    private PathFinder pathFinder = new PathFinder();
 
     public Monster(Board board, PApplet app) {
         System.out.println("Board object in Monster constructor: " + board); 
@@ -58,119 +61,74 @@ public class Monster {
         return spawnPoints;
     }
     
-
     public void move() {
         Tile[][] tiles = board.getTiles();
-
-
-        // Determine initial direction based on spawn location
+        System.out.println("Monster at position (" + x + ", " + y + ")");
+    
+        if (x < 0 || x >= tiles[0].length || y < 0 || y >= tiles.length) {
+            moveOutside(tiles);
+        } else {
+            moveInside(tiles);
+        }
+        System.out.println("Monster moved to position (" + x + ", " + y + ")");
+    }
+    
+    private void moveOutside(Tile[][] tiles) {
         if (y == -1) direction = "down";
         else if (y == tiles.length) direction = "up";
         else if (x == -1) direction = "right";
         else if (x == tiles[0].length) direction = "left";
-
-        // If the monster is outside the board, move it in the initial direction
-        if (x < 0 || x >= tiles[0].length || y < 0 || y >= tiles.length) {
-            switch (direction) {
-                case "up":
-                    y--;
-                    break;
-                case "down":
-                    y++;
-                    break;
-                case "left":
-                    x--;
-                    break;
-                case "right":
-                    x++;
-                    break;
-            }
-            return;  // Exit the move method after initial movement
-        }
-        // Check if monster is on Wizard's house
-        if (tiles[y][x] instanceof WizardHouseTile) {
-            // Monster disappears when it reaches the Wizard's house
-            x = -1;
-            y = -1;
-            return;
-        }
-
-    // Determine possible directions monster can move based on neighboring tiles
-    List<String> possibleDirections = new ArrayList<>();
-    if (y > 0 && tiles[y - 1][x] instanceof PathTile) possibleDirections.add("up");
-    if (y < tiles.length - 1 && tiles[y + 1][x] instanceof PathTile) possibleDirections.add("down");
-    if (x > 0 && tiles[y][x - 1] instanceof PathTile) possibleDirections.add("left");
-    if (x < tiles[y].length - 1 && tiles[y][x + 1] instanceof PathTile) possibleDirections.add("right");
-
-    // If only one possible direction, move in that direction
-    if (possibleDirections.size() == 1) {
-        direction = possibleDirections.get(0);
-    } else {
-        // If multiple possible directions, choose the one that gets the monster closer to the Wizard's house
-        direction = getDirectionCloserToWizardHouse(possibleDirections, tiles);
-    }
-
-    // Move in the determined direction
-    switch (direction) {
-        case "up":
-            y--;
-            break;
-        case "down":
-            y++;
-            break;
-        case "left":
-            x--;
-            break;
-        case "right":
-            x++;
-            break;
-    }
-}
-
-private String getDirectionCloserToWizardHouse(List<String> possibleDirections, Tile[][] tiles) {
-    int destX = -1, destY = -1;
-    
-    // Find the position of the Wizard's house
-    for (int i = 0; i < tiles.length; i++) {
-        for (int j = 0; j < tiles[i].length; j++) {
-            if (tiles[i][j] instanceof WizardHouseTile) {
-                destX = j;
-                destY = i;
-                break;
-            }
-        }
+        
+        moveInDirection();
     }
     
-    String bestDirection = null;
-    int bestDistance = Integer.MAX_VALUE;
-    
-    for (String dir : possibleDirections) {
-        int newX = x, newY = y;
-        switch (dir) {
+    private void moveInDirection() {
+        switch (direction) {
             case "up":
-                newY--;
+                y--;
                 break;
             case "down":
-                newY++;
+                y++;
                 break;
             case "left":
-                newX--;
+                x--;
                 break;
             case "right":
-                newX++;
+                x++;
                 break;
-        }
-
-        int distance = Math.abs(newX - destX) + Math.abs(newY - destY);
-        if (distance < bestDistance) {
-            bestDistance = distance;
-            bestDirection = dir;
         }
     }
     
-    return bestDirection;
-    }
 
+    private void moveInside(Tile[][] tiles) {
+        PathFinder.Node start = pathFinder.new Node(x, y);
+        
+        // Find the goal (the 'W' tile)
+        int goalX = -1, goalY = -1;
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] instanceof WizardHouseTile) {
+                    goalX = j;
+                    goalY = i;
+                    break;
+                }
+            }
+            if (goalX != -1) {
+                break;
+            }
+        }
+        
+        PathFinder.Node goal = pathFinder.new Node(goalX, goalY);
+        
+        List<PathFinder.Node> path = pathFinder.findPath(start, goal, tiles);
+        
+        if (path.size() > 1) {
+            PathFinder.Node nextStep = path.get(1);
+            this.x = nextStep.x;
+            this.y = nextStep.y;
+        }
+    }       
+    
 
     public void render(PApplet app) {
         if (x != -1 && y != -1) { // Only render if monster hasn't disappeared
