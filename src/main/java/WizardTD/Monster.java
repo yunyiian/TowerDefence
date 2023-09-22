@@ -18,7 +18,6 @@ public class Monster {
     private PathFinder pathFinder = new PathFinder();
 
     public Monster(Board board, PApplet app) {
-        System.out.println("Board object in Monster constructor: " + board); 
         this.board = board;
         this.image = app.loadImage("src/main/resources/WizardTD/gremlin.png");
         List<int[]> spawnPoints = getSpawnPoints();
@@ -63,14 +62,12 @@ public class Monster {
     
     public void move() {
         Tile[][] tiles = board.getTiles();
-        System.out.println("Monster at position (" + x + ", " + y + ")");
     
         if (x < 0 || x >= tiles[0].length || y < 0 || y >= tiles.length) {
             moveOutside(tiles);
         } else {
             moveInside(tiles);
         }
-        System.out.println("Monster moved to position (" + x + ", " + y + ")");
     }
     
     private void moveOutside(Tile[][] tiles) {
@@ -99,7 +96,13 @@ public class Monster {
         }
     }
     
-
+     /**
+     * moveInside method
+     *          
+     * This method implements the A* pathfinding algorithm,
+     *
+     * For details on the A* algorithm, refer to the credits in the PathFinder class.
+     */
     private void moveInside(Tile[][] tiles) {
         PathFinder.Node start = pathFinder.new Node(x, y);
         

@@ -3,7 +3,16 @@ import java.util.*;
 
 import WizardTD.subtiles.PathTile;
 import WizardTD.subtiles.WizardHouseTile;
-
+/**
+ * PathFinder class
+ * 
+ * This class implements the A* pathfinding algorithm,
+ * 
+ * Reference:
+ * Hart, P. E., Nilsson, N. J., & Raphael, B. (1968). 
+ * A formal basis for the heuristic determination of minimum cost paths. 
+ * IEEE transactions on Systems Science and Cybernetics, 4(2), 100-107.
+ */
 public class PathFinder {
 
     public class Node {

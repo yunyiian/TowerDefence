@@ -72,7 +72,7 @@ public class App extends PApplet {
         // loadImage("src/main/resources/WizardTD/tower2.png");
 
         board = new Board(); // initialize the board
-        board.loadLayout("/Users/ianchang/desktop/scaffold/level2.txt", this);  // load the layout from the file
+        board.loadLayout(config.getString("layout"), this);  
         monster = new Monster(board, this);
     }
 
