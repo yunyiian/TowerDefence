@@ -38,6 +38,9 @@ public class App extends PApplet {
     int initialManaCap;
     int manaGainedPerSecond;
     Monster monster;
+    private List<Wave> waves = new ArrayList<>();  // List to manage waves
+    private int currentWaveIndex = 0;  // Track the current wave
+    private float waveTimer = 0;
 
 
     public App() {
@@ -74,6 +77,20 @@ public class App extends PApplet {
         board = new Board(); // initialize the board
         board.loadLayout(config.getString("layout"), this);  
         monster = new Monster(board, this);
+
+        JSONArray wavesConfig = config.getJSONArray("waves");
+        for (int i = 0; i < wavesConfig.size(); i++) {
+            JSONObject waveConfig = wavesConfig.getJSONObject(i);
+            int duration = waveConfig.getInt("duration");
+            float preWavePause = waveConfig.getFloat("pre_wave_pause");
+            JSONArray monstersConfig = waveConfig.getJSONArray("monsters");
+            
+            for (int j = 0; j < monstersConfig.size(); j++) {
+                JSONObject monsterConfig = monstersConfig.getJSONObject(j);
+                Wave wave = new Wave(duration, preWavePause, monsterConfig, board, this);
+                waves.add(wave);
+            }
+        }        
     }
 
     /**
@@ -102,32 +119,47 @@ public class App extends PApplet {
 
     }
 
-    /*@Override
     public void mouseDragged(MouseEvent e) {
 
-    }*/
-
+    }
     /**
      * Draw all elements in the game by current frame.
      */
+    @Override
     public void draw() {
         background(255); // Clear the background.
-        
-        
+    
         // Render the board
         board.render(this);
-        
-        monster.move();
-        monster.render(this);
-
+    
+        // Handle waves
+        if (currentWaveIndex < waves.size()) {
+            Wave currentWave = waves.get(currentWaveIndex);
+            
+            if (waveTimer < currentWave.getPreWavePause()) {
+                // We're in the pause phase of the wave, don't update monsters
+            } else {
+                currentWave.update();
+                currentWave.render(this);
+            }
+            
+            waveTimer += 1.0 / FPS;  // Increment timer by frame duration
+    
+            // Check if the entire wave duration (pause + active) is over
+            if (waveTimer > (currentWave.getPreWavePause() + currentWave.getDuration())) {
+                waveTimer = 0;  // Reset timer
+                currentWaveIndex++;  // Move to the next wave
+            }
+        }
+    
         // Render the sidebar
         sidebar.render(this);
-
+    
         // Render the top bar
         topBar.render(this);
-
+    
         topBar.updateMana(manaGainedPerSecond / (float)FPS); 
-
+    
         board.renderWizardHouse(this);
     }
 

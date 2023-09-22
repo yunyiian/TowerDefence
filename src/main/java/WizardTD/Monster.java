@@ -16,14 +16,32 @@ public class Monster {
     List<String> pathToWizard;
     int pathIndex = 0;
     private PathFinder pathFinder = new PathFinder();
+    private float speed;  // speed of the monster in pixels per frame
+    private float leftoverMove = 0.0f;  
 
-    public Monster(Board board, PApplet app) {
+    public Monster(Board board, PApplet app, float speed) {
         this.board = board;
         this.image = app.loadImage("src/main/resources/WizardTD/gremlin.png");
         List<int[]> spawnPoints = getSpawnPoints();
         int[] chosenSpawn = spawnPoints.get((int) (Math.random() * spawnPoints.size()));
         this.x = chosenSpawn[0];
         this.y = chosenSpawn[1];
+        this.speed = speed;
+    }
+
+    // Overloaded constructor for backward compatibility
+    public Monster(Board board, PApplet app) {
+        this(board, app, 1.0f); // Default speed set to 1.0f
+    }
+
+    public void moveWithSpeed() {
+        float totalMove = speed + leftoverMove;
+        int intMove = (int) totalMove;  // integer part of the movement
+        leftoverMove = totalMove - intMove;  // store the fractional part for next frame
+    
+        for (int i = 0; i < intMove; i++) {
+            move();  // call the existing move method
+        }
     }
 
     private List<int[]> getSpawnPoints() {
@@ -140,4 +158,5 @@ public class Monster {
             app.image(image, drawX, drawY);
         }
     }
+
 }
