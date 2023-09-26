@@ -10,18 +10,40 @@ public class Wave {
     private float preWavePause;
     private List<Monster> monsters = new ArrayList<>();
 
+    // Add board, app, and speed as class attributes
+    private Board board;
+    private PApplet app;
+    private float speed;
+
+    private float spawnInterval;  // Time interval (in frames) between spawning each monster
+    private float currentSpawnTime = 0;  // Elapsed time (in frames) since the last spawn
+    private int monstersToSpawn;  // Number of monsters left to spawn
+
     public Wave(int duration, float preWavePause, JSONObject monsterConfig, Board board, PApplet app) {
         this.duration = duration;
         this.preWavePause = preWavePause;
+        this.board = board;  // Initialize board
+        this.app = app;  // Initialize app
+        this.speed = monsterConfig.getFloat("speed");  // Initialize speed
 
         int quantity = monsterConfig.getInt("quantity");
-        float speed = monsterConfig.getFloat("speed");
-        for (int i = 0; i < quantity; i++) {
-            monsters.add(new Monster(board, app, speed));
-        }
+        
+        // Calculate the spawn interval based on the wave duration and monster quantity
+        this.spawnInterval = (float) duration / quantity;
+        this.monstersToSpawn = quantity;
     }
 
     public void update() {
+        currentSpawnTime += 1;  // Increment the elapsed time since the last spawn
+
+        // If it's time to spawn a new monster and there are still monsters left to spawn
+        if (currentSpawnTime >= spawnInterval && monstersToSpawn > 0) {
+            int spawnDelay = Math.round(currentSpawnTime - spawnInterval);
+            monsters.add(new Monster(board, app, speed, spawnDelay));
+            monstersToSpawn--;
+            currentSpawnTime = 0;  // Reset the elapsed time since the last spawn
+        }
+
         // Logic to update monsters in this wave
         for (Monster monster : monsters) {
             monster.moveWithSpeed();

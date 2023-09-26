@@ -20,8 +20,9 @@ public class Monster {
     private PathFinder pathFinder = new PathFinder();
     private float speed;  // speed of the monster in pixels per frame
     private float leftoverMove = 0.0f;  
+    private int spawnDelay; 
 
-    public Monster(Board board, PApplet app, float speed) {
+    public Monster(Board board, PApplet app, float speed, int spawnDelay) {
         this.board = board;
         this.image = app.loadImage("src/main/resources/WizardTD/gremlin.png");
         List<int[]> spawnPoints = getSpawnPoints();
@@ -29,14 +30,20 @@ public class Monster {
         this.x = (float) chosenSpawn[0];
         this.y = (float) chosenSpawn[1];
         this.speed = speed;
+        this.spawnDelay = spawnDelay; 
     }
 
     // Overloaded constructor for backward compatibility
     public Monster(Board board, PApplet app) {
-        this(board, app, 1.0f); // Default speed set to 1.0f
+        this(board, app, 1.0f, 0); // Default speed set to 1.0f
     }
 
     public void moveWithSpeed() {
+        if (spawnDelay > 0) {
+            // If there's a spawn delay, decrement it and do not move the monster
+            spawnDelay--;
+            return;
+        }
         float totalMove = speed + leftoverMove;
         int intMove = (int) totalMove;  // integer part of the movement
         leftoverMove = totalMove - intMove;  // store the fractional part for next frame
