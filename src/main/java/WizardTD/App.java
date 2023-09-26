@@ -38,6 +38,7 @@ public class App extends PApplet {
     int initialManaCap;
     int manaGainedPerSecond;
     Monster monster;
+    private List<Monster> activeMonsters = new ArrayList<>();
     private List<Wave> waves = new ArrayList<>();  // List to manage waves
     private int currentWaveIndex = 0;  // Track the current wave
     private float waveTimer = 0;
@@ -128,10 +129,10 @@ public class App extends PApplet {
     @Override
     public void draw() {
         background(255); // Clear the background.
-    
+
         // Render the board
         board.render(this);
-    
+
         // Handle waves
         if (currentWaveIndex < waves.size()) {
             Wave currentWave = waves.get(currentWaveIndex);
@@ -140,27 +141,36 @@ public class App extends PApplet {
                 // We're in the pause phase of the wave, don't update monsters
             } else {
                 currentWave.update();
-                currentWave.render(this);
             }
             
             waveTimer += 1.0 / FPS;  // Increment timer by frame duration
-    
+
             // Check if the entire wave duration (pause + active) is over
             if (waveTimer > (currentWave.getPreWavePause() + currentWave.getDuration())) {
                 waveTimer = 0;  // Reset timer
                 currentWaveIndex++;  // Move to the next wave
             }
         }
-    
+
+        // Update and render all active monsters
+        for (Monster monster : activeMonsters) {
+            monster.moveWithSpeed();
+            monster.render(this);
+        }
+
         // Render the sidebar
         sidebar.render(this);
-    
+
         // Render the top bar
         topBar.render(this);
-    
+
         topBar.updateMana(manaGainedPerSecond / (float)FPS); 
-    
+
         board.renderWizardHouse(this);
+    }
+
+    public void addActiveMonster(Monster monster) {
+        activeMonsters.add(monster);
     }
 
 
