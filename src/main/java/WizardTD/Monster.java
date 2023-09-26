@@ -38,21 +38,6 @@ public class Monster {
         this(board, app, 1.0f, 0); // Default speed set to 1.0f
     }
 
-    public void moveWithSpeed() {
-        if (spawnDelay > 0) {
-            // If there's a spawn delay, decrement it and do not move the monster
-            spawnDelay--;
-            return;
-        }
-        float totalMove = speed + leftoverMove;
-        int intMove = (int) totalMove;  // integer part of the movement
-        leftoverMove = totalMove - intMove;  // store the fractional part for next frame
-        
-        for (int i = 0; i < intMove; i++) {
-            move();  // call the existing move method
-        }
-    }
-
     private List<int[]> getSpawnPoints() {
         List<int[]> spawnPoints = new ArrayList<>();
         Tile[][] tiles = board.getTiles();
@@ -85,6 +70,21 @@ public class Monster {
             }
         }
         return spawnPoints;
+    }
+
+    public void moveWithSpeed() {
+        if (spawnDelay > 0) {
+            // If there's a spawn delay, decrement it and do not move the monster
+            spawnDelay--;
+            return;
+        }
+        float totalMove = speed + leftoverMove;
+        int intMove = (int) totalMove;  // integer part of the movement
+        leftoverMove = totalMove - intMove;  // store the fractional part for next frame
+        
+        for (int i = 0; i < intMove; i++) {
+            move();  // call the existing move method
+        }
     }
     
     public void move() {
@@ -160,18 +160,27 @@ public class Monster {
             }
         }
     
-        // Move towards the target in pixel increments, as before
+        // Move towards the target in pixel increments
         float deltaX = targetX - x;
         float deltaY = targetY - y;
         float distance = (float) Math.sqrt(deltaX * deltaX + deltaY * deltaY);
         if (distance > 0) {
             float moveX = (speed / 32.0f) * (deltaX / distance);
             float moveY = (speed / 32.0f) * (deltaY / distance);
-            x += moveX;
-            y += moveY;
+            
+            // Check if the move would overshoot the target
+            float new_distance_after_move = (float) Math.sqrt((deltaX - moveX) * (deltaX - moveX) + (deltaY - moveY) * (deltaY - moveY));
+            if (new_distance_after_move > distance) {
+                // If it would overshoot, just move to the target
+                x = targetX;
+                y = targetY;
+                leftoverMove += (new_distance_after_move - distance) * 32.0f / speed;  // Store the leftover movement for next frame
+            } else {
+                x += moveX;
+                y += moveY;
+            }
         }
-    }
-    
+     }
     
 
     public void render(PApplet app) {
