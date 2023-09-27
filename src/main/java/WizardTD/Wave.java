@@ -28,7 +28,7 @@ public class Wave {
         int quantity = monsterConfig.getInt("quantity");
         
         // Calculate the spawn interval in frames
-        this.spawnInterval = (duration * 60.0f) / quantity;  // Assuming 60 fps
+        this.spawnInterval = (duration * App.FPS) / quantity;  // Assuming 60 fps
         this.monstersToSpawn = quantity;
     }
 

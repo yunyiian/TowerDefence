@@ -79,6 +79,21 @@ public class Board {
         }
     }
 
+    public boolean placeTower(int x, int y, PApplet app) {
+        if (x >= 0 && x < tiles[0].length && y >= 0 && y < tiles.length) {
+            Tile tile = tiles[y][x];
+            
+            // Check if it's a GrassTile
+            if (tile instanceof GrassTile) {
+                // Replace with a TowerTile
+                tiles[y][x] = new TowerTile(app);
+                return true;  // Successfully placed the tower
+            }
+        }
+        return false;  // Failed to place the tower
+    }
+    
+
     public Tile[][] getTiles() {
         return tiles;
     }

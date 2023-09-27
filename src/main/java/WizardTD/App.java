@@ -37,11 +37,16 @@ public class App extends PApplet {
     int initialMana;
     int initialManaCap;
     int manaGainedPerSecond;
+
+    //Monsters
     Monster monster;
     private List<Monster> activeMonsters = new ArrayList<>();
     private List<Wave> waves = new ArrayList<>();  // List to manage waves
     private int currentWaveIndex = 0;  // Track the current wave
     private float waveTimer = 0;
+
+    //towers
+    private boolean towerPlacementMode = false;
 
 
     public App() {
@@ -112,8 +117,25 @@ public class App extends PApplet {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        
-    }
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+    
+        if (sidebar.isTowerButtonClicked(mouseX, mouseY)) {
+            // Toggle the tower placement mode
+            sidebar.toggleTowerPlacementMode();
+            towerPlacementMode = sidebar.isInTowerPlacementMode();
+        } else if (towerPlacementMode) {
+            // Try to place a tower on the clicked tile
+            int tileX = mouseX / App.CELLSIZE;
+            int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+    
+            boolean towerPlaced = board.placeTower(tileX, tileY, this);
+            if (towerPlaced) {
+                towerPlacementMode = false;
+                sidebar.toggleTowerPlacementMode();
+            }
+        }
+    }     
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -121,8 +143,8 @@ public class App extends PApplet {
     }
 
     public void mouseDragged(MouseEvent e) {
-
     }
+    
     /**
      * Draw all elements in the game by current frame.
      */
