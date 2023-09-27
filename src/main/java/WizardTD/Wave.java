@@ -34,7 +34,7 @@ public class Wave {
 
     public void update() {
         currentSpawnTime += 1;  // Increment the elapsed time since the last spawn
-    
+        
         // If it's time to spawn a new monster and there are still monsters left to spawn
         if (currentSpawnTime >= spawnInterval && monstersToSpawn > 0) {
             int spawnDelay = Math.round(spawnInterval * monsters.size());
@@ -45,12 +45,8 @@ public class Wave {
             monstersToSpawn--;
             currentSpawnTime = 0;  // Reset the elapsed time since the last spawn
         }
-    
-        // Logic to update monsters in this wave
-        for (Monster monster : monsters) {
-            monster.moveWithSpeed();
-        } 
     }
+    
     public void render(PApplet app) {
         // Logic to render monsters in this wave
         for (Monster monster : monsters) {

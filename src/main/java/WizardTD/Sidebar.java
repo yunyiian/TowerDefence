@@ -47,9 +47,14 @@ public class Sidebar {
     public void render(PApplet app) {
         app.fill(app.color(0x83, 0x74, 0x4A));
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
-
-        // Render the tower placement button
-        app.fill(app.color(0x83, 0x74, 0x4A));  // Match sidebar color
+    
+        // Change button's fill color based on tower placement mode
+        if (towerPlacementMode) {
+            app.fill(app.color(0xfb, 0xfb, 0x0d));  // Yellow color for active mode
+        } else {
+            app.fill(app.color(0x83, 0x74, 0x4A));  // Default color
+        }
+    
         app.rect(buttonX, buttonY, buttonWidth, buttonHeight);
         
         // Black border/highlight around the button
@@ -63,4 +68,5 @@ public class Sidebar {
         app.fill(0);  // Black text
         app.text("Place Tower", buttonX + 10, buttonY + 20);
     }
+    
 }

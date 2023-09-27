@@ -102,10 +102,16 @@ public class App extends PApplet {
     /**
      * Receive key pressed signal from the keyboard.
      */
-	@Override
-    public void keyPressed(){
-        
+    @Override
+    public void keyPressed() {
+        if (key == 'T' || key == 't') {
+            // Toggle the tower placement mode
+            sidebar.toggleTowerPlacementMode();
+            towerPlacementMode = sidebar.isInTowerPlacementMode();
+        }
     }
+    
+    
 
     /**
      * Receive key released signal from the keyboard.
@@ -129,13 +135,10 @@ public class App extends PApplet {
             int tileX = mouseX / App.CELLSIZE;
             int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
     
-            boolean towerPlaced = board.placeTower(tileX, tileY, this);
-            if (towerPlaced) {
-                towerPlacementMode = false;
-                sidebar.toggleTowerPlacementMode();
-            }
+            board.placeTower(tileX, tileY, this); // We no longer check if the tower is placed or not here
         }
-    }     
+    }
+    
 
     @Override
     public void mouseReleased(MouseEvent e) {
