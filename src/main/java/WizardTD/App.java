@@ -84,7 +84,6 @@ public class App extends PApplet {
 
         board = new Board(); // initialize the board
         board.loadLayout(config.getString("layout"), this);  
-        monster = new Monster(board, this);
 
         JSONArray wavesConfig = config.getJSONArray("waves");
         for (int i = 0; i < wavesConfig.size(); i++) {

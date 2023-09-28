@@ -33,11 +33,6 @@ public class Monster {
         this.spawnDelay = spawnDelay; 
     }
 
-    // Overloaded constructor for backward compatibility
-    public Monster(Board board, PApplet app) {
-        this(board, app, 1.0f, 0); // Default speed set to 1.0f
-    }
-
     private List<int[]> getSpawnPoints() {
         List<int[]> spawnPoints = new ArrayList<>();
         Tile[][] tiles = board.getTiles();
