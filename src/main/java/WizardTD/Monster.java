@@ -22,17 +22,39 @@ public class Monster {
     private float leftoverMove = 0.0f;  
     private int spawnDelay; 
 
-    public Monster(Board board, PApplet app, float speed, int spawnDelay) {
+
+    private float hp;  // Max hit points (initial health)
+    private float currentHp;  // Current health
+    private float armour;  // Percentage multiplier to damage received
+    private float manaGainedOnKill;  // Mana gained when this monster is killed
+    private String type;  // The sprite image to use for the monster
+    private PImage deathImages[];  // Images for death animation
+    private int deathFrameCount = 0;  // Frame counter for death animation
+
+
+    public Monster(Board board, PApplet app, float speed, int spawnDelay, float hp, float armour, float manaGainedOnKill, String type) {
         this.board = board;
-        this.image = app.loadImage("src/main/resources/WizardTD/gremlin.png");
+        this.image = app.loadImage("src/main/resources/WizardTD/" + type + ".png");
+        this.hp = hp;
+        this.currentHp = hp;
+        this.armour = armour;
+        this.manaGainedOnKill = manaGainedOnKill;
+        this.type = type;
+        this.speed = speed;
+        this.spawnDelay = spawnDelay;
         List<int[]> spawnPoints = getSpawnPoints();
         int[] chosenSpawn = spawnPoints.get((int) (Math.random() * spawnPoints.size()));
         this.x = (float) chosenSpawn[0];
         this.y = (float) chosenSpawn[1];
         this.speed = speed;
         this.spawnDelay = spawnDelay; 
-    }
 
+        // Load death animation images
+        deathImages = new PImage[4];
+        for (int i = 0; i < 4; i++) {
+        deathImages[i] = app.loadImage("src/main/resources/WizardTD/" + type + (i+2) + ".png");
+        }
+    }
     private List<int[]> getSpawnPoints() {
         List<int[]> spawnPoints = new ArrayList<>();
         Tile[][] tiles = board.getTiles();
@@ -180,9 +202,34 @@ public class Monster {
 
     public void render(PApplet app) {
         if (x != -1.0f && y != -1.0f) { // Only render if monster hasn't disappeared
-            int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);
-            int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);
+        int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);
+        int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);
+        
+        // Display HP bar
+        float hpPercentage = currentHp / hp;
+        app.fill(255, 0, 0);  // Red color for missing HP
+        app.rect(drawX, drawY - 10, image.width, 5);
+        app.fill(0, 255, 0);  // Green color for current HP
+        app.rect(drawX, drawY - 10, image.width * hpPercentage, 5);
+    
+        // Display the monster image
+        if (deathFrameCount < 16) {  // 4 images * 4 frames each
             app.image(image, drawX, drawY);
-        }
+        } else {
+            int deathImageIndex = deathFrameCount / 4;  // Get the right image for the animation frame
+            app.image(deathImages[deathImageIndex], drawX, drawY);
+            deathFrameCount++;
+            if (deathFrameCount >= 16) {
+                // Once the death animation is over, remove the monster from the game
+                x = -1.0f;
+                y = -1.0f;
+            }
+            }
+        }      
     }
+    public void onDeath() {
+        // Start the death animation
+        deathFrameCount = 1;
+    }
+    
 }

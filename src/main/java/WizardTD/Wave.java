@@ -18,6 +18,12 @@ public class Wave {
     private float currentSpawnTime = 0;  // Elapsed time (in frames) since the last spawn
     private int monstersToSpawn;  // Number of monsters left to spawn
 
+    private float hp;
+    private float armour;
+    private float manaGainedOnKill;
+    private String type;
+
+
     public Wave(int duration, float preWavePause, JSONObject monsterConfig, Board board, PApplet app) {
         this.duration = duration;
         this.preWavePause = preWavePause;
@@ -30,6 +36,11 @@ public class Wave {
         // Calculate the spawn interval in frames
         this.spawnInterval = (duration * App.FPS) / quantity;  // Assuming 60 fps
         this.monstersToSpawn = quantity;
+
+        this.hp = monsterConfig.getFloat("hp");
+        this.armour = monsterConfig.getFloat("armour");
+        this.manaGainedOnKill = monsterConfig.getFloat("mana_gained_on_kill");
+        this.type = monsterConfig.getString("type");
     }
 
     public void update() {
@@ -37,7 +48,7 @@ public class Wave {
         
         // If it's time to spawn a new monster and there are still monsters left to spawn
         if (currentSpawnTime >= spawnInterval && monstersToSpawn > 0) {
-            Monster newMonster = new Monster(board, app, speed, 0);
+            Monster newMonster = new Monster(board, app, speed, 0, hp, armour, manaGainedOnKill, type);
             monsters.add(newMonster);
             // Add the new monster to the activeMonsters list in App.java directly
             ((App) app).addActiveMonster(newMonster);
