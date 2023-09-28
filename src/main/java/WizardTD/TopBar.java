@@ -8,12 +8,21 @@ public class TopBar {
     private int mana;
     private int manaCap;
 
+    private int waveNumber = -1;
+    private float timeRemaining = 0.0f;
+
     public TopBar(int width, int height, int initialMana, int manaCap) {
         this.width = width;
         this.height = height;
         this.mana = initialMana;
         this.manaCap = manaCap;
     }
+
+    public void setWaveTimer(int waveNumber, float timeRemaining) {
+        this.waveNumber = waveNumber;
+        this.timeRemaining = timeRemaining;
+    }
+
 
     public void render(PApplet app) {
         // Set color and draw the top bar background
@@ -47,8 +56,11 @@ public class TopBar {
         float textWidth = app.textWidth(manaText);
         app.text(manaText, manaBarX + (manaBarWidth - textWidth) / 2, manaBarY + 13);
         
-        // Display "Wave 2 starts: 9" text on the left of the bar, offset by half a tile
-        app.text("Wave 2 starts: 9", 16, manaBarY + 13);
+        // Render wave timer
+        if (waveNumber > 0 && timeRemaining >= 0) {
+            String waveText = "Wave " + waveNumber + " starts: " + Math.round(timeRemaining);
+            app.text(waveText, 16, manaBarY + 13);
+        }
     }
 
     public void updateMana(float amount) {

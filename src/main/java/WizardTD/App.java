@@ -37,6 +37,8 @@ public class App extends PApplet {
     int initialMana;
     int initialManaCap;
     int manaGainedPerSecond;
+    private float totalGameTime = 0.0f;  // Total game elapsed time in seconds
+
 
     //Monsters
     Monster monster;
@@ -155,6 +157,7 @@ public class App extends PApplet {
     public void draw() {
         background(255); // Clear the background.
 
+
         // Render the board
         board.render(this);
 
@@ -183,6 +186,9 @@ public class App extends PApplet {
             monster.render(this);
         }
 
+        totalGameTime += 1.0 / FPS;
+
+
         // Render the sidebar
         sidebar.render(this);
 
@@ -192,10 +198,39 @@ public class App extends PApplet {
         topBar.updateMana(manaGainedPerSecond / (float)FPS); 
 
         board.renderWizardHouse(this);
+
+        updateWaveTimer(); 
     }
 
     public void addActiveMonster(Monster monster) {
         activeMonsters.add(monster);
+    }
+
+    private void updateWaveTimer() {
+        float elapsedTime = totalGameTime;
+        float timeForNextWave = 0.0f;
+        
+        for (int i = 0; i < waves.size(); i++) {
+            float waveTotalTime = waves.get(i).getPreWavePause() + (i == waves.size() - 1 ? 0 : waves.get(i).getDuration());
+            
+            if (i == 0) {
+                // For the first wave
+                timeForNextWave = waves.get(i).getPreWavePause();
+            } else {
+                // For subsequent waves
+                timeForNextWave = waves.get(i).getPreWavePause() + waves.get(i - 1).getDuration();
+            }
+            
+            if (elapsedTime < timeForNextWave) {
+                topBar.setWaveTimer(i + 1, timeForNextWave - elapsedTime);
+                return;
+            } else {
+                elapsedTime -= timeForNextWave;
+            }
+        }
+    
+        // All waves completed
+        topBar.setWaveTimer(-1, 0);
     }
 
 
