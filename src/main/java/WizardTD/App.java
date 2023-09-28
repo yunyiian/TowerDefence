@@ -106,13 +106,18 @@ public class App extends PApplet {
     @Override
     public void keyPressed() {
         if (key == 'T' || key == 't') {
-            // Toggle the tower placement mode
             sidebar.toggleTowerPlacementMode();
             towerPlacementMode = sidebar.isInTowerPlacementMode();
+        } else if (key == '1') {
+            sidebar.toggleRangeUpgradeMode();
+        } else if (key == '2') {
+            sidebar.toggleSpeedUpgradeMode();
+        } else if (key == '3') {
+            sidebar.toggleDamageUpgradeMode();
         }
-    }
+    }    
     
-    
+
 
     /**
      * Receive key released signal from the keyboard.
@@ -127,18 +132,28 @@ public class App extends PApplet {
         int mouseX = e.getX();
         int mouseY = e.getY();
     
-        if (sidebar.isTowerButtonClicked(mouseX, mouseY)) {
-            // Toggle the tower placement mode
+        if (sidebar.isButtonClicked(mouseX, mouseY, 0)) {
             sidebar.toggleTowerPlacementMode();
             towerPlacementMode = sidebar.isInTowerPlacementMode();
         } else if (towerPlacementMode) {
-            // Try to place a tower on the clicked tile
             int tileX = mouseX / App.CELLSIZE;
             int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
-    
-            board.placeTower(tileX, tileY, this); // We no longer check if the tower is placed or not here
+            board.placeTower(tileX, tileY, this);
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, sidebar.buttonHeight + 10)) {
+            sidebar.toggleRangeUpgradeMode();
+            // Upgrade the tower's range if there's a tower on the clicked tile
+            board.upgradeTowerRange(mouseX, mouseY, this);
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleSpeedUpgradeMode();
+            // Upgrade the tower's speed if there's a tower on the clicked tile
+            board.upgradeTowerSpeed(mouseX, mouseY, this);
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleDamageUpgradeMode();
+            // Upgrade the tower's damage if there's a tower on the clicked tile
+            board.upgradeTowerDamage(mouseX, mouseY, this);
         }
     }
+    
     
 
     @Override

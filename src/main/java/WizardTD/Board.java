@@ -92,6 +92,42 @@ public class Board {
         }
         return false;  // Failed to place the tower
     }
+
+    public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {
+        int tileX = mouseX / App.CELLSIZE;
+        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+        
+        if (tileX >= 0 && tileX < tiles[0].length && tileY >= 0 && tileY < tiles.length) {
+            Tile tile = tiles[tileY][tileX];
+            if (tile instanceof TowerTile) {
+                ((TowerTile) tile).upgradeRange();
+            }
+        }
+    }
+    
+    public void upgradeTowerSpeed(int mouseX, int mouseY, PApplet app) {
+        int tileX = mouseX / App.CELLSIZE;
+        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+        
+        if (tileX >= 0 && tileX < tiles[0].length && tileY >= 0 && tileY < tiles.length) {
+            Tile tile = tiles[tileY][tileX];
+            if (tile instanceof TowerTile) {
+                ((TowerTile) tile).upgradeSpeed();
+            }
+        }
+    }
+    
+    public void upgradeTowerDamage(int mouseX, int mouseY, PApplet app) {
+        int tileX = mouseX / App.CELLSIZE;
+        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+        
+        if (tileX >= 0 && tileX < tiles[0].length && tileY >= 0 && tileY < tiles.length) {
+            Tile tile = tiles[tileY][tileX];
+            if (tile instanceof TowerTile) {
+                ((TowerTile) tile).upgradeDamage();
+            }
+        }
+    } 
     
 
     public Tile[][] getTiles() {
