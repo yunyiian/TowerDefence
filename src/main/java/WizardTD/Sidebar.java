@@ -34,8 +34,6 @@ public class Sidebar {
 
     public void toggleRangeUpgradeMode() {
         rangeUpgradeMode = !rangeUpgradeMode;
-        speedUpgradeMode = false;
-        damageUpgradeMode = false;
         System.out.println("Range upgrade mode toggled: " + rangeUpgradeMode);  // Debugging line
     }
 
@@ -45,8 +43,6 @@ public class Sidebar {
 
     public void toggleSpeedUpgradeMode() {
         speedUpgradeMode = !speedUpgradeMode;
-        rangeUpgradeMode = false;
-        damageUpgradeMode = false;
         System.out.println("Speed upgrade mode toggled: " + speedUpgradeMode);  // Debugging line
     }
 
@@ -55,10 +51,9 @@ public class Sidebar {
     }
     public void toggleDamageUpgradeMode() {
         damageUpgradeMode = !damageUpgradeMode;
-        rangeUpgradeMode = false;
-        speedUpgradeMode = false;
         System.out.println("Damage upgrade mode toggled: " + damageUpgradeMode);  // Debugging line
     }
+    
 
     public boolean isInDamageUpgradeMode() {
         return damageUpgradeMode;

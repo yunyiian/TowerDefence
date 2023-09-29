@@ -5,6 +5,7 @@ import processing.core.PImage;
 import processing.data.JSONArray;
 import processing.data.JSONObject;
 import processing.event.MouseEvent;
+import WizardTD.subtiles.TowerTile;
 
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -118,57 +119,71 @@ public class App extends PApplet {
     }    
     
 
-
     /**
      * Receive key released signal from the keyboard.
      */
 	@Override
     public void keyReleased(){
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
-    
-        // Check sidebar buttons first
+
+        // Check sidebar buttons
         if (sidebar.isButtonClicked(mouseX, mouseY, 0)) {
             sidebar.toggleTowerPlacementMode();
-            return;
         } else if (sidebar.isButtonClicked(mouseX, mouseY, sidebar.buttonHeight + 10)) {
             sidebar.toggleRangeUpgradeMode();
-            return;
         } else if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
             sidebar.toggleSpeedUpgradeMode();
-            return;
         } else if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
             sidebar.toggleDamageUpgradeMode();
-            return;
         }
-    
-        // If not in any upgrade mode, handle tower placement
-        if (!sidebar.isInAnyUpgradeMode() && towerPlacementMode) {
-            int tileX = mouseX / App.CELLSIZE;
-            int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
-            board.placeTower(tileX, tileY, this);
-            return;
+
+        int tileX = mouseX / App.CELLSIZE;
+        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+         // Check boundaries before doing anything
+        if (tileX < 0 || tileX >= board.getTiles()[0].length || tileY < 0 || tileY >= board.getTiles().length) {
+            return;  // Outside of board, so just return
         }
-    
-        // Handle upgrades
-        if (sidebar.isInRangeUpgradeMode()) {
-            board.upgradeTowerRange(mouseX, mouseY, this);
-        } else if (sidebar.isInSpeedUpgradeMode()) {
-            board.upgradeTowerSpeed(mouseX, mouseY, this);
-        } else if (sidebar.isInDamageUpgradeMode()) {
-            board.upgradeTowerDamage(mouseX, mouseY, this);
+
+        // First, check if the clicked tile is a tower
+        Tile clickedTile = board.getTiles()[tileY][tileX];
+        if (clickedTile instanceof TowerTile) {
+            TowerTile tower = (TowerTile) clickedTile;
+            if (sidebar.isInRangeUpgradeMode()) {
+                tower.upgradeRange();
+            }
+            if (sidebar.isInSpeedUpgradeMode()) {
+                tower.upgradeSpeed();
+            }
+            if (sidebar.isInDamageUpgradeMode()) {
+                tower.upgradeDamage();
+            }
+            return;  // Return early since we have already handled the tower upgrade
+        }
+
+        // Next, handle tower placement with potential upgrades
+        if (sidebar.isInTowerPlacementMode()) {
+            TowerTile newTower = board.placeTower(tileX, tileY, this);
+            if (newTower != null) {  // If a tower was placed
+                if (sidebar.isInRangeUpgradeMode()) {
+                    newTower.upgradeRange();
+                }
+                if (sidebar.isInSpeedUpgradeMode()) {
+                    newTower.upgradeSpeed();
+                }
+                if (sidebar.isInDamageUpgradeMode()) {
+                    newTower.upgradeDamage();
+                }
+            }
         }
     }
-    
 
     
-    
-    
+
 
     @Override
     public void mouseReleased(MouseEvent e) {

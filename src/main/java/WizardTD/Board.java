@@ -79,19 +79,21 @@ public class Board {
         }
     }
 
-    public boolean placeTower(int x, int y, PApplet app) {
+    public TowerTile placeTower(int x, int y, PApplet app) {
         if (x >= 0 && x < tiles[0].length && y >= 0 && y < tiles.length) {
             Tile tile = tiles[y][x];
             
             // Check if it's a GrassTile
             if (tile instanceof GrassTile) {
                 // Replace with a TowerTile
-                tiles[y][x] = new TowerTile(app);
-                return true;  // Successfully placed the tower
+                TowerTile tower = new TowerTile(app);
+                tiles[y][x] = tower;
+                return tower;  // Successfully placed the tower and return it
             }
         }
-        return false;  // Failed to place the tower
+        return null;  // Failed to place the tower
     }
+    
 
     public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {
         int tileX = mouseX / App.CELLSIZE;
