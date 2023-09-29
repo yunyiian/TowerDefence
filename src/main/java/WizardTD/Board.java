@@ -85,14 +85,15 @@ public class Board {
             
             // Check if it's a GrassTile
             if (tile instanceof GrassTile) {
-                // Replace with a TowerTile
-                TowerTile tower = new TowerTile(app);
+                // Replace with a TowerTile and pass the coordinates
+                TowerTile tower = new TowerTile(app, x, y);
                 tiles[y][x] = tower;
                 return tower;  // Successfully placed the tower and return it
             }
         }
         return null;  // Failed to place the tower
     }
+    
     
 
     public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {

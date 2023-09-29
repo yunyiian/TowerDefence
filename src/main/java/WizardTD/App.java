@@ -229,6 +229,22 @@ public class App extends PApplet {
             monster.render(this);
         }
 
+        // Make towers shoot at monsters
+        Tile[][] tiles = board.getTiles();
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                if (tiles[i][j] instanceof TowerTile) {
+                    TowerTile tower = (TowerTile) tiles[i][j];
+                    tower.incrementTimeSinceLastShot(1.0 / FPS);  // Add this line
+                    Monster target = tower.getClosestMonsterInRange(activeMonsters);
+                    if (target != null) {
+                        tower.shootMonster(target);
+                    }
+                    tower.updateAndRenderFireballs();  // Add this line to update and render the fireballs
+                }
+            }
+        }
+
         totalGameTime += 1.0 / FPS;
 
 

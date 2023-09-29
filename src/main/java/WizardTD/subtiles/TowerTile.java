@@ -1,9 +1,11 @@
 package WizardTD.subtiles;
 
-import WizardTD.Tile;
-import WizardTD.App;
+import WizardTD.*;
 import processing.core.PApplet;
 import processing.core.PImage;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TowerTile extends Tile {
     private PImage image;
@@ -12,10 +14,65 @@ public class TowerTile extends Tile {
     private int damageUpgradeLevel = 0;
     private PApplet app;
     private int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red
+    private float towerRange;
+    private float towerFiringSpeed;
+    private float towerDamage;
+    private float timeSinceLastShot = 0;  // To control the firing rate
 
-    public TowerTile(PApplet app) {
+    private int x;  // x coordinate
+    private int y;  // y coordinate
+    private List<Fireball> fireballs = new ArrayList<>();
+
+    public TowerTile(PApplet app, int x, int y) {
         this.app = app;
+        this.x = x;
+        this.y = y;
         image = app.loadImage("src/main/resources/WizardTD/tower0.png");
+
+        this.towerRange = 5 * App.CELLSIZE;  // Example value, adjust as needed
+        this.towerFiringSpeed = 1;  // Example value, meaning one shot per second
+        this.towerDamage = 10;  // Example value, adjust as needed
+    }
+
+
+    public Monster getClosestMonsterInRange(List<Monster> monsters) {
+        Monster closestMonster = null;
+        float minDistance = Float.MAX_VALUE;
+    
+        for (Monster monster : monsters) {
+            float distance = PApplet.dist(x * App.CELLSIZE, y * App.CELLSIZE, monster.getX() * App.CELLSIZE, monster.getY() * App.CELLSIZE);
+            if (distance < towerRange && distance < minDistance) {
+                closestMonster = monster;
+                minDistance = distance;
+            }
+        }
+        return closestMonster;
+    }
+
+    public void shootMonster(Monster monster) {
+        if (timeSinceLastShot >= 1.0 / towerFiringSpeed) {
+            fireballs.add(new Fireball(x * App.CELLSIZE, y * App.CELLSIZE, monster, app));
+            timeSinceLastShot = 0;
+        }
+    }
+
+    public void updateAndRenderFireballs() {
+        Iterator<Fireball> iterator = fireballs.iterator();
+        while (iterator.hasNext()) {
+            Fireball fireball = iterator.next();
+            fireball.update();
+    
+            if (fireball.hasHitTarget()) {
+                fireball.getTarget().reduceHealth(towerDamage);
+                iterator.remove();
+            } else {
+                fireball.render();
+            }
+        }
+    }
+
+    public void incrementTimeSinceLastShot(double increment) {
+        this.timeSinceLastShot += increment;
     }
 
     public void upgradeRange() {

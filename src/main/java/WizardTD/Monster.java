@@ -198,6 +198,13 @@ public class Monster {
             }
         }
      }
+
+     public void reduceHealth(float damage) {
+        currentHp -= damage;
+        if (currentHp <= 0) {
+            onDeath();
+        }
+    }
     
 
     public void render(PApplet app) {
@@ -231,5 +238,15 @@ public class Monster {
         // Start the death animation
         deathFrameCount = 1;
     }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
+
     
 }
