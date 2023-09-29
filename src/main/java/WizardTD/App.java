@@ -50,6 +50,9 @@ public class App extends PApplet {
 
     //towers
     private boolean towerPlacementMode = false;
+    public float initialTowerRange;
+    public float initialTowerFiringSpeed;
+    public float initialTowerDamage;
 
 
     public App() {
@@ -76,6 +79,12 @@ public class App extends PApplet {
         manaGainedPerSecond = config.getInt("initial_mana_gained_per_second");
         topBar = new TopBar(WIDTH, TOPBAR, initialMana, initialManaCap);
         sidebar = new Sidebar(SIDEBAR, HEIGHT);
+
+        initialTowerRange = config.getInt("initial_tower_range");
+        initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
+        initialTowerDamage = config.getInt("initial_tower_damage");
+        
+
 
         // Load images during setup
 		// Eg:
@@ -167,7 +176,7 @@ public class App extends PApplet {
 
         // Next, handle tower placement with potential upgrades
         if (sidebar.isInTowerPlacementMode()) {
-            TowerTile newTower = board.placeTower(tileX, tileY, this);
+            TowerTile newTower = board.placeTower(tileX, tileY, this, initialTowerRange, initialTowerFiringSpeed, initialTowerDamage);
             if (newTower != null) {  // If a tower was placed
                 if (sidebar.isInRangeUpgradeMode()) {
                     newTower.upgradeRange();

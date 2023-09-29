@@ -23,16 +23,17 @@ public class TowerTile extends Tile {
     private int y;  // y coordinate
     private List<Fireball> fireballs = new ArrayList<>();
 
-    public TowerTile(PApplet app, int x, int y) {
+    public TowerTile(PApplet app, int x, int y, float towerRange, float towerFiringSpeed, float towerDamage) {
         this.app = app;
         this.x = x;
         this.y = y;
         image = app.loadImage("src/main/resources/WizardTD/tower0.png");
-
-        this.towerRange = 5 * App.CELLSIZE;  // Example value, adjust as needed
-        this.towerFiringSpeed = 1;  // Example value, meaning one shot per second
-        this.towerDamage = 10;  // Example value, adjust as needed
+    
+        this.towerRange = towerRange;
+        this.towerFiringSpeed = towerFiringSpeed;
+        this.towerDamage = towerDamage;
     }
+    
 
 
     public Monster getClosestMonsterInRange(List<Monster> monsters) {
