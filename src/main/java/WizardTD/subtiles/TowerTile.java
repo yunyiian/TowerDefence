@@ -17,6 +17,7 @@ public class TowerTile extends Tile {
     private float towerRange;
     private float towerFiringSpeed;
     private float towerDamage;
+    private float initialTowerDamage;
     private float timeSinceLastShot = 0;  // To control the firing rate
 
     private int x;  // x coordinate
@@ -28,7 +29,7 @@ public class TowerTile extends Tile {
         this.x = x;
         this.y = y;
         image = app.loadImage("src/main/resources/WizardTD/tower0.png");
-    
+        this.initialTowerDamage = towerDamage;
         this.towerRange = towerRange;
         this.towerFiringSpeed = towerFiringSpeed;
         this.towerDamage = towerDamage;
@@ -83,21 +84,25 @@ public class TowerTile extends Tile {
 
     public void upgradeRange() {
         rangeUpgradeLevel++;
+        towerRange += 32;  // Increase tower range by 32 pixels
         System.out.println("Upgraded Range to Level: " + rangeUpgradeLevel);  // Debugging line
         updateTowerImage();
     }
     
     public void upgradeSpeed() {
         speedUpgradeLevel++;
+        towerFiringSpeed += 0.5f;  // Increase firing speed by 0.5 fireballs per second
         System.out.println("Upgraded Speed to Level: " + speedUpgradeLevel);  // Debugging line
         updateTowerImage();
     }
     
     public void upgradeDamage() {
         damageUpgradeLevel++;
+        towerDamage += initialTowerDamage / 2.0f;  // Increase damage by half of initial damage
         System.out.println("Upgraded Damage to Level: " + damageUpgradeLevel);  // Debugging line
         updateTowerImage();
     }
+
     
 
     private void updateTowerImage() {
