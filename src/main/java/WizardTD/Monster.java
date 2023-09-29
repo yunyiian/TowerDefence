@@ -233,34 +233,34 @@ public class Monster {
     }
 
     
-
     public void render(PApplet app) {
         app.noTint();
-        if (x != -1.0f && y != -1.0f) { // Only render if monster hasn't disappeared
+        if (x != -1.0f && y != -1.0f) { // Only render if the monster hasn't disappeared
             int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);
             int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);
-    
+
             // Display HP bar
             float hpPercentage = PApplet.constrain(currentHp / hp, 0, 1);  // Clamp between 0 and 1
             app.fill(255, 0, 0);  // Red color for missing HP
             app.rect(drawX, drawY - 10, image.width, 5);
             app.fill(0, 255, 0);  // Green color for current HP
             app.rect(drawX, drawY - 10, image.width * hpPercentage, 5);
-    
-        // Display the monster image
-        if (deathFrameCount < 16) {  // 4 images * 4 frames each
-            app.image(image, drawX, drawY);
-        } else if (deathFrameCount < 20) {  // Additional check to ensure the animation plays out
-            int deathImageIndex = (deathFrameCount - 16) / 4;  // Adjust to start the animation frames from 0
-            app.image(deathImages[deathImageIndex], drawX, drawY);
-            deathFrameCount++;
-        } else {
-            // Once the death animation is over, remove the monster from the game
-            x = -1.0f;
-            y = -1.0f;
-        }
+
+            if (deathFrameCount == 0) {
+                // If not in death animation, display the normal monster image
+                app.image(image, drawX, drawY);
+            } else if (deathFrameCount < 20) {  
+                // If in death animation, display the death images based on the frame count
+                int deathImageIndex = (deathFrameCount / 4) % 4; // This will give values: 0, 0, 0, 0, 1, 1, 1, 1, etc.
+                app.image(deathImages[deathImageIndex], drawX, drawY);
+            } else {
+                // After the death animation is over, remove the monster from the game
+                x = -1.0f;
+                y = -1.0f;
+            }
         }      
     }
+
 
     
 }
