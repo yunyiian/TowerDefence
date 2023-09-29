@@ -69,6 +69,18 @@ public class TopBar {
             this.mana = manaCap;
         }
     }
+
+    public void setMana(int mana) {
+        this.mana = mana;
+        if (this.mana > manaCap) {
+            this.mana = manaCap;
+        }
+    }
+    
+    public int getMana() {
+        return this.mana;
+    }
+    
 }
 
 

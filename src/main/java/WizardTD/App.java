@@ -35,9 +35,13 @@ public class App extends PApplet {
     private Board board;
     private TopBar topBar;
     private Sidebar sidebar;
-    int initialMana;
-    int initialManaCap;
-    int manaGainedPerSecond;
+    public int initialMana;
+    public int initialManaCap;
+    public int manaGainedPerSecond;
+    public int mana;
+    private float manaUpdateTimer = 0.0f;
+
+
     private float totalGameTime = 0.0f;  // Total game elapsed time in seconds
 
 
@@ -77,15 +81,16 @@ public class App extends PApplet {
         initialMana = config.getInt("initial_mana");
         initialManaCap = config.getInt("initial_mana_cap");
         manaGainedPerSecond = config.getInt("initial_mana_gained_per_second");
-        topBar = new TopBar(WIDTH, TOPBAR, initialMana, initialManaCap);
+        mana = initialMana; 
+
+
+        topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);
         sidebar = new Sidebar(SIDEBAR, HEIGHT);
 
         initialTowerRange = config.getInt("initial_tower_range");
         initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
         initialTowerDamage = config.getInt("initial_tower_damage");
         
-
-
         // Load images during setup
 		// Eg:
         // loadImage("src/main/resources/WizardTD/tower0.png");
@@ -271,8 +276,14 @@ public class App extends PApplet {
 
         // Render the top bar
         topBar.render(this);
+        manaUpdateTimer += 1.0 / FPS;
+        if (manaUpdateTimer >= 1.0f) {
+            mana += manaGainedPerSecond;
+            manaUpdateTimer -= 1.0f; // reset the timer for the next second
+        }
+        
+        topBar.setMana(Math.round(mana));     
 
-        topBar.updateMana(manaGainedPerSecond / (float)FPS); 
 
         board.renderWizardHouse(this);
 
