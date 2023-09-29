@@ -45,7 +45,7 @@ public class Fireball {
     
 
     public boolean hasHitTarget() {
-        return PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE) < 1;  // Check if it's very close to the center
+        return PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE) < 5;  // Check if it's very close to the center
     }    
 
     public Monster getTarget() {
@@ -55,5 +55,7 @@ public class Fireball {
     public void render() {
         app.image(fireballImage, x - fireballImage.width / 2, y - fireballImage.height / 2);
     }
+
+
 
 }
