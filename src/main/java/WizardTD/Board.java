@@ -55,14 +55,26 @@ public class Board {
 
     public void render(PApplet app) {
         app.noTint();
+    
+        // First, render all tiles except tower tiles
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                if (!(tiles[i][j] instanceof WizardHouseTile)) {
+                if (!(tiles[i][j] instanceof TowerTile)) {
+                    tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);
+                }
+            }
+        }
+    
+        // Then, render all tower tiles
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] instanceof TowerTile) {
                     tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);
                 }
             }
         }
     }
+    
         
     public void renderWizardHouse(PApplet app) {
         GrassTile grass = new GrassTile(app); // Create an instance of GrassTile
