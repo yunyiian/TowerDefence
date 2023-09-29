@@ -235,8 +235,9 @@ public class App extends PApplet {
         // Update and render all active monsters
         for (Monster monster : activeMonsters) {
             monster.moveWithSpeed();
+            monster.update();
             monster.render(this);
-        }
+        }        
 
         // Make towers shoot at monsters
         Tile[][] tiles = board.getTiles();
@@ -253,6 +254,15 @@ public class App extends PApplet {
                 }
             }
         }
+
+        Iterator<Monster> monsterIterator = activeMonsters.iterator();
+        while (monsterIterator.hasNext()) {
+            Monster monster = monsterIterator.next();
+            if (monster.getX() == -1.0f && monster.getY() == -1.0f) {
+                monsterIterator.remove();
+            }
+        }
+
 
         totalGameTime += 1.0 / FPS;
         

@@ -51,11 +51,15 @@ public class TowerTile extends Tile {
     }
 
     public void shootMonster(Monster monster) {
+        if (monster.getCurrentHp() <= 0) {
+            return; // Do not shoot at dead monsters.
+        }
         if (timeSinceLastShot >= 1.0 / towerFiringSpeed) {
             fireballs.add(new Fireball((x * App.CELLSIZE) + (App.CELLSIZE / 2.0f), (y * App.CELLSIZE) + (App.CELLSIZE / 2.0f) + App.TOPBAR, monster, app));
             timeSinceLastShot = 0;
         }
     }
+    
     
 
     public void updateAndRenderFireballs() {

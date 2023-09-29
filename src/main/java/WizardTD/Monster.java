@@ -205,6 +205,33 @@ public class Monster {
             onDeath();
         }
     }
+
+    public void onDeath() {
+        // Start the death animation
+        deathFrameCount = 1;
+        speed = 0;  // Stop the monster's movement
+    }
+
+    public void update() {
+        if (deathFrameCount > 0 && deathFrameCount < 20) {
+            deathFrameCount++;
+        }
+    }
+    
+
+    public float getCurrentHp() {
+        return this.currentHp;
+    }
+
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
     
 
     public void render(PApplet app) {
@@ -234,21 +261,6 @@ public class Monster {
         }
         }      
     }
-    public void onDeath() {
-        // Start the death animation
-        deathFrameCount = 1;
-        speed = 0;  // Stop the monster's movement
-    }
-
-
-    public float getX() {
-        return this.x;
-    }
-
-    public float getY() {
-        return this.y;
-    }
-
 
     
 }
