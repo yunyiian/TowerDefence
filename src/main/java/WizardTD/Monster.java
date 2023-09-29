@@ -200,13 +200,14 @@ public class Monster {
         }
      }
 
-    public void reduceHealth(float damage) {
-        currentHp -= damage;
+     public void reduceHealth(float damage) {
+        float actualDamage = damage * armour;  // Calculate actual damage after considering armour
+        currentHp -= actualDamage;  // Reduce the monster's health by the actual damage
         if (currentHp <= 0 && deathFrameCount == 0) {  // Ensure the death sequence is only initiated once
             onDeath();
         }
     }
-
+    
     public void onDeath() {
         // Start the death animation
         deathFrameCount = 1;
