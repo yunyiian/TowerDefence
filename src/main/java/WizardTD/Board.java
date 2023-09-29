@@ -96,23 +96,33 @@ public class Board {
     public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {
         int tileX = mouseX / App.CELLSIZE;
         int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+        System.out.println("Trying to upgrade range at tile: (" + tileX + ", " + tileY + ")");  // Debugging line
         
         if (tileX >= 0 && tileX < tiles[0].length && tileY >= 0 && tileY < tiles.length) {
             Tile tile = tiles[tileY][tileX];
             if (tile instanceof TowerTile) {
+                System.out.println("Upgrading a TowerTile for Range");  // Debugging line
                 ((TowerTile) tile).upgradeRange();
+            }
+            else {
+                System.out.println("Clicked tile is not a TowerTile");  // Debugging line
             }
         }
     }
-    
+
     public void upgradeTowerSpeed(int mouseX, int mouseY, PApplet app) {
         int tileX = mouseX / App.CELLSIZE;
         int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+        System.out.println("Trying to upgrade speed at tile: (" + tileX + ", " + tileY + ")");  // Debugging line
         
         if (tileX >= 0 && tileX < tiles[0].length && tileY >= 0 && tileY < tiles.length) {
             Tile tile = tiles[tileY][tileX];
             if (tile instanceof TowerTile) {
+                System.out.println("Upgrading a TowerTile for speed");  // Debugging line
                 ((TowerTile) tile).upgradeSpeed();
+            }
+            else {
+                System.out.println("Clicked tile is not a TowerTile");  // Debugging line
             }
         }
     }
@@ -120,11 +130,16 @@ public class Board {
     public void upgradeTowerDamage(int mouseX, int mouseY, PApplet app) {
         int tileX = mouseX / App.CELLSIZE;
         int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
+        System.out.println("Trying to upgrade damage at tile: (" + tileX + ", " + tileY + ")");  // Debugging line
         
         if (tileX >= 0 && tileX < tiles[0].length && tileY >= 0 && tileY < tiles.length) {
             Tile tile = tiles[tileY][tileX];
             if (tile instanceof TowerTile) {
+                System.out.println("Upgrading a TowerTile for damage");  // Debugging line
                 ((TowerTile) tile).upgradeDamage();
+            }
+            else {
+                System.out.println("Clicked tile is not a TowerTile");  // Debugging line
             }
         }
     } 

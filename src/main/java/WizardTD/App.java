@@ -132,27 +132,41 @@ public class App extends PApplet {
         int mouseX = e.getX();
         int mouseY = e.getY();
     
+        // Check sidebar buttons first
         if (sidebar.isButtonClicked(mouseX, mouseY, 0)) {
             sidebar.toggleTowerPlacementMode();
-            towerPlacementMode = sidebar.isInTowerPlacementMode();
-        } else if (towerPlacementMode) {
+            return;
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, sidebar.buttonHeight + 10)) {
+            sidebar.toggleRangeUpgradeMode();
+            return;
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleSpeedUpgradeMode();
+            return;
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleDamageUpgradeMode();
+            return;
+        }
+    
+        // If not in any upgrade mode, handle tower placement
+        if (!sidebar.isInAnyUpgradeMode() && towerPlacementMode) {
             int tileX = mouseX / App.CELLSIZE;
             int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
             board.placeTower(tileX, tileY, this);
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, sidebar.buttonHeight + 10)) {
-            sidebar.toggleRangeUpgradeMode();
-            // Upgrade the tower's range if there's a tower on the clicked tile
+            return;
+        }
+    
+        // Handle upgrades
+        if (sidebar.isInRangeUpgradeMode()) {
             board.upgradeTowerRange(mouseX, mouseY, this);
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
-            sidebar.toggleSpeedUpgradeMode();
-            // Upgrade the tower's speed if there's a tower on the clicked tile
+        } else if (sidebar.isInSpeedUpgradeMode()) {
             board.upgradeTowerSpeed(mouseX, mouseY, this);
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
-            sidebar.toggleDamageUpgradeMode();
-            // Upgrade the tower's damage if there's a tower on the clicked tile
+        } else if (sidebar.isInDamageUpgradeMode()) {
             board.upgradeTowerDamage(mouseX, mouseY, this);
         }
     }
+    
+
+    
     
     
 

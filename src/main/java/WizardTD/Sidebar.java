@@ -11,6 +11,7 @@ public class Sidebar {
     private boolean speedUpgradeMode = false;
     private boolean damageUpgradeMode = false;
 
+
     public int buttonWidth = 80;
     public int buttonHeight = 30;
     private int buttonX;
@@ -31,17 +32,40 @@ public class Sidebar {
         return towerPlacementMode;
     }
 
-    // New methods for upgrade modes
     public void toggleRangeUpgradeMode() {
         rangeUpgradeMode = !rangeUpgradeMode;
+        speedUpgradeMode = false;
+        damageUpgradeMode = false;
+        System.out.println("Range upgrade mode toggled: " + rangeUpgradeMode);  // Debugging line
+    }
+
+    public boolean isInRangeUpgradeMode() {
+        return rangeUpgradeMode;
     }
 
     public void toggleSpeedUpgradeMode() {
         speedUpgradeMode = !speedUpgradeMode;
+        rangeUpgradeMode = false;
+        damageUpgradeMode = false;
+        System.out.println("Speed upgrade mode toggled: " + speedUpgradeMode);  // Debugging line
     }
 
+    public boolean isInSpeedUpgradeMode() {
+        return speedUpgradeMode;
+    }
     public void toggleDamageUpgradeMode() {
         damageUpgradeMode = !damageUpgradeMode;
+        rangeUpgradeMode = false;
+        speedUpgradeMode = false;
+        System.out.println("Damage upgrade mode toggled: " + damageUpgradeMode);  // Debugging line
+    }
+
+    public boolean isInDamageUpgradeMode() {
+        return damageUpgradeMode;
+    }
+
+    public boolean isInAnyUpgradeMode() {
+        return isInRangeUpgradeMode() || isInSpeedUpgradeMode() || isInDamageUpgradeMode();
     }
 
     // Check which button was clicked
