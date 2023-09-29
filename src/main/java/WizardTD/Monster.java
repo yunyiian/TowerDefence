@@ -199,9 +199,9 @@ public class Monster {
         }
      }
 
-     public void reduceHealth(float damage) {
+    public void reduceHealth(float damage) {
         currentHp -= damage;
-        if (currentHp <= 0) {
+        if (currentHp <= 0 && deathFrameCount == 0) {  // Ensure the death sequence is only initiated once
             onDeath();
         }
     }
@@ -210,35 +210,36 @@ public class Monster {
     public void render(PApplet app) {
         app.noTint();
         if (x != -1.0f && y != -1.0f) { // Only render if monster hasn't disappeared
-        int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);
-        int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);
-        
-        // Display HP bar
-        float hpPercentage = currentHp / hp;
-        app.fill(255, 0, 0);  // Red color for missing HP
-        app.rect(drawX, drawY - 10, image.width, 5);
-        app.fill(0, 255, 0);  // Green color for current HP
-        app.rect(drawX, drawY - 10, image.width * hpPercentage, 5);
+            int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);
+            int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);
+    
+            // Display HP bar
+            float hpPercentage = PApplet.constrain(currentHp / hp, 0, 1);  // Clamp between 0 and 1
+            app.fill(255, 0, 0);  // Red color for missing HP
+            app.rect(drawX, drawY - 10, image.width, 5);
+            app.fill(0, 255, 0);  // Green color for current HP
+            app.rect(drawX, drawY - 10, image.width * hpPercentage, 5);
     
         // Display the monster image
         if (deathFrameCount < 16) {  // 4 images * 4 frames each
             app.image(image, drawX, drawY);
-        } else {
-            int deathImageIndex = deathFrameCount / 4;  // Get the right image for the animation frame
+        } else if (deathFrameCount < 20) {  // Additional check to ensure the animation plays out
+            int deathImageIndex = (deathFrameCount - 16) / 4;  // Adjust to start the animation frames from 0
             app.image(deathImages[deathImageIndex], drawX, drawY);
             deathFrameCount++;
-            if (deathFrameCount >= 16) {
-                // Once the death animation is over, remove the monster from the game
-                x = -1.0f;
-                y = -1.0f;
-            }
-            }
+        } else {
+            // Once the death animation is over, remove the monster from the game
+            x = -1.0f;
+            y = -1.0f;
+        }
         }      
     }
     public void onDeath() {
         // Start the death animation
         deathFrameCount = 1;
+        speed = 0;  // Stop the monster's movement
     }
+
 
     public float getX() {
         return this.x;
