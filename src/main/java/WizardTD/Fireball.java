@@ -30,23 +30,28 @@ public class Fireball {
     }
 
     public void update() {
-        if (target != null) {
-            // Calculate angle to target
-            float angle = PApplet.atan2(target.getY() * App.CELLSIZE - y, target.getX() * App.CELLSIZE - x);
-    
+        if (target != null && target.getCurrentHp() > 0) {
+            // Calculate angle to target's current location
+            float angle = PApplet.atan2(target.getY() * App.CELLSIZE + App.CELLSIZE / 2 - y, 
+                                        target.getX() * App.CELLSIZE + App.CELLSIZE / 2 - x);
+        
             // Calculate x and y increments
             dx = speed * PApplet.cos(angle);
             dy = speed * PApplet.sin(angle);
-    
-            x += dx;
-            y += dy;
         }
+        
+        x += dx;
+        y += dy;
     }
     
 
     public boolean hasHitTarget() {
-        return PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE) < 5;  // Check if it's very close to the center
-    }    
+        float targetCenterX = target.getX() * App.CELLSIZE + App.CELLSIZE / 2;
+        float targetCenterY = target.getY() * App.CELLSIZE + App.CELLSIZE / 2;
+        
+        return PApplet.dist(x, y, targetCenterX, targetCenterY) <= (fireballImage.width / 2);
+    }  
+    
 
     public Monster getTarget() {
         return this.target;
