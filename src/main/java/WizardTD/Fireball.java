@@ -30,13 +30,23 @@ public class Fireball {
     }
 
     public void update() {
-        x += dx;
-        y += dy;
+        if (target != null) {
+            // Calculate angle to target
+            float angle = PApplet.atan2(target.getY() * App.CELLSIZE - y, target.getX() * App.CELLSIZE - x);
+    
+            // Calculate x and y increments
+            dx = speed * PApplet.cos(angle);
+            dy = speed * PApplet.sin(angle);
+    
+            x += dx;
+            y += dy;
+        }
     }
+    
 
     public boolean hasHitTarget() {
-        return PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE) < 5;  // Check if within hit radius
-    }
+        return PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE) < 1;  // Check if it's very close to the center
+    }    
 
     public Monster getTarget() {
         return this.target;
