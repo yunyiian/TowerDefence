@@ -37,28 +37,33 @@ public class TowerTile extends Tile {
     
 
     private void updateTowerImage() {
-        if (rangeUpgradeLevel + speedUpgradeLevel + damageUpgradeLevel >= 6) {
+        if (rangeUpgradeLevel >= 2 && speedUpgradeLevel >= 2 && damageUpgradeLevel >= 2) {
             image = app.loadImage("src/main/resources/WizardTD/tower2.png");
-        } else if (rangeUpgradeLevel + speedUpgradeLevel + damageUpgradeLevel >= 3) {
+        } else if (rangeUpgradeLevel >= 1 && speedUpgradeLevel >= 1 && damageUpgradeLevel >= 1) {
             image = app.loadImage("src/main/resources/WizardTD/tower1.png");
         } else {
             image = app.loadImage("src/main/resources/WizardTD/tower0.png");
         }
-    }    
+    }
+    
 
     @Override
     public void render(int x, int y, PApplet app) {
         app.image(image, x, y);
         
         // Render range upgrade level
-        if (rangeUpgradeLevel > 1) {
+        if (rangeUpgradeLevel > 0) {
             app.fill(app.color(255, 0, 255));  // Magenta color
-            app.text("O", x + App.CELLSIZE / 2, y + 10);
+            app.textSize(App.CELLSIZE / 2);  // Reduce the size of the text by half
+            for (int i = 0; i < rangeUpgradeLevel; i++) {
+                app.text("O", x + (i * (App.CELLSIZE / 4)), y + App.CELLSIZE / 4);
+            }
         }
-        
+
+
         // Render speed upgrade level
-        if (speedUpgradeLevel > 1) {
-            app.stroke(0, 0, 255);  // Blue color
+        if (speedUpgradeLevel > 0) {
+            app.stroke(173, 216, 230);  // Lighter blue color
             app.strokeWeight(speedUpgradeLevel);
             app.noFill();
             app.ellipse((float)x + App.CELLSIZE / 2.0f, (float)y + App.CELLSIZE / 2.0f, App.CELLSIZE / 2.0f, App.CELLSIZE / 2.0f);
@@ -66,9 +71,13 @@ public class TowerTile extends Tile {
         }
         
         // Render damage upgrade level
-        if (damageUpgradeLevel > 1) {
+        if (damageUpgradeLevel > 0) {
             app.fill(app.color(255, 0, 255));  // Magenta color
-            app.text("X", x + App.CELLSIZE / 2, y + App.CELLSIZE - 10);
+            app.textSize(App.CELLSIZE / 2);  // Reduce the size of the text by half
+            for (int i = 0; i < damageUpgradeLevel; i++) {
+                app.text("X", x + (i * (App.CELLSIZE / 4)), y + (3 * App.CELLSIZE / 4));
+            }
         }
+
     }
 }
