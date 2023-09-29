@@ -11,6 +11,7 @@ public class TowerTile extends Tile {
     private int speedUpgradeLevel = 0;
     private int damageUpgradeLevel = 0;
     private PApplet app;
+    private int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red
 
     public TowerTile(PApplet app) {
         this.app = app;
@@ -39,10 +40,13 @@ public class TowerTile extends Tile {
     private void updateTowerImage() {
         if (rangeUpgradeLevel >= 2 && speedUpgradeLevel >= 2 && damageUpgradeLevel >= 2) {
             image = app.loadImage("src/main/resources/WizardTD/tower2.png");
+            towerAppearanceState = 2;
         } else if (rangeUpgradeLevel >= 1 && speedUpgradeLevel >= 1 && damageUpgradeLevel >= 1) {
             image = app.loadImage("src/main/resources/WizardTD/tower1.png");
+            towerAppearanceState = 1;
         } else {
             image = app.loadImage("src/main/resources/WizardTD/tower0.png");
+            towerAppearanceState = 0;
         }
     }
     
@@ -51,33 +55,40 @@ public class TowerTile extends Tile {
     public void render(int x, int y, PApplet app) {
         app.image(image, x, y);
         
+        float textSize = App.CELLSIZE / 4;  // Reduce the size of the text by half
+        app.textSize(textSize);
+        
         // Render range upgrade level
-        if (rangeUpgradeLevel > 0) {
+        if (rangeUpgradeLevel > towerAppearanceState) {
             app.fill(app.color(255, 0, 255));  // Magenta color
-            app.textSize(App.CELLSIZE / 2);  // Reduce the size of the text by half
-            for (int i = 0; i < rangeUpgradeLevel; i++) {
-                app.text("O", x + (i * (App.CELLSIZE / 4)), y + App.CELLSIZE / 4);
+            for (int i = 0; i < rangeUpgradeLevel - towerAppearanceState; i++) {
+                app.text("O", x + (i * textSize), y + textSize);
             }
         }
-
-
+    
         // Render speed upgrade level
         if (speedUpgradeLevel > 0) {
             app.stroke(173, 216, 230);  // Lighter blue color
-            app.strokeWeight(speedUpgradeLevel);
-            app.noFill();
-            app.ellipse((float)x + App.CELLSIZE / 2.0f, (float)y + App.CELLSIZE / 2.0f, App.CELLSIZE / 2.0f, App.CELLSIZE / 2.0f);
+            for (int i = 0; i < speedUpgradeLevel - towerAppearanceState; i++) {
+                app.strokeWeight(1);  // Keeping a constant stroke weight
+                float radiusReduction = i * 4; // Adjust this value to change the gap between rings
+                app.noFill();
+                app.ellipse((float)x + App.CELLSIZE / 2.0f, (float)y + App.CELLSIZE / 2.0f, App.CELLSIZE / 2.0f - radiusReduction, App.CELLSIZE / 2.0f - radiusReduction);
+            }
             app.noStroke();
         }
+
         
         // Render damage upgrade level
-        if (damageUpgradeLevel > 0) {
+        if (damageUpgradeLevel > towerAppearanceState) {
             app.fill(app.color(255, 0, 255));  // Magenta color
-            app.textSize(App.CELLSIZE / 2);  // Reduce the size of the text by half
-            for (int i = 0; i < damageUpgradeLevel; i++) {
-                app.text("X", x + (i * (App.CELLSIZE / 4)), y + (3 * App.CELLSIZE / 4));
+            for (int i = 0; i < damageUpgradeLevel - towerAppearanceState; i++) {
+                app.text("X", x + (i * textSize), y + App.CELLSIZE - textSize / 2);
             }
         }
-
+        
+        app.textSize(App.CELLSIZE);  // Reset text size
     }
+    
+    
 }

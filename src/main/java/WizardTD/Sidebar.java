@@ -94,6 +94,7 @@ public class Sidebar {
         app.noStroke();
 
         app.fill(0);
+        app.textSize(App.CELLSIZE);  // Ensure text size is consistent
         app.text(text, buttonX + 10, buttonY + 20 + yOffset);
     }
 }
