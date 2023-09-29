@@ -11,7 +11,7 @@ import WizardTD.PathFinder.Node;
 public class Monster {
 
     private PImage image;
-    
+    private App game;
     private float x, y, targetX, targetY; 
     private Board board;
     private String direction = "";  // Can be "up", "down", "left", "right"
@@ -32,8 +32,9 @@ public class Monster {
     private int deathFrameCount = 0;  // Frame counter for death animation
 
 
-    public Monster(Board board, PApplet app, float speed, int spawnDelay, float hp, float armour, float manaGainedOnKill, String type) {
+    public Monster(Board board, PApplet app, float speed, int spawnDelay, float hp, float armour, float manaGainedOnKill, String type, App game) {
         this.board = board;
+        this.game = game;
         this.image = app.loadImage("src/main/resources/WizardTD/" + type + ".png");
         this.hp = hp;
         this.currentHp = hp;
@@ -210,6 +211,7 @@ public class Monster {
         // Start the death animation
         deathFrameCount = 1;
         speed = 0;  // Stop the monster's movement
+        game.addMana(manaGainedOnKill);
     }
 
     public void update() {

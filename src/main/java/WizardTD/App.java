@@ -321,6 +321,10 @@ public class App extends PApplet {
         topBar.setWaveTimer(-1, 0);
     }
 
+    public void addMana(float amount) {
+        this.mana += amount;
+    }
+
 
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");
