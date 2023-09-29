@@ -255,8 +255,7 @@ public class App extends PApplet {
         }
 
         totalGameTime += 1.0 / FPS;
-
-
+        
         // Render the sidebar
         sidebar.render(this);
 

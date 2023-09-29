@@ -138,7 +138,8 @@ public class TowerTile extends Tile {
             app.noFill();
             app.stroke(255, 255, 0);  // Yellow color
             app.ellipse(x + App.CELLSIZE / 2.0f, y + App.CELLSIZE / 2.0f, towerRange * 2, towerRange * 2);  // Draw the range
-        }  
+            app.noStroke();  // Reset the stroke
+        }
 
         // Render speed upgrade level
         if (speedUpgradeLevel > 0) {
