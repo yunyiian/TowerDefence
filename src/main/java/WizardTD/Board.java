@@ -54,6 +54,7 @@ public class Board {
     }
 
     public void render(PApplet app) {
+        app.noTint();
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 if (!(tiles[i][j] instanceof WizardHouseTile)) {

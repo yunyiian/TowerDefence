@@ -107,6 +107,14 @@ public class TowerTile extends Tile {
             towerAppearanceState = 0;
         }
     }
+
+    public boolean isMouseHovering(int mouseX, int mouseY) {
+        float towerCenterX = x * App.CELLSIZE + App.CELLSIZE / 2.0f;
+        float towerCenterY = y * App.CELLSIZE + App.CELLSIZE / 2.0f;
+        
+        return PApplet.dist(towerCenterX, towerCenterY, mouseX, mouseY) <= App.CELLSIZE / 2.0f;
+    }
+    
     
 
     @Override
@@ -115,6 +123,7 @@ public class TowerTile extends Tile {
         
         float textSize = App.CELLSIZE / 4;  // Reduce the size of the text by half
         app.textSize(textSize);
+
         
         // Render range upgrade level
         if (rangeUpgradeLevel > towerAppearanceState) {
@@ -123,7 +132,14 @@ public class TowerTile extends Tile {
                 app.text("O", x + (i * textSize), y + textSize);
             }
         }
-    
+
+        // Check if the mouse is hovering over this tower
+        if (isMouseHovering(app.mouseX, app.mouseY - App.TOPBAR)) {
+            app.noFill();
+            app.stroke(255, 255, 0);  // Yellow color
+            app.ellipse(x + App.CELLSIZE / 2.0f, y + App.CELLSIZE / 2.0f, towerRange * 2, towerRange * 2);  // Draw the range
+        }  
+
         // Render speed upgrade level
         if (speedUpgradeLevel > 0) {
             app.stroke(173, 216, 230);  // Lighter blue color

@@ -70,6 +70,7 @@ public class Sidebar {
     }
 
     public void render(PApplet app) {
+        app.noTint();
         app.fill(app.color(0x83, 0x74, 0x4A));
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
 

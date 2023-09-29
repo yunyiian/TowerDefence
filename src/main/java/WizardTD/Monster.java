@@ -208,6 +208,7 @@ public class Monster {
     
 
     public void render(PApplet app) {
+        app.noTint();
         if (x != -1.0f && y != -1.0f) { // Only render if monster hasn't disappeared
         int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);
         int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);
