@@ -386,7 +386,32 @@ public class App extends PApplet {
                 topBar.setMana(Math.round(mana));     
                 updateWaveTimer(); 
             }
+        
         }
+    // Check for Loss Condition
+    if (mana < 0) {
+        mana = 0; // Set mana to 0 for display purposes
+        topBar.setMana(mana); // Update the display
+
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        fill(255, 0, 0); // Set text color to red
+        text("YOU LOST", WIDTH / 2, HEIGHT / 2);
+        textSize(24);
+        text("Press 'r' to restart", WIDTH / 2, HEIGHT / 2 + 40); // Display instruction to restart
+        noLoop(); // Stop the game loop
+        return; // Exit the draw function
+    }
+
+    // Check for Win Condition
+    if (currentWaveIndex == waves.size() && activeMonsters.isEmpty()) {
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        fill(0, 255, 0); // Set text color to green
+        text("YOU WIN", WIDTH / 2, HEIGHT / 2);
+        noLoop(); // Stop the game loop
+        return; // Exit the draw function
+    }     
     
     // Renderings (should be done once per frame)
     background(255);
