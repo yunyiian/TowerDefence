@@ -332,7 +332,7 @@ public class App extends PApplet {
                         if (target != null) {
                             tower.shootMonster(target);
                         }
-                        tower.updateAndRenderFireballs();  // Update the fireballs, but consider rendering outside the loop
+                        tower.updateFireballs(sidebar.isDoubleSpeedMode());   // Update the fireballs, but consider rendering outside the loop
                     }
                 }
             }
@@ -356,15 +356,27 @@ public class App extends PApplet {
             updateWaveTimer(); 
         }
     
-        // Renderings (should be done once per frame)
-        background(255);
-        board.render(this);
-        for (Monster monster : activeMonsters) {
-            monster.render(this);
-        }  
-        sidebar.render(this, selectedTower);
-        topBar.render(this);
-        board.renderWizardHouse(this);
+    // Renderings (should be done once per frame)
+    background(255);
+    board.render(this);
+
+    // Render fireballs here:
+    Tile[][] tiles = board.getTiles();
+    for (int i = 0; i < tiles.length; i++) {
+        for (int j = 0; j < tiles[0].length; j++) {
+            if (tiles[i][j] instanceof TowerTile) {
+                TowerTile tower = (TowerTile) tiles[i][j];
+                tower.renderFireballs();
+            }
+        }
+    }
+
+    for (Monster monster : activeMonsters) {
+        monster.render(this);
+    }  
+    sidebar.render(this, selectedTower);
+    topBar.render(this);
+    board.renderWizardHouse(this);
     }
 
 

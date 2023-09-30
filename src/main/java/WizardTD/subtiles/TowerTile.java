@@ -72,22 +72,25 @@ public class TowerTile extends Tile {
         }
     }
     
-    
 
-    public void updateAndRenderFireballs() {
+    public void updateFireballs(boolean doubleSpeed) {
         Iterator<Fireball> iterator = fireballs.iterator();
         while (iterator.hasNext()) {
             Fireball fireball = iterator.next();
-            fireball.update();  // This will internally check for target != null
+            fireball.update(doubleSpeed);  // Pass the doubleSpeed value
             
             if (fireball.getTarget() != null && fireball.hasHitTarget()) {
                 fireball.getTarget().reduceHealth(towerDamage);
                 iterator.remove();
-            } else {
-                fireball.render();
             }
         }
-    }    
+    }
+
+    public void renderFireballs() {
+        for (Fireball fireball : fireballs) {
+            fireball.render();
+        }
+    }
 
     public void incrementTimeSinceLastShot(double increment) {
         this.timeSinceLastShot += increment;

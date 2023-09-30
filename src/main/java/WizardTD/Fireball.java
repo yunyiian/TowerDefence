@@ -35,12 +35,13 @@ public class Fireball {
         dy = speed * PApplet.sin(angle);
     }
 
-    public void update() {
+    public void update(boolean doubleSpeed)  {
         // Homing logic: Adjust the trajectory every frame to aim towards the monster's current position
         float angle = PApplet.atan2(target.getY() * App.CELLSIZE + App.CELLSIZE / 2 - y, target.getX() * App.CELLSIZE + App.CELLSIZE / 2 - x);
-        dx = speed * PApplet.cos(angle);
-        dy = speed * PApplet.sin(angle);
-
+        float adjustedSpeed = doubleSpeed ? speed * 2 : speed;
+        dx = adjustedSpeed * PApplet.cos(angle);
+        dy = adjustedSpeed * PApplet.sin(angle);
+    
         x += dx;
         y += dy;
     }
@@ -57,6 +58,7 @@ public class Fireball {
     public Monster getTarget() {
         return this.target;
     }
+
 
     public void render() {
         app.image(fireballImage, x - fireballImage.width / 2, y - fireballImage.height / 2);
