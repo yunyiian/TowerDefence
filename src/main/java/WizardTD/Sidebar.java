@@ -18,12 +18,15 @@ public class Sidebar {
     public int buttonHeight = 30;
     private int buttonX;
     private int buttonY;
+    private App mainApp;
 
-    public Sidebar(int width, int height) {
+
+    public Sidebar(int width, int height, App app) {
         this.width = width;
         this.height = height;
         this.buttonX = App.WIDTH - this.width + 20;
         this.buttonY = App.TOPBAR + 10;
+        this.mainApp = app;
     }
 
     public void toggleTowerPlacementMode() {
@@ -66,7 +69,7 @@ public class Sidebar {
     }
 
     public boolean isManaPoolSpellButtonClicked(int mouseX, int mouseY) {
-        return isButtonClicked(mouseX, mouseY, 4 * (buttonHeight + 10));
+        return isButtonClicked(mouseX, mouseY, 5 * (buttonHeight + 10));
     }
 
     public boolean isSpeedToggleClicked(int mouseX, int mouseY) {
@@ -112,7 +115,21 @@ public class Sidebar {
         app.text("Total: " + totalCost, startX + 20, startY + 100);
     }
     
+    private void renderManaPoolSpellCost(PApplet app) {
+        if (isManaPoolSpellButtonClicked(app.mouseX, app.mouseY)) {
+            int costBoxWidth = 70;
+            int costBoxHeight = 30;
+            int startX = buttonX - costBoxWidth - 10;
+            int startY = buttonY + 6 * (buttonHeight + 10);
     
+            app.fill(app.color(255));  // White color
+            app.rect(startX, startY, costBoxWidth, costBoxHeight);
+    
+            app.fill(0);  // Text color (black)
+            app.textSize(14);
+            app.text("Cost: " + (int)mainApp.getCurrentManaPoolSpellCost(), startX + 10, startY + 20);
+        }
+    }
     
 
     // Check which button was clicked
@@ -133,6 +150,8 @@ public class Sidebar {
         renderButton(app, "Upgrade Speed", 3*(buttonHeight + 10), speedUpgradeMode);
         renderButton(app, "Upgrade Damage", 4*(buttonHeight + 10), damageUpgradeMode);
         renderButton(app, "Mana Pool Spell", 5 * (buttonHeight + 10), false);  
+        renderManaPoolSpellCost(app);
+
 
         if (selectedTower != null && isInAnyUpgradeMode()) {
             renderUpgradeCosts(app, selectedTower);

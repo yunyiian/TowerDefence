@@ -103,7 +103,7 @@ public class App extends PApplet {
 
 
         topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);
-        sidebar = new Sidebar(SIDEBAR, HEIGHT);
+        sidebar = new Sidebar(SIDEBAR, HEIGHT, this);
 
         initialTowerRange = config.getInt("initial_tower_range");
         initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
@@ -433,6 +433,11 @@ public class App extends PApplet {
     public boolean canAfford(int cost) {
         return mana >= cost;
     }
+
+    public float getCurrentManaPoolSpellCost() {
+        return currentManaPoolSpellCost;
+    }
+    
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");
     }
