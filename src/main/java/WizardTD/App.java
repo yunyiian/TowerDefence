@@ -188,17 +188,30 @@ public class App extends PApplet {
         Tile clickedTile = board.getTiles()[tileY][tileX];
         if (clickedTile instanceof TowerTile) {
             TowerTile tower = (TowerTile) clickedTile;
+    
             if (sidebar.isInRangeUpgradeMode()) {
-                tower.upgradeRange();
+                int upgradeCost = calculateUpgradeCost(tower.getRangeUpgradeLevel());
+                if(canAfford(upgradeCost) && tower.upgradeRange()) {
+                    deductMana(upgradeCost);
+                }
             }
             if (sidebar.isInSpeedUpgradeMode()) {
-                tower.upgradeSpeed();
+                int upgradeCost = calculateUpgradeCost(tower.getSpeedUpgradeLevel());
+                if(canAfford(upgradeCost) && tower.upgradeSpeed()) {
+                    deductMana(upgradeCost);
+                }
             }
             if (sidebar.isInDamageUpgradeMode()) {
-                tower.upgradeDamage();
+                int upgradeCost = calculateUpgradeCost(tower.getDamageUpgradeLevel());
+                if(canAfford(upgradeCost) && tower.upgradeDamage()) {
+                    deductMana(upgradeCost);
+                }
             }
+    
             return;  // Return early since we have already handled the tower upgrade
         }
+    
+
 
         // Next, handle tower placement with potential upgrades
         if (sidebar.isInTowerPlacementMode()) {
@@ -357,6 +370,11 @@ public class App extends PApplet {
         this.mana += amount;
     }
 
+    public void deductMana(int cost) {
+        mana -= cost;
+    }
+    
+
     private void activateManaPoolSpell() {
         if (mana >= currentManaPoolSpellCost) {
             mana -= currentManaPoolSpellCost;
@@ -380,6 +398,11 @@ public class App extends PApplet {
     public int calculateUpgradeCost(int currentUpgradeLevel) {
         return 20 + currentUpgradeLevel * 10;  // 20 is the base cost for the first upgrade, subsequent upgrades cost 10 more
     }
+
+    public boolean canAfford(int cost) {
+        return mana >= cost;
+    }
+    
     
 
 

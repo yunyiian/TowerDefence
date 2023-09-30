@@ -107,9 +107,6 @@ public class Board {
         return null;  // Failed to place the tower
     }
     
-    
-    
-
     public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {
         int tileX = mouseX / App.CELLSIZE;
         int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;

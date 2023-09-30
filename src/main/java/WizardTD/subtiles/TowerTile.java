@@ -41,6 +41,11 @@ public class TowerTile extends Tile {
         cost += 20 * upgradeCount;  // Add 20 for each upgrade
         return cost;
     }
+
+    public int getUpgradeCost(int currentLevel) {
+        return 20 + (currentLevel * 10); // 20 for level 1, 30 for level 2, and so on...
+    }
+    
     
 
     public Monster getClosestMonsterInRange(List<Monster> monsters) {
@@ -88,27 +93,63 @@ public class TowerTile extends Tile {
         this.timeSinceLastShot += increment;
     }
 
-    public void upgradeRange() {
-        rangeUpgradeLevel++;
-        towerRange += 32;  // Increase tower range by 32 pixels
-        System.out.println("Upgraded Range to Level: " + rangeUpgradeLevel);  // Debugging line
-        updateTowerImage();
+    public boolean upgradeRange() {
+        if(app instanceof App) {
+            App gameApp = (App) app;
+            int upgradeCost = gameApp.calculateUpgradeCost(rangeUpgradeLevel);
+            if(gameApp.canAfford(upgradeCost)) {
+                rangeUpgradeLevel++;
+                towerRange += 32;  // Increase tower range by 32 pixels
+                System.out.println("Upgraded Range to Level: " + rangeUpgradeLevel);  // Debugging line
+                updateTowerImage();
+                return true;
+            }
+        }
+        return false;
     }
     
-    public void upgradeSpeed() {
-        speedUpgradeLevel++;
-        towerFiringSpeed += 0.5f;  // Increase firing speed by 0.5 fireballs per second
-        System.out.println("Upgraded Speed to Level: " + speedUpgradeLevel);  // Debugging line
-        updateTowerImage();
+    public boolean upgradeSpeed() {
+        if(app instanceof App) {
+            App gameApp = (App) app;
+            int upgradeCost = gameApp.calculateUpgradeCost(speedUpgradeLevel);
+            if(gameApp.canAfford(upgradeCost)) {
+                speedUpgradeLevel++;
+                towerFiringSpeed += 0.5f;  // Increase firing speed by 0.5 fireballs per second
+                System.out.println("Upgraded Speed to Level: " + speedUpgradeLevel);  // Debugging line
+                updateTowerImage();
+                return true;
+            }
+        }
+        return false;
     }
     
-    public void upgradeDamage() {
-        damageUpgradeLevel++;
-        towerDamage += initialTowerDamage / 2.0f;  // Increase damage by half of initial damage
-        System.out.println("Upgraded Damage to Level: " + damageUpgradeLevel);  // Debugging line
-        updateTowerImage();
+    public boolean upgradeDamage() {
+        if(app instanceof App) {
+            App gameApp = (App) app;
+            int upgradeCost = gameApp.calculateUpgradeCost(damageUpgradeLevel);
+            if(gameApp.canAfford(upgradeCost)) {
+                damageUpgradeLevel++;
+                towerDamage += initialTowerDamage / 2.0f;  // Increase damage by half of initial damage
+                System.out.println("Upgraded Damage to Level: " + damageUpgradeLevel);  // Debugging line
+                updateTowerImage();
+                return true;
+            }
+        }
+        return false;
     }
 
+    public int getRangeUpgradeLevel() {
+        return rangeUpgradeLevel;
+    }
+    
+    public int getSpeedUpgradeLevel() {
+        return speedUpgradeLevel;
+    }
+    
+    public int getDamageUpgradeLevel() {
+        return damageUpgradeLevel;
+    }
+    
     
 
     private void updateTowerImage() {
