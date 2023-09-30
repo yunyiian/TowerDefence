@@ -70,7 +70,7 @@ public class Sidebar {
     }
 
     public boolean isManaPoolSpellButtonClicked(int mouseX, int mouseY) {
-        return isButtonClicked(mouseX, mouseY, 5 * (buttonHeight + 10));
+        return isButtonClicked(mouseX, mouseY, 6 * (buttonHeight + 10));
     }
 
     public boolean isSpeedToggleClicked(int mouseX, int mouseY) {
@@ -91,7 +91,7 @@ public class Sidebar {
     }
 
     public boolean isPauseButtonClicked(int mouseX, int mouseY) {
-        return isButtonClicked(mouseX, mouseY, 6 * (buttonHeight + 10));
+        return isButtonClicked(mouseX, mouseY, 1 * (buttonHeight + 10));
     }
 
     public void togglePauseMode() {
@@ -135,11 +135,11 @@ public class Sidebar {
     }
     
     private void renderManaPoolSpellCost(PApplet app) {
-        if (isManaPoolSpellButtonClicked(app.mouseX, app.mouseY)) {
+        if (isButtonHovered(app.mouseX, app.mouseY, 6 * (buttonHeight + 10))) {
             int costBoxWidth = 70;
             int costBoxHeight = 30;
             int startX = buttonX - costBoxWidth - 10;
-            int startY = buttonY + 5 * (buttonHeight + 10);
+            int startY = buttonY + 6 * (buttonHeight + 10);
     
             app.fill(app.color(255));  // White color
             app.rect(startX, startY, costBoxWidth, costBoxHeight);
@@ -150,6 +150,7 @@ public class Sidebar {
         }
     }
     
+    
 
     // Check which button was clicked
     public boolean isButtonClicked(int mouseX, int mouseY, int yOffset) {
@@ -158,11 +159,11 @@ public class Sidebar {
     }
 
     private void renderTowerCost(PApplet app) {
-        if (isButtonHovered(app.mouseX, app.mouseY, buttonHeight + 10)) {  // Check if "Place Tower" button is hovered
+        if (isButtonHovered(app.mouseX, app.mouseY, 2*(buttonHeight + 10))) {  // Check if "Place Tower" button is hovered
             int costBoxWidth = 70;
             int costBoxHeight = 30;
             int startX = buttonX - costBoxWidth - 10;
-            int startY = buttonY + buttonHeight + 10;
+            int startY = buttonY + 2 * (buttonHeight + 10);
     
             app.fill(app.color(255));  // White color
             app.rect(startX, startY, costBoxWidth, costBoxHeight);
@@ -181,12 +182,12 @@ public class Sidebar {
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
 
         renderButton(app, "2x Speed", 0, speedToggleActive); 
-        renderButton(app, "Pause", 6*(buttonHeight + 10), pauseActive);
-        renderButton(app, "Place Tower", buttonHeight + 10, towerPlacementMode);
-        renderButton(app, "Upgrade Range", 2*(buttonHeight + 10), rangeUpgradeMode);
-        renderButton(app, "Upgrade Speed", 3*(buttonHeight + 10), speedUpgradeMode);
-        renderButton(app, "Upgrade Damage", 4*(buttonHeight + 10), damageUpgradeMode);
-        renderButton(app, "Mana Pool Spell", 5 * (buttonHeight + 10), false);  
+        renderButton(app, "Pause", buttonHeight + 10, pauseActive);
+        renderButton(app, "Place Tower", 2*(buttonHeight + 10), towerPlacementMode);
+        renderButton(app, "Upgrade Range", 3*(buttonHeight + 10), rangeUpgradeMode);
+        renderButton(app, "Upgrade Speed", 4*(buttonHeight + 10), speedUpgradeMode);
+        renderButton(app, "Upgrade Damage", 5*(buttonHeight + 10), damageUpgradeMode);
+        renderButton(app, "Mana Pool Spell", 6 * (buttonHeight + 10), false);          
         renderManaPoolSpellCost(app);
         renderTowerCost(app);  
 

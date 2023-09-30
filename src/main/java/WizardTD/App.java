@@ -177,37 +177,54 @@ public class App extends PApplet {
 	@Override
     public void keyReleased(){
     }
-
+    
+    
     @Override
     public void mousePressed(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
-    
-        // Check the "2x Speed" button first
+        
+        // "2x Speed" button
         if (sidebar.isSpeedToggleClicked(mouseX, mouseY)) {
             sidebar.toggleSpeedMode();
-            return;  // Return early to avoid handling other buttons
+            return;
         }
 
-        if (sidebar.isPauseButtonClicked(e.getX(), e.getY())) {
+        // "Pause" button
+        if (sidebar.isPauseButtonClicked(mouseX, mouseY)) {
             sidebar.togglePauseMode();
-            return;  // Return early to avoid handling other buttons
+            gamePaused = sidebar.isPauseActive();
+            return;
         }
-    
+
+        // "Place Tower" button
+        if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleTowerPlacementMode();
+            return;
+        } 
+
+        // "Upgrade Range" button
+        if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleRangeUpgradeMode();
+            return;
+        } 
+
+        // "Upgrade Speed" button
+        if (sidebar.isButtonClicked(mouseX, mouseY, 4*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleSpeedUpgradeMode();
+            return;
+        } 
+
+        // "Upgrade Damage" button
+        if (sidebar.isButtonClicked(mouseX, mouseY, 5*(sidebar.buttonHeight + 10))) {
+            sidebar.toggleDamageUpgradeMode();
+            return;
+        } 
+
+        // "Mana Pool Spell" button
         if (sidebar.isManaPoolSpellButtonClicked(mouseX, mouseY)) {
             activateManaPoolSpell();
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, sidebar.buttonHeight + 10)) {
-            // This is the "Place Tower" button
-            sidebar.toggleTowerPlacementMode();
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
-            // This is the "Upgrade Range" button
-            sidebar.toggleRangeUpgradeMode();
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
-            // This is the "Upgrade Speed" button
-            sidebar.toggleSpeedUpgradeMode();
-        } else if (sidebar.isButtonClicked(mouseX, mouseY, 4*(sidebar.buttonHeight + 10))) {
-            // This is the "Upgrade Damage" button
-            sidebar.toggleDamageUpgradeMode();
+            return;
         }
 
         int tileX = mouseX / App.CELLSIZE;
