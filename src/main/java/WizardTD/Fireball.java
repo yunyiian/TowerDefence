@@ -11,7 +11,6 @@ public class Fireball {
     PImage fireballImage;
     PApplet app;
 
-
     public Fireball(float startX, float startY, Monster target, PApplet app) {
         this.x = startX;
         this.y = startY;
@@ -20,38 +19,37 @@ public class Fireball {
 
         // Load fireball image
         fireballImage = app.loadImage("src/main/resources/WizardTD/fireball.png");
+        initialTrajectory();
+    }
 
-        // Calculate angle to target
-        float angle = PApplet.atan2(target.getY() * App.CELLSIZE - y, target.getX() * App.CELLSIZE - x);
-
-        // Calculate x and y increments
+    private void initialTrajectory() {
+        // Initial prediction of where the monster will be after a certain time
+        float distanceToMonster = PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE);
+        float predictedTime = distanceToMonster / speed;
+        float predictedMonsterX = target.getX() * App.CELLSIZE + target.getSpeed() * predictedTime * PApplet.cos(PApplet.radians(target.getDirectionAngle()));
+        float predictedMonsterY = target.getY() * App.CELLSIZE + target.getSpeed() * predictedTime * PApplet.sin(PApplet.radians(target.getDirectionAngle()));
+        
+        // Adjust trajectory towards the predicted position
+        float angle = PApplet.atan2(predictedMonsterY - y, predictedMonsterX - x);
         dx = speed * PApplet.cos(angle);
         dy = speed * PApplet.sin(angle);
     }
 
     public void update() {
-        if (target != null && target.getCurrentHp() > 0) {
-            // Calculate angle to target's current location
-            float angle = PApplet.atan2(target.getY() * App.CELLSIZE + App.CELLSIZE / 2 - y, 
-                                        target.getX() * App.CELLSIZE + App.CELLSIZE / 2 - x);
-        
-            // Calculate x and y increments
-            dx = speed * PApplet.cos(angle);
-            dy = speed * PApplet.sin(angle);
-        }
-        
+        // Homing logic: Adjust the trajectory every frame to aim towards the monster's current position
+        float angle = PApplet.atan2(target.getY() * App.CELLSIZE + App.CELLSIZE / 2 - y, target.getX() * App.CELLSIZE + App.CELLSIZE / 2 - x);
+        dx = speed * PApplet.cos(angle);
+        dy = speed * PApplet.sin(angle);
+
         x += dx;
         y += dy;
     }
-    
 
     public boolean hasHitTarget() {
         float targetCenterX = target.getX() * App.CELLSIZE + App.CELLSIZE / 2;
         float targetCenterY = target.getY() * App.CELLSIZE + App.CELLSIZE / 2;
-        
         return PApplet.dist(x, y, targetCenterX, targetCenterY) <= (fireballImage.width / 2);
-    }  
-    
+    }
 
     public Monster getTarget() {
         return this.target;
@@ -60,7 +58,4 @@ public class Fireball {
     public void render() {
         app.image(fireballImage, x - fireballImage.width / 2, y - fireballImage.height / 2);
     }
-
-
-
 }

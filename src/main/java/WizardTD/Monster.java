@@ -201,6 +201,16 @@ public class Monster {
         }
      }
 
+     public float getDirectionAngle() {
+        switch (direction) {
+            case "up": return 270;
+            case "down": return 90;
+            case "left": return 180;
+            case "right": return 0;
+            default: return 0;
+        }
+    }
+
      public void reduceHealth(float damage) {
         float actualDamage = damage * armour;  // Calculate actual damage after considering armour
         currentHp -= actualDamage;  // Reduce the monster's health by the actual damage
@@ -238,6 +248,10 @@ public class Monster {
 
     public float getY() {
         return this.y;
+    }
+
+    public float getSpeed() {
+        return this.speed;
     }
 
     
