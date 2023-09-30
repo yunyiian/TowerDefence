@@ -142,8 +142,11 @@ public class App extends PApplet {
             sidebar.toggleSpeedUpgradeMode();
         } else if (key == '3') {
             sidebar.toggleDamageUpgradeMode();
+        } else if (key == 'M' || key == 'm') {  
+            activateManaPoolSpell();
         }
-    }    
+    }
+    
     
 
     /**
