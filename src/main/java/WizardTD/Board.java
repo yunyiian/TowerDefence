@@ -92,6 +92,14 @@ public class Board {
         }
     }
 
+    public boolean isWizardHouseTile(int x, int y) {
+        if (x < 0 || x >= tiles[0].length || y < 0 || y >= tiles.length) {
+            return false;
+        }
+        return tiles[y][x] instanceof WizardHouseTile;
+    }
+    
+
     public TowerTile placeTower(int x, int y, PApplet app, float towerRange, float towerFiringSpeed, float towerDamage) {
         if (x >= 0 && x < tiles[0].length && y >= 0 && y < tiles.length) {
             Tile tile = tiles[y][x];

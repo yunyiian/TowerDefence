@@ -49,7 +49,7 @@ public class TopBar {
         // Display "MANA :" text on the left of the bar
         app.fill(0);  // Black color for text
         app.textSize(18);
-        app.text("MANA :", manaBarX - 64, manaBarY + 13);  // Adjusted y position to align text vertically with the bar
+        app.text("MANA : ", manaBarX - 64, manaBarY + 13);  // Adjusted y position to align text vertically with the bar
         
         // Display the mana value in the center of the mana bar
         String manaText = mana + "/" + manaCap;

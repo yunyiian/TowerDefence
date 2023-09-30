@@ -141,6 +141,14 @@ public class Monster {
                 break;
         }
     }
+
+    private void resetMonsterPosition() {
+        List<int[]> spawnPoints = getSpawnPoints();
+        int[] chosenSpawn = spawnPoints.get((int) (Math.random() * spawnPoints.size()));
+        this.x = (float) chosenSpawn[0];
+        this.y = (float) chosenSpawn[1];
+    }
+    
     
      /**
      * moveInside method
@@ -230,8 +238,12 @@ public class Monster {
         if (deathFrameCount > 0 && deathFrameCount < 20) {
             deathFrameCount++;
         }
+        if (board.isWizardHouseTile((int) this.x, (int) this.y)) {
+            // Monster has reached the WizardHouseTile
+            game.deductMana((int) this.currentHp);  // Decrement wizard's mana by monster's current HP
+            resetMonsterPosition();  // Reset monster's position to a spawn point
+        }        
     }
-    
 
     public float getCurrentHp() {
         return this.currentHp;
