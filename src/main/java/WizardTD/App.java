@@ -46,6 +46,7 @@ public class App extends PApplet {
     public float manaPoolSpellCapMultiplier;
     public float manaPoolSpellManaGainedMultiplier;
     public float currentManaPoolSpellCost;  // To keep track of the current cost after multiple uses
+    private float manaMultiplier = 1.0f;  // New attribute to store the mana multiplier
 
 
 
@@ -298,7 +299,7 @@ public class App extends PApplet {
         topBar.render(this);
         manaUpdateTimer += 1.0 / FPS;
         if (manaUpdateTimer >= 1.0f) {
-            mana += manaGainedPerSecond;
+            mana += manaGainedPerSecond * manaMultiplier;  // Updated to consider multiplier
             manaUpdateTimer -= 1.0f; // reset the timer for the next second
         }
         
@@ -350,9 +351,13 @@ public class App extends PApplet {
             mana -= currentManaPoolSpellCost;
             initialManaCap *= manaPoolSpellCapMultiplier;
             topBar.setManaCap(initialManaCap);
-            manaGainedPerSecond *= manaPoolSpellManaGainedMultiplier;
+            manaMultiplier += manaPoolSpellManaGainedMultiplier;  // Increase the mana multiplier
             currentManaPoolSpellCost += manaPoolSpellCostIncreasePerUse;
         }
+    }
+
+    public float getCurrentManaMultiplier() {
+        return manaMultiplier;
     }
     
 

@@ -30,6 +30,7 @@ public class Monster {
     private String type;  // The sprite image to use for the monster
     private PImage deathImages[];  // Images for death animation
     private int deathFrameCount = 0;  // Frame counter for death animation
+    private float manaMultiplier = 1.0f; 
 
 
     public Monster(Board board, PApplet app, float speed, int spawnDelay, float hp, float armour, float manaGainedOnKill, String type, App game) {
@@ -212,7 +213,7 @@ public class Monster {
         // Start the death animation
         deathFrameCount = 1;
         speed = 0;  // Stop the monster's movement
-        game.addMana(manaGainedOnKill);
+        game.addMana(manaGainedOnKill * manaMultiplier);  // Updated to consider multiplier
     }
 
     public void update() {
@@ -224,6 +225,10 @@ public class Monster {
 
     public float getCurrentHp() {
         return this.currentHp;
+    }
+
+    public void setManaMultiplier(float multiplier) {
+        this.manaMultiplier = multiplier;
     }
 
 

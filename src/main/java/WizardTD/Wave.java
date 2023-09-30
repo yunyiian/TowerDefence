@@ -49,6 +49,7 @@ public class Wave {
         // If it's time to spawn a new monster and there are still monsters left to spawn
         if (currentSpawnTime >= spawnInterval && monstersToSpawn > 0) {
             Monster newMonster = new Monster(board, app, speed, 0, hp, armour, manaGainedOnKill, type, (App) app);
+            newMonster.setManaMultiplier(((App) app).getCurrentManaMultiplier());  // Assuming you have a method in App class that returns the current multiplier
             monsters.add(newMonster);
             // Add the new monster to the activeMonsters list in App.java directly
             ((App) app).addActiveMonster(newMonster);
