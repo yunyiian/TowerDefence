@@ -10,6 +10,7 @@ public class Sidebar {
     private boolean rangeUpgradeMode = false;
     private boolean speedUpgradeMode = false;
     private boolean damageUpgradeMode = false;
+    private boolean speedToggleActive = false;
 
 
     public int buttonWidth = 80;
@@ -66,6 +67,14 @@ public class Sidebar {
     public boolean isManaPoolSpellButtonClicked(int mouseX, int mouseY) {
         return isButtonClicked(mouseX, mouseY, 4 * (buttonHeight + 10));
     }
+
+    public boolean isSpeedToggleClicked(int mouseX, int mouseY) {
+        return isButtonClicked(mouseX, mouseY, 0);
+    }
+
+    public void toggleSpeedMode() {
+        speedToggleActive = !speedToggleActive;
+    }
     
 
     // Check which button was clicked
@@ -74,18 +83,18 @@ public class Sidebar {
                mouseY >= buttonY + yOffset && mouseY <= buttonY + yOffset + buttonHeight;
     }
 
+    // Update render method:
     public void render(PApplet app) {
         app.noTint();
         app.fill(app.color(0x83, 0x74, 0x4A));
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
 
-        renderButton(app, "Place Tower", 0, towerPlacementMode);
-        renderButton(app, "Upgrade Range", buttonHeight + 10, rangeUpgradeMode);
-        renderButton(app, "Upgrade Speed", 2*(buttonHeight + 10), speedUpgradeMode);
-        renderButton(app, "Upgrade Damage", 3*(buttonHeight + 10), damageUpgradeMode);
-
-        renderButton(app, "Mana Pool Spell", 4 * (buttonHeight + 10), false);
-
+        renderButton(app, "2x Speed", 0, speedToggleActive); 
+        renderButton(app, "Place Tower", buttonHeight + 10, towerPlacementMode);
+        renderButton(app, "Upgrade Range", 2*(buttonHeight + 10), rangeUpgradeMode);
+        renderButton(app, "Upgrade Speed", 3*(buttonHeight + 10), speedUpgradeMode);
+        renderButton(app, "Upgrade Damage", 4*(buttonHeight + 10), damageUpgradeMode);
+        renderButton(app, "Mana Pool Spell", 5 * (buttonHeight + 10), false);  
     }
 
     private void renderButton(PApplet app, String text, int yOffset, boolean active) {

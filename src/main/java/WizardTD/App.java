@@ -51,6 +51,8 @@ public class App extends PApplet {
 
 
     private float totalGameTime = 0.0f;  // Total game elapsed time in seconds
+    private long lastFPressTime = 0;
+
 
 
     //Monsters
@@ -134,6 +136,13 @@ public class App extends PApplet {
      */
     @Override
     public void keyPressed() {
+        if (key == 'F' || key == 'f') {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastFPressTime < 300) {  // Double press within 300ms
+                sidebar.toggleSpeedMode();
+            }
+            lastFPressTime = currentTime;
+        }
         if (key == 'T' || key == 't') {
             sidebar.toggleTowerPlacementMode();
             towerPlacementMode = sidebar.isInTowerPlacementMode();
@@ -161,19 +170,26 @@ public class App extends PApplet {
     public void mousePressed(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
-
+    
+        // Check the "2x Speed" button first
+        if (sidebar.isSpeedToggleClicked(mouseX, mouseY)) {
+            sidebar.toggleSpeedMode();
+            return;  // Return early to avoid handling other buttons
+        }
+    
         if (sidebar.isManaPoolSpellButtonClicked(mouseX, mouseY)) {
             activateManaPoolSpell();
-        }
-
-        // Check sidebar buttons
-        if (sidebar.isButtonClicked(mouseX, mouseY, 0)) {
-            sidebar.toggleTowerPlacementMode();
         } else if (sidebar.isButtonClicked(mouseX, mouseY, sidebar.buttonHeight + 10)) {
-            sidebar.toggleRangeUpgradeMode();
+            // This is the "Place Tower" button
+            sidebar.toggleTowerPlacementMode();
         } else if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {
-            sidebar.toggleSpeedUpgradeMode();
+            // This is the "Upgrade Range" button
+            sidebar.toggleRangeUpgradeMode();
         } else if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {
+            // This is the "Upgrade Speed" button
+            sidebar.toggleSpeedUpgradeMode();
+        } else if (sidebar.isButtonClicked(mouseX, mouseY, 4*(sidebar.buttonHeight + 10))) {
+            // This is the "Upgrade Damage" button
             sidebar.toggleDamageUpgradeMode();
         }
 
