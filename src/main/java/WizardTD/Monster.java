@@ -254,6 +254,11 @@ public class Monster {
         return this.speed;
     }
 
+    public PImage getImage() {
+        return this.image;
+    }
+    
+
     
     public void render(PApplet app) {
         app.noTint();

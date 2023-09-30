@@ -48,8 +48,11 @@ public class Fireball {
     public boolean hasHitTarget() {
         float targetCenterX = target.getX() * App.CELLSIZE + App.CELLSIZE / 2;
         float targetCenterY = target.getY() * App.CELLSIZE + App.CELLSIZE / 2;
-        return PApplet.dist(x, y, targetCenterX, targetCenterY) <= (fireballImage.width / 2);
+        float monsterHitboxRadius = target.getImage().width * 1.0f / 2;  // Using 100% of monster's width for the hitbox
+        return PApplet.dist(x, y, targetCenterX, targetCenterY) <= (fireballImage.width / 2 + monsterHitboxRadius);
     }
+    
+
 
     public Monster getTarget() {
         return this.target;
