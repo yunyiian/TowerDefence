@@ -1,6 +1,7 @@
 package WizardTD;
 
 import processing.core.PApplet;
+import WizardTD.subtiles.TowerTile;
 
 public class Sidebar {
     private int width;
@@ -79,6 +80,38 @@ public class Sidebar {
     public boolean isDoubleSpeedMode() {
         return speedToggleActive;
     }
+
+    private void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
+        int startX = app.width - this.width + 10;  // adjust to the left side of the sidebar
+        int startY = app.height - 100; // starting position at bottom left
+    
+        app.fill(app.color(0x83, 0x74, 0x4A));
+        app.rect(startX, startY, 150, 80); // background for the costs
+    
+        app.fill(255); // Text color
+        app.textSize(14); 
+        app.text("Upgrade Cost", startX + 10, startY + 20);
+    
+        int totalCost = 0;
+        if (isInRangeUpgradeMode()) {
+            int cost = selectedTower.getNextRangeUpgradeCost();
+            app.text("Range: " + cost, startX + 20, startY + 40);
+            totalCost += cost;
+        }
+        if (isInSpeedUpgradeMode()) {
+            int cost = selectedTower.getNextSpeedUpgradeCost();
+            app.text("Speed: " + cost, startX + 20, startY + 60);
+            totalCost += cost;
+        }
+        if (isInDamageUpgradeMode()) {
+            int cost = selectedTower.getNextDamageUpgradeCost();
+            app.text("Damage: " + cost, startX + 20, startY + 80);
+            totalCost += cost;
+        }
+    
+        app.text("Total: " + totalCost, startX + 20, startY + 100);
+    }
+    
     
     
 
@@ -89,7 +122,7 @@ public class Sidebar {
     }
 
     // Update render method:
-    public void render(PApplet app) {
+    public void render(PApplet app, TowerTile selectedTower) {
         app.noTint();
         app.fill(app.color(0x83, 0x74, 0x4A));
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
@@ -100,6 +133,10 @@ public class Sidebar {
         renderButton(app, "Upgrade Speed", 3*(buttonHeight + 10), speedUpgradeMode);
         renderButton(app, "Upgrade Damage", 4*(buttonHeight + 10), damageUpgradeMode);
         renderButton(app, "Mana Pool Spell", 5 * (buttonHeight + 10), false);  
+
+        if (selectedTower != null && isInAnyUpgradeMode()) {
+            renderUpgradeCosts(app, selectedTower);
+        }
     }
 
     private void renderButton(PApplet app, String text, int yOffset, boolean active) {

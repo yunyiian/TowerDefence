@@ -171,6 +171,19 @@ public class TowerTile extends Tile {
         
         return PApplet.dist(towerCenterX, towerCenterY, mouseX, mouseY) <= App.CELLSIZE / 2.0f;
     }
+
+    public int getNextRangeUpgradeCost() {
+        return getUpgradeCost(rangeUpgradeLevel);
+    }
+    
+    public int getNextSpeedUpgradeCost() {
+        return getUpgradeCost(speedUpgradeLevel);
+    }
+    
+    public int getNextDamageUpgradeCost() {
+        return getUpgradeCost(damageUpgradeLevel);
+    }
+    
     
     
 

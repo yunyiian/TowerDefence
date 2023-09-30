@@ -67,6 +67,8 @@ public class App extends PApplet {
     public float initialTowerRange;
     public float initialTowerFiringSpeed;
     public float initialTowerDamage;
+    private TowerTile selectedTower;
+
 
 
     public App() {
@@ -204,6 +206,7 @@ public class App extends PApplet {
         Tile clickedTile = board.getTiles()[tileY][tileX];
         if (clickedTile instanceof TowerTile) {
             TowerTile tower = (TowerTile) clickedTile;
+            selectedTower = tower;
     
             if (sidebar.isInRangeUpgradeMode()) {
                 int upgradeCost = calculateUpgradeCost(tower.getRangeUpgradeLevel());
@@ -256,9 +259,28 @@ public class App extends PApplet {
         }
     }
 
-
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        int tileX = mouseX / App.CELLSIZE;
+        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;
     
-
+        // Check boundaries before doing anything
+        if (tileX < 0 || tileX >= board.getTiles()[0].length || tileY < 0 || tileY >= board.getTiles().length) {
+            selectedTower = null; // No tower selected
+            return;
+        }
+    
+        // Check if the hovered tile is a tower
+        Tile hoveredTile = board.getTiles()[tileY][tileX];
+        if (hoveredTile instanceof TowerTile) {
+            selectedTower = (TowerTile) hoveredTile;
+        } else {
+            selectedTower = null; // No tower selected
+        }
+    }
+    
 
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -338,10 +360,11 @@ public class App extends PApplet {
         for (Monster monster : activeMonsters) {
             monster.render(this);
         }  
-        sidebar.render(this);
+        sidebar.render(this, selectedTower);
         topBar.render(this);
         board.renderWizardHouse(this);
     }
+
 
     public void addActiveMonster(Monster monster) {
         activeMonsters.add(monster);
@@ -410,10 +433,6 @@ public class App extends PApplet {
     public boolean canAfford(int cost) {
         return mana >= cost;
     }
-    
-    
-
-
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");
     }
