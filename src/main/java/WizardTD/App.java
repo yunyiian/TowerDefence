@@ -67,6 +67,7 @@ public class App extends PApplet {
     public float initialTowerRange;
     public float initialTowerFiringSpeed;
     public float initialTowerDamage;
+    public int towerBaseCost;
     private TowerTile selectedTower;
 
 
@@ -108,7 +109,8 @@ public class App extends PApplet {
         initialTowerRange = config.getInt("initial_tower_range");
         initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
         initialTowerDamage = config.getInt("initial_tower_damage");
-        
+        towerBaseCost = config.getInt("tower_cost");
+
         // Load images during setup
 		// Eg:
         // loadImage("src/main/resources/WizardTD/tower0.png");
@@ -422,7 +424,7 @@ public class App extends PApplet {
 
     // Calculate the cost to place a tower with the given number of upgrades
     public int calculateTowerPlacementCost(int numUpgrades) {
-        return 100 + numUpgrades * 20;  // 100 is the base cost of placing a tower, each upgrade costs 20 more
+        return towerBaseCost + numUpgrades * 20;  // 100 is the base cost of placing a tower, each upgrade costs 20 more
     }
 
     // Calculate the upgrade cost for a tower based on the current upgrade level

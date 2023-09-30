@@ -84,6 +84,12 @@ public class Sidebar {
         return speedToggleActive;
     }
 
+    public boolean isButtonHovered(int mouseX, int mouseY, int yOffset) {
+        return mouseX >= buttonX && mouseX <= buttonX + buttonWidth &&
+               mouseY >= buttonY + yOffset && mouseY <= buttonY + yOffset + buttonHeight;
+    }
+    
+
     private void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
         int startX = app.width - this.width + 10;  // adjust to the left side of the sidebar
         int startY = app.height - 100; // starting position at bottom left
@@ -120,7 +126,7 @@ public class Sidebar {
             int costBoxWidth = 70;
             int costBoxHeight = 30;
             int startX = buttonX - costBoxWidth - 10;
-            int startY = buttonY + 6 * (buttonHeight + 10);
+            int startY = buttonY + 5 * (buttonHeight + 10);
     
             app.fill(app.color(255));  // White color
             app.rect(startX, startY, costBoxWidth, costBoxHeight);
@@ -138,6 +144,23 @@ public class Sidebar {
                mouseY >= buttonY + yOffset && mouseY <= buttonY + yOffset + buttonHeight;
     }
 
+    private void renderTowerCost(PApplet app) {
+        if (isButtonHovered(app.mouseX, app.mouseY, buttonHeight + 10)) {  // Check if "Place Tower" button is hovered
+            int costBoxWidth = 70;
+            int costBoxHeight = 30;
+            int startX = buttonX - costBoxWidth - 10;
+            int startY = buttonY + buttonHeight + 10;
+    
+            app.fill(app.color(255));  // White color
+            app.rect(startX, startY, costBoxWidth, costBoxHeight);
+    
+            app.fill(0);  // Text color (black)
+            app.textSize(14);
+            app.text("Cost: " + mainApp.towerBaseCost, startX + 10, startY + 20);
+        }
+    }
+    
+
     // Update render method:
     public void render(PApplet app, TowerTile selectedTower) {
         app.noTint();
@@ -151,6 +174,7 @@ public class Sidebar {
         renderButton(app, "Upgrade Damage", 4*(buttonHeight + 10), damageUpgradeMode);
         renderButton(app, "Mana Pool Spell", 5 * (buttonHeight + 10), false);  
         renderManaPoolSpellCost(app);
+        renderTowerCost(app);  
 
 
         if (selectedTower != null && isInAnyUpgradeMode()) {
@@ -160,10 +184,12 @@ public class Sidebar {
 
     private void renderButton(PApplet app, String text, int yOffset, boolean active) {
         if (active) {
-            app.fill(app.color(0xfb, 0xfb, 0x0d)); 
+            app.fill(app.color(0xfb, 0xfb, 0x0d));
+        } else if (isButtonHovered(app.mouseX, app.mouseY, yOffset)) {
+            app.fill(app.color(200, 200, 200));  // Gray color when hovered
         } else {
-            app.fill(app.color(0x83, 0x74, 0x4A)); 
-        }
+            app.fill(app.color(0x83, 0x74, 0x4A));
+        }        
         app.rect(buttonX, buttonY + yOffset, buttonWidth, buttonHeight);
 
         app.stroke(0);
