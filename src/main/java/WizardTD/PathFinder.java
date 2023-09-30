@@ -66,13 +66,15 @@ public class PathFinder {
         Set<Node> openList = new HashSet<>();
         Set<Node> closedList = new HashSet<>();
         openList.add(start);
-
+    
         start.g = 0;
         start.h = heuristic(start, goal);
         start.f = start.h;
-
+    
         while (!openList.isEmpty()) {
-            Node current = getLowestFCostNode(openList);
+            List<Node> currentNodes = getLowestFCostNodes(openList);
+            Node current = currentNodes.get(new Random().nextInt(currentNodes.size()));
+    
             
             if (current.equals(goal)) {
                 return reconstructPath(current);
@@ -102,14 +104,21 @@ public class PathFinder {
         return new ArrayList<>(); // Return an empty list if no path is found
     }
 
-    private Node getLowestFCostNode(Set<Node> nodes) {
-        Node lowest = null;
+    private List<Node> getLowestFCostNodes(Set<Node> nodes) {
+        List<Node> lowestNodes = new ArrayList<>();
+        float lowestFCost = Float.POSITIVE_INFINITY;
+    
         for (Node node : nodes) {
-            if (lowest == null || node.f < lowest.f) {
-                lowest = node;
+            if (node.f < lowestFCost) {
+                lowestFCost = node.f;
+                lowestNodes.clear();
+                lowestNodes.add(node);
+            } else if (node.f == lowestFCost) {
+                lowestNodes.add(node);
             }
         }
-        return lowest;
+    
+        return lowestNodes;
     }
 
     private List<Node> reconstructPath(Node node) {
