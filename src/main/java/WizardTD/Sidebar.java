@@ -12,6 +12,7 @@ public class Sidebar {
     private boolean speedUpgradeMode = false;
     private boolean damageUpgradeMode = false;
     private boolean speedToggleActive = false;
+    private boolean pauseActive = false;
 
 
     public int buttonWidth = 80;
@@ -88,7 +89,19 @@ public class Sidebar {
         return mouseX >= buttonX && mouseX <= buttonX + buttonWidth &&
                mouseY >= buttonY + yOffset && mouseY <= buttonY + yOffset + buttonHeight;
     }
-    
+
+    public boolean isPauseButtonClicked(int mouseX, int mouseY) {
+        return isButtonClicked(mouseX, mouseY, 6 * (buttonHeight + 10));
+    }
+
+    public void togglePauseMode() {
+        pauseActive = !pauseActive;
+    }
+
+    public boolean isPauseActive() {
+        return pauseActive;
+    }
+        
 
     private void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
         int startX = app.width - this.width + 10;  // adjust to the left side of the sidebar
@@ -168,6 +181,7 @@ public class Sidebar {
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
 
         renderButton(app, "2x Speed", 0, speedToggleActive); 
+        renderButton(app, "Pause", 6*(buttonHeight + 10), pauseActive);
         renderButton(app, "Place Tower", buttonHeight + 10, towerPlacementMode);
         renderButton(app, "Upgrade Range", 2*(buttonHeight + 10), rangeUpgradeMode);
         renderButton(app, "Upgrade Speed", 3*(buttonHeight + 10), speedUpgradeMode);

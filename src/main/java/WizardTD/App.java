@@ -64,6 +64,7 @@ public class App extends PApplet {
 
     //towers
     private boolean towerPlacementMode = false;
+    private boolean gamePaused = false;
     public float initialTowerRange;
     public float initialTowerFiringSpeed;
     public float initialTowerDamage;
@@ -147,6 +148,13 @@ public class App extends PApplet {
             }
             lastFPressTime = currentTime;
         }
+
+        if (key == 'P' || key == 'p') {
+            sidebar.togglePauseMode();
+            gamePaused = sidebar.isPauseActive();
+        }
+
+
         if (key == 'T' || key == 't') {
             sidebar.toggleTowerPlacementMode();
             towerPlacementMode = sidebar.isInTowerPlacementMode();
@@ -178,6 +186,11 @@ public class App extends PApplet {
         // Check the "2x Speed" button first
         if (sidebar.isSpeedToggleClicked(mouseX, mouseY)) {
             sidebar.toggleSpeedMode();
+            return;  // Return early to avoid handling other buttons
+        }
+
+        if (sidebar.isPauseButtonClicked(e.getX(), e.getY())) {
+            sidebar.togglePauseMode();
             return;  // Return early to avoid handling other buttons
         }
     
@@ -297,63 +310,65 @@ public class App extends PApplet {
      */
     @Override
     public void draw() {
-        int updates = sidebar.isDoubleSpeedMode() ? 2 : 1;
-    
-        for (int u = 0; u < updates; u++) {
-            // Handle waves
-            if (currentWaveIndex < waves.size()) {
-                Wave currentWave = waves.get(currentWaveIndex);
-                if (waveTimer < currentWave.getPreWavePause()) {
-                    // We're in the pause phase of the wave, don't update monsters
-                } else {
-                    currentWave.update();
-                }
-                waveTimer += 1.0 / FPS;  // Increment timer by frame duration
-                if (waveTimer > (currentWave.getPreWavePause() + currentWave.getDuration())) {
-                    waveTimer = 0;  // Reset timer
-                    currentWaveIndex++;  // Move to the next wave
-                }
-            }
-    
-            // Update all active monsters
-            for (Monster monster : activeMonsters) {
-                monster.moveWithSpeed();
-                monster.update();
-            }        
-    
-            // Make towers shoot at monsters
-            Tile[][] tiles = board.getTiles();
-            for (int i = 0; i < tiles.length; i++) {
-                for (int j = 0; j < tiles[0].length; j++) {
-                    if (tiles[i][j] instanceof TowerTile) {
-                        TowerTile tower = (TowerTile) tiles[i][j];
-                        tower.incrementTimeSinceLastShot(1.0 / FPS);
-                        Monster target = tower.getClosestMonsterInRange(activeMonsters);
-                        if (target != null) {
-                            tower.shootMonster(target);
-                        }
-                        tower.updateFireballs(sidebar.isDoubleSpeedMode());   // Update the fireballs, but consider rendering outside the loop
+        if (!gamePaused) {
+            int updates = sidebar.isDoubleSpeedMode() ? 2 : 1;
+        
+            for (int u = 0; u < updates; u++) {
+                // Handle waves
+                if (currentWaveIndex < waves.size()) {
+                    Wave currentWave = waves.get(currentWaveIndex);
+                    if (waveTimer < currentWave.getPreWavePause()) {
+                        // We're in the pause phase of the wave, don't update monsters
+                    } else {
+                        currentWave.update();
+                    }
+                    waveTimer += 1.0 / FPS;  // Increment timer by frame duration
+                    if (waveTimer > (currentWave.getPreWavePause() + currentWave.getDuration())) {
+                        waveTimer = 0;  // Reset timer
+                        currentWaveIndex++;  // Move to the next wave
                     }
                 }
-            }
-    
-            // Remove dead monsters
-            Iterator<Monster> monsterIterator = activeMonsters.iterator();
-            while (monsterIterator.hasNext()) {
-                Monster monster = monsterIterator.next();
-                if (monster.getX() == -1.0f && monster.getY() == -1.0f) {
-                    monsterIterator.remove();
+        
+                // Update all active monsters
+                for (Monster monster : activeMonsters) {
+                    monster.moveWithSpeed();
+                    monster.update();
+                }        
+        
+                // Make towers shoot at monsters
+                Tile[][] tiles = board.getTiles();
+                for (int i = 0; i < tiles.length; i++) {
+                    for (int j = 0; j < tiles[0].length; j++) {
+                        if (tiles[i][j] instanceof TowerTile) {
+                            TowerTile tower = (TowerTile) tiles[i][j];
+                            tower.incrementTimeSinceLastShot(1.0 / FPS);
+                            Monster target = tower.getClosestMonsterInRange(activeMonsters);
+                            if (target != null) {
+                                tower.shootMonster(target);
+                            }
+                            tower.updateFireballs(sidebar.isDoubleSpeedMode());   // Update the fireballs, but consider rendering outside the loop
+                        }
+                    }
                 }
+        
+                // Remove dead monsters
+                Iterator<Monster> monsterIterator = activeMonsters.iterator();
+                while (monsterIterator.hasNext()) {
+                    Monster monster = monsterIterator.next();
+                    if (monster.getX() == -1.0f && monster.getY() == -1.0f) {
+                        monsterIterator.remove();
+                    }
+                }
+        
+                totalGameTime += 1.0 / FPS;
+                manaUpdateTimer += 1.0 / FPS;
+                if (manaUpdateTimer >= 1.0f) {
+                    mana += manaGainedPerSecond * manaMultiplier;  // Updated to consider multiplier
+                    manaUpdateTimer -= 1.0f; // reset the timer for the next second
+                }
+                topBar.setMana(Math.round(mana));     
+                updateWaveTimer(); 
             }
-    
-            totalGameTime += 1.0 / FPS;
-            manaUpdateTimer += 1.0 / FPS;
-            if (manaUpdateTimer >= 1.0f) {
-                mana += manaGainedPerSecond * manaMultiplier;  // Updated to consider multiplier
-                manaUpdateTimer -= 1.0f; // reset the timer for the next second
-            }
-            topBar.setMana(Math.round(mana));     
-            updateWaveTimer(); 
         }
     
     // Renderings (should be done once per frame)
