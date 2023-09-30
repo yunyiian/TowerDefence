@@ -75,6 +75,11 @@ public class Sidebar {
     public void toggleSpeedMode() {
         speedToggleActive = !speedToggleActive;
     }
+
+    public boolean isDoubleSpeedMode() {
+        return speedToggleActive;
+    }
+    
     
 
     // Check which button was clicked
