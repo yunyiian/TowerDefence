@@ -41,6 +41,13 @@ public class App extends PApplet {
     public int mana;
     private float manaUpdateTimer = 0.0f;
 
+    public float manaPoolSpellInitialCost;
+    public float manaPoolSpellCostIncreasePerUse;
+    public float manaPoolSpellCapMultiplier;
+    public float manaPoolSpellManaGainedMultiplier;
+    public float currentManaPoolSpellCost;  // To keep track of the current cost after multiple uses
+
+
 
     private float totalGameTime = 0.0f;  // Total game elapsed time in seconds
 
@@ -82,6 +89,12 @@ public class App extends PApplet {
         initialManaCap = config.getInt("initial_mana_cap");
         manaGainedPerSecond = config.getInt("initial_mana_gained_per_second");
         mana = initialMana; 
+
+        manaPoolSpellInitialCost = config.getFloat("mana_pool_spell_initial_cost");
+        manaPoolSpellCostIncreasePerUse = config.getFloat("mana_pool_spell_cost_increase_per_use");
+        manaPoolSpellCapMultiplier = config.getFloat("mana_pool_spell_cap_multiplier");
+        manaPoolSpellManaGainedMultiplier = config.getFloat("mana_pool_spell_mana_gained_multiplier");
+        currentManaPoolSpellCost = manaPoolSpellInitialCost;
 
 
         topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);
@@ -144,6 +157,10 @@ public class App extends PApplet {
     public void mousePressed(MouseEvent e) {
         int mouseX = e.getX();
         int mouseY = e.getY();
+
+        if (sidebar.isManaPoolSpellButtonClicked(mouseX, mouseY)) {
+            activateManaPoolSpell();
+        }
 
         // Check sidebar buttons
         if (sidebar.isButtonClicked(mouseX, mouseY, 0)) {
@@ -324,6 +341,17 @@ public class App extends PApplet {
     public void addMana(float amount) {
         this.mana += amount;
     }
+
+    private void activateManaPoolSpell() {
+        if (mana >= currentManaPoolSpellCost) {
+            mana -= currentManaPoolSpellCost;
+            initialManaCap *= manaPoolSpellCapMultiplier;
+            topBar.setManaCap(initialManaCap);
+            manaGainedPerSecond *= manaPoolSpellManaGainedMultiplier;
+            currentManaPoolSpellCost += manaPoolSpellCostIncreasePerUse;
+        }
+    }
+    
 
 
     public static void main(String[] args) {

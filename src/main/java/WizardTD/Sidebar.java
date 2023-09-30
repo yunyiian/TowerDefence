@@ -63,6 +63,11 @@ public class Sidebar {
         return isInRangeUpgradeMode() || isInSpeedUpgradeMode() || isInDamageUpgradeMode();
     }
 
+    public boolean isManaPoolSpellButtonClicked(int mouseX, int mouseY) {
+        return isButtonClicked(mouseX, mouseY, 4 * (buttonHeight + 10));
+    }
+    
+
     // Check which button was clicked
     public boolean isButtonClicked(int mouseX, int mouseY, int yOffset) {
         return mouseX >= buttonX && mouseX <= buttonX + buttonWidth &&
@@ -78,6 +83,9 @@ public class Sidebar {
         renderButton(app, "Upgrade Range", buttonHeight + 10, rangeUpgradeMode);
         renderButton(app, "Upgrade Speed", 2*(buttonHeight + 10), speedUpgradeMode);
         renderButton(app, "Upgrade Damage", 3*(buttonHeight + 10), damageUpgradeMode);
+
+        renderButton(app, "Mana Pool Spell", 4 * (buttonHeight + 10), false);
+
     }
 
     private void renderButton(PApplet app, String text, int yOffset, boolean active) {

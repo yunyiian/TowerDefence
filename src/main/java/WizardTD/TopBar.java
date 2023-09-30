@@ -80,6 +80,11 @@ public class TopBar {
     public int getMana() {
         return this.mana;
     }
+
+    public void setManaCap(int newManaCap) {
+        this.manaCap = newManaCap;
+    }
+    
     
 }
 
