@@ -202,20 +202,31 @@ public class App extends PApplet {
 
         // Next, handle tower placement with potential upgrades
         if (sidebar.isInTowerPlacementMode()) {
-            TowerTile newTower = board.placeTower(tileX, tileY, this, initialTowerRange, initialTowerFiringSpeed, initialTowerDamage);
-            if (newTower != null) {  // If a tower was placed
-                if (sidebar.isInRangeUpgradeMode()) {
-                    newTower.upgradeRange();
-                }
-                if (sidebar.isInSpeedUpgradeMode()) {
-                    newTower.upgradeSpeed();
-                }
-                if (sidebar.isInDamageUpgradeMode()) {
-                    newTower.upgradeDamage();
+            int numUpgradesSelected = 0;
+            if (sidebar.isInRangeUpgradeMode()) numUpgradesSelected++;
+            if (sidebar.isInSpeedUpgradeMode()) numUpgradesSelected++;
+            if (sidebar.isInDamageUpgradeMode()) numUpgradesSelected++;
+
+            int towerPlacementCost = calculateTowerPlacementCost(numUpgradesSelected);
+            if (mana >= towerPlacementCost) {
+                TowerTile newTower = board.placeTower(tileX, tileY, this, initialTowerRange, initialTowerFiringSpeed, initialTowerDamage);
+                if (newTower != null) {  // If a tower was placed
+                    mana -= towerPlacementCost;  // Deduct mana
+                    topBar.setMana(mana);
+                    if (sidebar.isInRangeUpgradeMode()) {
+                        newTower.upgradeRange();
+                    }
+                    if (sidebar.isInSpeedUpgradeMode()) {
+                        newTower.upgradeSpeed();
+                    }
+                    if (sidebar.isInDamageUpgradeMode()) {
+                        newTower.upgradeDamage();
+                    }
                 }
             }
         }
     }
+
 
     
 
@@ -358,6 +369,16 @@ public class App extends PApplet {
 
     public float getCurrentManaMultiplier() {
         return manaMultiplier;
+    }
+
+    // Calculate the cost to place a tower with the given number of upgrades
+    public int calculateTowerPlacementCost(int numUpgrades) {
+        return 100 + numUpgrades * 20;  // 100 is the base cost of placing a tower, each upgrade costs 20 more
+    }
+
+    // Calculate the upgrade cost for a tower based on the current upgrade level
+    public int calculateUpgradeCost(int currentUpgradeLevel) {
+        return 20 + currentUpgradeLevel * 10;  // 20 is the base cost for the first upgrade, subsequent upgrades cost 10 more
     }
     
 

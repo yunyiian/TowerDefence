@@ -34,8 +34,14 @@ public class TowerTile extends Tile {
         this.towerFiringSpeed = towerFiringSpeed;
         this.towerDamage = towerDamage;
     }
-    
 
+    public int getCost() {
+        int cost = 100;  // Base cost from config
+        int upgradeCount = rangeUpgradeLevel + speedUpgradeLevel + damageUpgradeLevel;
+        cost += 20 * upgradeCount;  // Add 20 for each upgrade
+        return cost;
+    }
+    
 
     public Monster getClosestMonsterInRange(List<Monster> monsters) {
         Monster closestMonster = null;
