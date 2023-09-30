@@ -147,7 +147,11 @@ public class Monster {
         int[] chosenSpawn = spawnPoints.get((int) (Math.random() * spawnPoints.size()));
         this.x = (float) chosenSpawn[0];
         this.y = (float) chosenSpawn[1];
-    }
+        
+        // Reset target coordinates
+        this.targetX = 0;
+        this.targetY = 0;
+    } 
     
     
      /**
