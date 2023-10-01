@@ -51,12 +51,27 @@ public class Monster {
         this.speed = speed;
         this.spawnDelay = spawnDelay; 
 
-        // Load death animation images
-        deathImages = new PImage[4];
+        List<PImage> deathImageList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-        deathImages[i] = app.loadImage("src/main/resources/WizardTD/" + type + (i+2) + ".png");
+            String imagePath = "src/main/resources/WizardTD/" + type + (i+2) + ".png";
+            PImage deathImage = safeLoadImage(app, imagePath);
+            if (deathImage != null) {  // Check if the image was loaded successfully
+                deathImageList.add(deathImage);
+            }
         }
+        // Convert the list to an array for consistency
+        deathImages = deathImageList.toArray(new PImage[0]);
     }
+
+    private PImage safeLoadImage(PApplet app, String path) {
+    try {
+        return app.loadImage(path);
+    } catch (Exception e) {
+        // Image not found or other error, return null
+        return null;
+    }
+    }
+
     private List<int[]> getSpawnPoints() {
         List<int[]> spawnPoints = new ArrayList<>();
         Tile[][] tiles = board.getTiles();
@@ -293,9 +308,9 @@ public class Monster {
             if (deathFrameCount == 0) {
                 // If not in death animation, display the normal monster image
                 app.image(image, drawX, drawY);
-            } else if (deathFrameCount < 20) {  
+            } else if (deathFrameCount < deathImages.length * 4) {  
                 // If in death animation, display the death images based on the frame count
-                int deathImageIndex = (deathFrameCount / 4) % 4; // This will give values: 0, 0, 0, 0, 1, 1, 1, 1, etc.
+                int deathImageIndex = (deathFrameCount / 4) % deathImages.length;
                 app.image(deathImages[deathImageIndex], drawX, drawY);
             } else {
                 // After the death animation is over, remove the monster from the game

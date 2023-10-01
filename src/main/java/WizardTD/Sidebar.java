@@ -229,7 +229,6 @@ public class Sidebar {
         }
     }
     
-
     // Update render method:
     public void render(PApplet app, TowerTile selectedTower) {
         app.noTint();
