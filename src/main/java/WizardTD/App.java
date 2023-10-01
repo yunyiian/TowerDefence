@@ -443,12 +443,11 @@ public class App extends PApplet {
         return; // Exit the draw function
     }
 
-    // Check for Win Condition
     if (currentWaveIndex == waves.size() && activeMonsters.isEmpty()) {
         System.out.println("Current Wave Index: " + currentWaveIndex);
         System.out.println("Total Waves: " + waves.size());
         System.out.println("Active Monsters: " + activeMonsters.size());
-
+    
         if (config.hasKey("levels") && currentLevelIndex < levels.size() - 1) {
             currentLevelIndex++;
             currentLevelConfig = levels.getJSONObject(currentLevelIndex);
@@ -460,6 +459,7 @@ public class App extends PApplet {
             text("YOU WIN", WIDTH / 2, HEIGHT / 2);
             textAlign(LEFT, BASELINE); // Reset the text alignment
             noLoop(); // Stop the game loop
+            return;  // Return here to prevent further rendering
         }
     }
     
