@@ -45,20 +45,20 @@ public class TopBar {
         app.noStroke();
         app.rect(manaBarX, manaBarY, manaBarWidth, manaBarHeight);
         
-
         // Draw the actual mana bar with the specified color
         app.fill(app.color(0x03, 0xD6, 0xD6));
         float manaPercentage = (float) mana / manaCap;
         app.rect(manaBarX + 2, manaBarY + 2, manaPercentage * (manaBarWidth - 4), manaBarHeight - 3);  // Adjusted height to fill white space
-   
+        
         // Draw the border around the mana bar
         app.stroke(0);
         app.strokeWeight(3);
         app.noFill();
         app.rect(manaBarX, manaBarY, manaBarWidth, manaBarHeight);
         
-        // Reset stroke weight for other elements
-        app.strokeWeight(0);
+        // Reset stroke weight and disable stroke for other elements
+        app.strokeWeight(1);
+        app.noStroke();
         
         // Display the mana value in the center of the mana bar
         String manaText = mana + "/" + manaCap;
@@ -69,10 +69,12 @@ public class TopBar {
         
         // Render wave timer
         if (waveNumber > 0 && timeRemaining >= 0) {
+            app.textSize(20);  // Increased text size for wave timer
             String waveText = "Wave " + waveNumber + " starts: " + Math.round(timeRemaining);
             app.text(waveText, 16, manaBarY + 13);
         }
     }
+    
     
     public void updateMana(float amount) {
         this.mana += amount;
