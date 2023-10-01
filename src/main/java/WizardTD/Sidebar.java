@@ -136,20 +136,26 @@ public class Sidebar {
     
     private void renderManaPoolSpellCost(PApplet app) {
         if (isButtonHovered(app.mouseX, app.mouseY, 6 * (buttonHeight + 10))) {
-            int costBoxWidth = 70;
-            int costBoxHeight = 30;
-            int startX = buttonX - costBoxWidth - 10;
+            int costBoxWidth = 65;  // Reduced width
+            int costBoxHeight = 25;  // Reduced height
+            int startX = buttonX - costBoxWidth - 20;  // Shifted further to the left
             int startY = buttonY + 6 * (buttonHeight + 10);
-    
+        
             app.fill(app.color(255));  // White color
             app.rect(startX, startY, costBoxWidth, costBoxHeight);
-    
+            
+            // Add a thin black outline
+            app.stroke(0);
+            app.strokeWeight(1);
+            app.noFill();
+            app.rect(startX, startY, costBoxWidth, costBoxHeight);
+            
+            app.noStroke();  // Reset stroke
             app.fill(0);  // Text color (black)
-            app.textSize(14);
-            app.text("Cost: " + (int)mainApp.getCurrentManaPoolSpellCost(), startX + 10, startY + 20);
+            app.textSize(12);  // Reduced font size
+            app.text("Cost: " + (int)mainApp.getCurrentManaPoolSpellCost(), startX + 5, startY + 17);  // Adjusted text position
         }
     }
-    
     
 
     // Check which button was clicked
@@ -159,18 +165,25 @@ public class Sidebar {
     }
 
     private void renderTowerCost(PApplet app) {
-        if (isButtonHovered(app.mouseX, app.mouseY, 2*(buttonHeight + 10))) {  // Check if "Place Tower" button is hovered
-            int costBoxWidth = 70;
-            int costBoxHeight = 30;
-            int startX = buttonX - costBoxWidth - 10;
+        if (isButtonHovered(app.mouseX, app.mouseY, 2*(buttonHeight + 10))) {
+            int costBoxWidth = 65;  // Reduced width
+            int costBoxHeight = 25;  // Reduced height
+            int startX = buttonX - costBoxWidth - 20;  // Shifted further to the left
             int startY = buttonY + 2 * (buttonHeight + 10);
-    
+        
             app.fill(app.color(255));  // White color
             app.rect(startX, startY, costBoxWidth, costBoxHeight);
-    
+            
+            // Add a thin black outline
+            app.stroke(0);
+            app.strokeWeight(1);
+            app.noFill();
+            app.rect(startX, startY, costBoxWidth, costBoxHeight);
+            
+            app.noStroke();  // Reset stroke
             app.fill(0);  // Text color (black)
-            app.textSize(14);
-            app.text("Cost: " + mainApp.towerBaseCost, startX + 10, startY + 20);
+            app.textSize(12);  // Reduced font size
+            app.text("Cost: " + mainApp.towerBaseCost, startX + 5, startY + 17);  // Adjusted text position
         }
     }
     
