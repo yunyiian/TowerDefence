@@ -65,11 +65,19 @@ public class App extends PApplet {
     //towers
     private boolean towerPlacementMode = false;
     private boolean gamePaused = false;
+
     public float initialTowerRange;
     public float initialTowerFiringSpeed;
     public float initialTowerDamage;
     public int towerBaseCost;
     private TowerTile selectedTower;
+
+    // New attributes for multilevel
+    private JSONArray levels;
+    private int currentLevelIndex;
+    private JSONObject currentLevelConfig;
+    private JSONObject config;
+
 
 
 
@@ -88,45 +96,54 @@ public class App extends PApplet {
     /**
      * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
      */
-	@Override
+    @Override
     public void setup() {
         frameRate(FPS);
-        JSONObject config = loadJSONObject(configPath);
+        config = loadJSONObject(configPath);
+    
+        // Load root-level configuration values
+        initialTowerRange = config.getInt("initial_tower_range");
+        initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
+        initialTowerDamage = config.getInt("initial_tower_damage");
         initialMana = config.getInt("initial_mana");
+        mana = initialMana; // Initialize the mana to the initial value
         initialManaCap = config.getInt("initial_mana_cap");
         manaGainedPerSecond = config.getInt("initial_mana_gained_per_second");
-        mana = initialMana; 
-
+        towerBaseCost = config.getInt("tower_cost");
         manaPoolSpellInitialCost = config.getFloat("mana_pool_spell_initial_cost");
         manaPoolSpellCostIncreasePerUse = config.getFloat("mana_pool_spell_cost_increase_per_use");
         manaPoolSpellCapMultiplier = config.getFloat("mana_pool_spell_cap_multiplier");
         manaPoolSpellManaGainedMultiplier = config.getFloat("mana_pool_spell_mana_gained_multiplier");
         currentManaPoolSpellCost = manaPoolSpellInitialCost;
-
-
-        initialTowerRange = config.getInt("initial_tower_range");
-        initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
-        initialTowerDamage = config.getInt("initial_tower_damage");
-        towerBaseCost = config.getInt("tower_cost");
-
-        // Load images during setup
-		// Eg:
-        // loadImage("src/main/resources/WizardTD/tower0.png");
-        // loadImage("src/main/resources/WizardTD/tower1.png");
-        // loadImage("src/main/resources/WizardTD/tower2.png");
-
+    
+        if (config.hasKey("levels")) {
+            levels = config.getJSONArray("levels");
+            currentLevelIndex = 0;
+            currentLevelConfig = levels.getJSONObject(currentLevelIndex);
+        } else {
+            currentLevelConfig = config;
+        }
+    
+        initializeLevel();
+    }
+    
+    
+    private void initializeLevel() {
+        // Only fetch level-specific keys here
         board = new Board(); // initialize the board
-        board.loadLayout(config.getString("layout"), this);  
+        board.loadLayout(currentLevelConfig.getString("layout"), this);  
         topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);
         sidebar = new Sidebar(SIDEBAR, HEIGHT, this);
+    
+        JSONArray wavesConfig = currentLevelConfig.getJSONArray("waves");
+        System.out.println("Initializing level with wave count: " + wavesConfig.size());
 
-        JSONArray wavesConfig = config.getJSONArray("waves");
         for (int i = 0; i < wavesConfig.size(); i++) {
             JSONObject waveConfig = wavesConfig.getJSONObject(i);
             int duration = waveConfig.getInt("duration");
             float preWavePause = waveConfig.getFloat("pre_wave_pause");
             JSONArray monstersConfig = waveConfig.getJSONArray("monsters");
-            
+    
             for (int j = 0; j < monstersConfig.size(); j++) {
                 JSONObject monsterConfig = monstersConfig.getJSONObject(j);
                 Wave wave = new Wave(duration, preWavePause, monsterConfig, board, this);
@@ -351,6 +368,7 @@ public class App extends PApplet {
             int updates = sidebar.isDoubleSpeedMode() ? 2 : 1;
         
             for (int u = 0; u < updates; u++) {
+
                 // Handle waves
                 if (currentWaveIndex < waves.size()) {
                     Wave currentWave = waves.get(currentWaveIndex);
@@ -363,8 +381,8 @@ public class App extends PApplet {
                     if (waveTimer > (currentWave.getPreWavePause() + currentWave.getDuration())) {
                         waveTimer = 0;  // Reset timer
                         currentWaveIndex++;  // Move to the next wave
+                        }
                     }
-                }
         
                 // Update all active monsters
                 for (Monster monster : activeMonsters) {
@@ -406,9 +424,8 @@ public class App extends PApplet {
                 topBar.setMana(Math.round(mana));     
                 updateWaveTimer(); 
             }
-        
-        }
 
+        }    
     // Check for Loss Condition
     if (mana < 0) {
         mana = 0; // Set mana to 0 for display purposes
@@ -428,14 +445,23 @@ public class App extends PApplet {
 
     // Check for Win Condition
     if (currentWaveIndex == waves.size() && activeMonsters.isEmpty()) {
-        textSize(32);
-        textAlign(CENTER, CENTER);
-        fill(0, 255, 0); // Set text color to green
-        text("YOU WIN", WIDTH / 2, HEIGHT / 2);
-        textAlign(LEFT, BASELINE); // Reset the text alignment
-        noLoop(); // Stop the game loop
-        return; // Exit the draw function
-    }     
+        System.out.println("Current Wave Index: " + currentWaveIndex);
+        System.out.println("Total Waves: " + waves.size());
+        System.out.println("Active Monsters: " + activeMonsters.size());
+
+        if (config.hasKey("levels") && currentLevelIndex < levels.size() - 1) {
+            currentLevelIndex++;
+            currentLevelConfig = levels.getJSONObject(currentLevelIndex);
+            initializeLevel();
+        } else {
+            textSize(32);
+            textAlign(CENTER, CENTER);
+            fill(0, 255, 0); // Set text color to green
+            text("YOU WIN", WIDTH / 2, HEIGHT / 2);
+            textAlign(LEFT, BASELINE); // Reset the text alignment
+            noLoop(); // Stop the game loop
+        }
+    }
     
     // Renderings (should be done once per frame)
     background(255);

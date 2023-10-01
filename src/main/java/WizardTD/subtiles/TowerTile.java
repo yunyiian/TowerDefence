@@ -103,7 +103,6 @@ public class TowerTile extends Tile {
             if(gameApp.canAfford(upgradeCost)) {
                 rangeUpgradeLevel++;
                 towerRange += 32;  // Increase tower range by 32 pixels
-                System.out.println("Upgraded Range to Level: " + rangeUpgradeLevel);  // Debugging line
                 updateTowerImage();
                 return true;
             }
@@ -118,7 +117,6 @@ public class TowerTile extends Tile {
             if(gameApp.canAfford(upgradeCost)) {
                 speedUpgradeLevel++;
                 towerFiringSpeed += 0.5f;  // Increase firing speed by 0.5 fireballs per second
-                System.out.println("Upgraded Speed to Level: " + speedUpgradeLevel);  // Debugging line
                 updateTowerImage();
                 return true;
             }
@@ -133,7 +131,6 @@ public class TowerTile extends Tile {
             if(gameApp.canAfford(upgradeCost)) {
                 damageUpgradeLevel++;
                 towerDamage += initialTowerDamage / 2.0f;  // Increase damage by half of initial damage
-                System.out.println("Upgraded Damage to Level: " + damageUpgradeLevel);  // Debugging line
                 updateTowerImage();
                 return true;
             }

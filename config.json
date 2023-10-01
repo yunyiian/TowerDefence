@@ -1,3 +1,4 @@
+
 {
   "layout": "level2.txt",
   "waves": [
@@ -64,4 +65,3 @@
   "mana_pool_spell_cap_multiplier": 1.5,
   "mana_pool_spell_mana_gained_multiplier": 1.1
 }
-

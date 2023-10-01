@@ -79,6 +79,7 @@ public class Sidebar {
 
     public void toggleSpeedMode() {
         speedToggleActive = !speedToggleActive;
+        System.out.println("Toggled speed mode to: " + speedToggleActive);
     }
 
     public boolean isDoubleSpeedMode() {
