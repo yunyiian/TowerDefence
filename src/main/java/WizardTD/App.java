@@ -104,9 +104,6 @@ public class App extends PApplet {
         currentManaPoolSpellCost = manaPoolSpellInitialCost;
 
 
-        topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);
-        sidebar = new Sidebar(SIDEBAR, HEIGHT, this);
-
         initialTowerRange = config.getInt("initial_tower_range");
         initialTowerFiringSpeed = config.getFloat("initial_tower_firing_speed");
         initialTowerDamage = config.getInt("initial_tower_damage");
@@ -120,6 +117,8 @@ public class App extends PApplet {
 
         board = new Board(); // initialize the board
         board.loadLayout(config.getString("layout"), this);  
+        topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);
+        sidebar = new Sidebar(SIDEBAR, HEIGHT, this);
 
         JSONArray wavesConfig = config.getJSONArray("waves");
         for (int i = 0; i < wavesConfig.size(); i++) {
@@ -135,6 +134,23 @@ public class App extends PApplet {
             }
         }        
     }
+
+    public void resetGame() {
+        // Reset the game variables to their initial state
+        mana = initialMana;
+        manaMultiplier = 1.0f;
+        totalGameTime = 0.0f;
+        lastFPressTime = 0;
+        currentWaveIndex = 0;
+        waveTimer = 0.0f;
+        activeMonsters.clear();
+        waves.clear();
+        towerPlacementMode = false;
+        gamePaused = false;
+        
+        // Reload the initial setup
+        setup();
+        }
 
     /**
      * Receive key pressed signal from the keyboard.
@@ -392,6 +408,7 @@ public class App extends PApplet {
             }
         
         }
+
     // Check for Loss Condition
     if (mana < 0) {
         mana = 0; // Set mana to 0 for display purposes
@@ -404,6 +421,7 @@ public class App extends PApplet {
         text("YOU LOST", WIDTH / 2, HEIGHT / 2);
         textSize(24);
         text("Press 'r' to restart", WIDTH / 2, HEIGHT / 2 + 40); // Display instruction to restart
+        textAlign(LEFT, BASELINE); // Reset the text alignment
         noLoop(); // Stop the game loop
         return; // Exit the draw function
     }
@@ -414,6 +432,7 @@ public class App extends PApplet {
         textAlign(CENTER, CENTER);
         fill(0, 255, 0); // Set text color to green
         text("YOU WIN", WIDTH / 2, HEIGHT / 2);
+        textAlign(LEFT, BASELINE); // Reset the text alignment
         noLoop(); // Stop the game loop
         return; // Exit the draw function
     }     
@@ -512,23 +531,6 @@ public class App extends PApplet {
 
     public float getCurrentManaPoolSpellCost() {
         return currentManaPoolSpellCost;
-    }
-
-    public void resetGame() {
-    // Reset the game variables to their initial state
-    mana = initialMana;
-    manaMultiplier = 1.0f;
-    totalGameTime = 0.0f;
-    lastFPressTime = 0;
-    currentWaveIndex = 0;
-    waveTimer = 0.0f;
-    activeMonsters.clear();
-    waves.clear();
-    towerPlacementMode = false;
-    gamePaused = false;
-    
-    // Reload the initial setup
-    setup();
     }
 
     
