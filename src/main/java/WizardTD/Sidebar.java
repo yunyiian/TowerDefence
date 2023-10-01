@@ -15,8 +15,8 @@ public class Sidebar {
     private boolean pauseActive = false;
 
 
-    public int buttonWidth = 80;
-    public int buttonHeight = 30;
+    public int buttonWidth = 40;
+    public int buttonHeight = 40;
     private int buttonX;
     private int buttonY;
     private App mainApp;
@@ -25,7 +25,7 @@ public class Sidebar {
     public Sidebar(int width, int height, App app) {
         this.width = width;
         this.height = height;
-        this.buttonX = App.WIDTH - this.width + 20;
+        this.buttonX = App.WIDTH - this.width + 10;
         this.buttonY = App.TOPBAR + 10;
         this.mainApp = app;
     }
@@ -181,22 +181,43 @@ public class Sidebar {
         app.fill(app.color(0x83, 0x74, 0x4A));
         app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);
 
-        renderButton(app, "2x Speed", 0, speedToggleActive); 
-        renderButton(app, "Pause", buttonHeight + 10, pauseActive);
-        renderButton(app, "Place Tower", 2*(buttonHeight + 10), towerPlacementMode);
-        renderButton(app, "Upgrade Range", 3*(buttonHeight + 10), rangeUpgradeMode);
-        renderButton(app, "Upgrade Speed", 4*(buttonHeight + 10), speedUpgradeMode);
-        renderButton(app, "Upgrade Damage", 5*(buttonHeight + 10), damageUpgradeMode);
-        renderButton(app, "Mana Pool Spell", 6 * (buttonHeight + 10), false);          
+        renderButton(app, "FF", 0, speedToggleActive); 
+        renderDescription(app, "2 x speed", 0);
+        
+        renderButton(app, "P", buttonHeight + 10, pauseActive);
+        renderDescription(app, "PAUSE", buttonHeight + 10);
+        
+        renderButton(app, "T", 2*(buttonHeight + 10), towerPlacementMode);
+        renderDescription(app, "Build\ntower", 2*(buttonHeight + 10));
+        
+        renderButton(app, "U1", 3*(buttonHeight + 10), rangeUpgradeMode);
+        renderDescription(app, "Upgrade\nrange", 3*(buttonHeight + 10));
+        
+        renderButton(app, "U2", 4*(buttonHeight + 10), speedUpgradeMode);
+        renderDescription(app, "Upgrade\nspeed", 4*(buttonHeight + 10));
+        
+        renderButton(app, "U3", 5*(buttonHeight + 10), damageUpgradeMode);
+        renderDescription(app, "Upgrade\ndamage", 5*(buttonHeight + 10));
+        
+        renderButton(app, "M", 6 * (buttonHeight + 10), false);
+        renderDescription(app, "Mana pool\ncost: " + (int)mainApp.getCurrentManaPoolSpellCost(), 6*(buttonHeight + 10));
+
         renderManaPoolSpellCost(app);
         renderTowerCost(app);  
-
 
         if (selectedTower != null && isInAnyUpgradeMode()) {
             renderUpgradeCosts(app, selectedTower);
         }
     }
 
+    private void renderDescription(PApplet app, String description, int yOffset) {
+        app.fill(0);  // Black color for text
+        app.textSize(12);  // Smaller text size for descriptions
+        float descX = buttonX + buttonWidth + 5;  // Right of the button
+        float descY = buttonY + 15 + yOffset;  // Vertically align with the top of the button
+        app.text(description, descX, descY);
+    }
+    
     private void renderButton(PApplet app, String text, int yOffset, boolean active) {
         if (active) {
             app.fill(app.color(0xfb, 0xfb, 0x0d));
@@ -214,7 +235,10 @@ public class Sidebar {
         app.noStroke();
 
         app.fill(0);
-        app.textSize(App.CELLSIZE);  // Ensure text size is consistent
-        app.text(text, buttonX + 10, buttonY + 20 + yOffset);
+        app.textSize(App.CELLSIZE * 0.8f);  // Decreased text size
+        float textWidth = app.textWidth(text);
+        float textX = buttonX + (buttonWidth - textWidth) / 2;   // Center text horizontally
+        float textY = buttonY + 28 + yOffset;  // Adjusted for vertical alignment
+        app.text(text, textX, textY);
     }
 }
