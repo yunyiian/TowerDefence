@@ -21,6 +21,9 @@ public class Monster {
     private float speed;  // speed of the monster in pixels per frame
     private float leftoverMove = 0.0f;  
     private int spawnDelay; 
+    private static final float EPSILON = 0.05f; 
+    private List<Node> currentPath = null;
+
 
 
     private float hp;  // Max hit points (initial health)
@@ -167,8 +170,23 @@ public class Monster {
         this.targetX = 0;
         this.targetY = 0;
     } 
-    
-    
+    private boolean isNearTarget() {
+    return Math.abs(x - targetX) < EPSILON && Math.abs(y - targetY) < EPSILON;
+    }
+    private boolean isAlignedWithTile() {
+        return Math.abs(x - Math.round(x)) < EPSILON && Math.abs(y - Math.round(y)) < EPSILON;
+    }
+
+    private Node findWizardHouseTileGoal(Tile[][] tiles) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[0].length; j++) {
+                if (tiles[i][j] instanceof WizardHouseTile) {
+                    return pathFinder.new Node(j, i);
+                }
+            }
+        }
+        return null;
+    }
      /**
      * moveInside method
      *          
@@ -177,30 +195,23 @@ public class Monster {
      * For details on the A* algorithm, refer to the credits in the PathFinder class.
      */
      private void moveInside(Tile[][] tiles) {
-         // If the monster is close to its target or doesn't have a target, determine the next tile
-         if (Math.abs(x - targetX) < 0.01 && Math.abs(y - targetY) < 0.01 || targetX == 0 && targetY == 0) {
-             Node start = pathFinder.new Node((int)x, (int)y);  // Create a start node based on the monster's current position
-             Node goal = null;
-             
-             // Loop through the tiles to find the WizardHouseTile and set the goal node to its position
-             for (int i = 0; i < tiles.length; i++) {
-                 for (int j = 0; j < tiles[0].length; j++) {
-                     if (tiles[i][j] instanceof WizardHouseTile) {
-                         goal = pathFinder.new Node(j, i);  // Update the goal node based on the WizardHouseTile's position
-                     }
-                 }
-             }
-    
-            // Use the PathFinder's findPath method to get the path to the wizard house
-            List<Node> path = pathFinder.findPath(start, goal, tiles);
-    
-            // If the path is valid and has more than one node, set the next tile in the path as the monster's target
-            if (path != null && path.size() > 1) {
-                Node nextTile = path.get(1);
+        if (isNearTarget() || targetX == 0 && targetY == 0) {
+            if (currentPath == null || currentPath.isEmpty()) {
+                Node start = pathFinder.new Node((int) x, (int) y);
+                Node goal = findWizardHouseTileGoal(tiles);
+                
+                currentPath = pathFinder.findPath(start, goal, tiles);
+                if (currentPath != null && currentPath.size() > 0) {
+                    currentPath.remove(0);  // Remove the starting node, as the monster is already there
+                }
+            }
+            
+            if (currentPath != null && !currentPath.isEmpty()) {
+                Node nextTile = currentPath.get(0);
+                currentPath.remove(0);  // Monster is moving to this tile, so remove it from the path
                 targetX = nextTile.x;
                 targetY = nextTile.y;
             } else {
-                // If the monster is already at the goal or there's no path, set the target as the current position
                 targetX = x;
                 targetY = y;
             }
@@ -227,6 +238,7 @@ public class Monster {
             }
         }
      }
+
 
      public float getDirectionAngle() {
         switch (direction) {
