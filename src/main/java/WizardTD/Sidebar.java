@@ -104,35 +104,77 @@ public class Sidebar {
         
 
     private void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
-        int startX = app.width - this.width + 10;  // adjust to the left side of the sidebar
-        int startY = app.height - 100; // starting position at bottom left
-    
-        app.fill(app.color(0x83, 0x74, 0x4A));
-        app.rect(startX, startY, 150, 80); // background for the costs
-    
-        app.fill(255); // Text color
-        app.textSize(14); 
-        app.text("Upgrade Cost", startX + 10, startY + 20);
+        int startX = app.width - this.width + 10;  // Adjust to the left side of the sidebar
+        int startY = app.height - 110; // Adjust starting position at bottom left
+        int boxWidth = 100;  // Reduced by 20 to make it slimmer
+        
+        app.textSize(12);  // Make text slightly smaller
+        
+        // Top box: "Upgrade Costs"
+        app.fill(255);  // White color
+        app.rect(startX, startY, boxWidth, 20);
+        app.stroke(0);  // black color
+        app.noFill();
+        app.rect(startX, startY, boxWidth, 20);
+        startY += 20; // Move startY down after the "Upgrade Costs" box
     
         int totalCost = 0;
+        int yOffset = 0; // Adjust for each piece of text
+    
+        StringBuilder upgradeDetails = new StringBuilder();
+    
         if (isInRangeUpgradeMode()) {
             int cost = selectedTower.getNextRangeUpgradeCost();
-            app.text("Range: " + cost, startX + 20, startY + 40);
+            upgradeDetails.append("Range: ").append(cost).append("\n");
             totalCost += cost;
+            yOffset += 20;
         }
         if (isInSpeedUpgradeMode()) {
             int cost = selectedTower.getNextSpeedUpgradeCost();
-            app.text("Speed: " + cost, startX + 20, startY + 60);
+            upgradeDetails.append("Speed: ").append(cost).append("\n");
             totalCost += cost;
+            yOffset += 20;
         }
         if (isInDamageUpgradeMode()) {
             int cost = selectedTower.getNextDamageUpgradeCost();
-            app.text("Damage: " + cost, startX + 20, startY + 80);
+            upgradeDetails.append("Damage: ").append(cost).append("\n");
             totalCost += cost;
+            yOffset += 20;
         }
     
-        app.text("Total: " + totalCost, startX + 20, startY + 100);
+        // Middle box: Individual upgrade costs
+        app.fill(255);  // White color
+        app.rect(startX, startY, boxWidth, yOffset);
+        app.stroke(0);  // black color
+        app.noFill();
+        app.rect(startX, startY, boxWidth, yOffset);
+        startY += yOffset;  // Move startY down after the individual costs box
+    
+        // Bottom box: Total
+        app.fill(255);  // White color
+        app.rect(startX, startY, boxWidth, 20);
+        app.stroke(0);  // black color
+        app.noFill();
+        app.rect(startX, startY, boxWidth, 20);
+    
+        // Draw texts after all rectangles
+        app.fill(0);  // Black text color
+    
+        // "Upgrade Costs" text
+        app.text("Upgrade Costs", startX + 10, app.height - 110 + 15 - 3);
+    
+        // Individual upgrade costs text
+        float textHeight = app.textAscent() + app.textDescent();  // Calculate text height
+        app.text(upgradeDetails.toString(), startX + 10, app.height - 110 + 20 + 10 + (yOffset - upgradeDetails.toString().split("\n").length * textHeight) / 2);
+    
+        // "Total" text
+        app.text("Total: " + totalCost, startX + 10, app.height - 110 + 20 + yOffset + 15 - 3);
+    
+        // Reset graphics settings
+        app.noStroke();
+        app.fill(255);
     }
+
     
     private void renderManaPoolSpellCost(PApplet app) {
         if (isButtonHovered(app.mouseX, app.mouseY, 6 * (buttonHeight + 10))) {
