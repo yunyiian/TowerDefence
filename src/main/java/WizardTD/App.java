@@ -154,6 +154,10 @@ public class App extends PApplet {
             gamePaused = sidebar.isPauseActive();
         }
 
+        if (key == 'R' || key == 'r') {
+            resetGame();
+            loop();  // Resume the game loop
+        }
 
         if (key == 'T' || key == 't') {
             sidebar.toggleTowerPlacementMode();
@@ -392,6 +396,7 @@ public class App extends PApplet {
     if (mana < 0) {
         mana = 0; // Set mana to 0 for display purposes
         topBar.setMana(mana); // Update the display
+        topBar.render(this);
 
         textSize(32);
         textAlign(CENTER, CENTER);
@@ -508,6 +513,24 @@ public class App extends PApplet {
     public float getCurrentManaPoolSpellCost() {
         return currentManaPoolSpellCost;
     }
+
+    public void resetGame() {
+    // Reset the game variables to their initial state
+    mana = initialMana;
+    manaMultiplier = 1.0f;
+    totalGameTime = 0.0f;
+    lastFPressTime = 0;
+    currentWaveIndex = 0;
+    waveTimer = 0.0f;
+    activeMonsters.clear();
+    waves.clear();
+    towerPlacementMode = false;
+    gamePaused = false;
+    
+    // Reload the initial setup
+    setup();
+    }
+
     
     public static void main(String[] args) {
         PApplet.main("WizardTD.App");
