@@ -114,6 +114,17 @@ public class Board {
         }
         return null;  // Failed to place the tower
     }
+
+    public void notifyFireballsToDespawn(Monster monster) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j] instanceof TowerTile) {
+                    ((TowerTile) tiles[i][j]).despawnFireballsTargeting(monster);
+                }
+            }
+        }
+    }
+    
     
     public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {
         int tileX = mouseX / App.CELLSIZE;

@@ -245,6 +245,7 @@ public class Monster {
         if (board.isWizardHouseTile((int) this.x, (int) this.y)) {
             // Monster has reached the WizardHouseTile
             game.deductMana((int) this.currentHp);  // Decrement wizard's mana by monster's current HP
+            board.notifyFireballsToDespawn(this); 
             resetMonsterPosition();  // Reset monster's position to a spawn point
         }        
     }

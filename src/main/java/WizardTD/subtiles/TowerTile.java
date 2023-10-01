@@ -186,7 +186,16 @@ public class TowerTile extends Tile {
     public int getNextDamageUpgradeCost() {
         return getUpgradeCost(damageUpgradeLevel);
     }
-    
+
+    public void despawnFireballsTargeting(Monster monster) {
+        Iterator<Fireball> iterator = fireballs.iterator();
+        while (iterator.hasNext()) {
+            Fireball fireball = iterator.next();
+            if (fireball.getTarget() == monster) {
+                iterator.remove();
+            }
+        }
+    }
     
     
 
