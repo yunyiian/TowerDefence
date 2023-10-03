@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WizardHouseTile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD.subtiles</a> &gt; <span class="el_source">WizardHouseTile.java</span></div><h1>WizardHouseTile.java</h1><pre class="source lang-java linenums">package WizardTD.subtiles;
+import WizardTD.Tile;
+import processing.core.PApplet;
+import processing.core.PImage;
+import WizardTD.App;
+import WizardTD.Board;
+
+public class WizardHouseTile extends Tile {
+    private PImage image;
+    private Board board;
+    private int x, y;  // Add fields to store x and y coordinates
+
+<span class="fc" id="L13">    public WizardHouseTile(App app, int x, int y, Board board) {</span>
+<span class="nc" id="L14">        this.image = app.loadImage(&quot;src/main/resources/WizardTD/wizard_house.png&quot;);</span>
+<span class="nc" id="L15">        this.board = board;</span>
+<span class="nc" id="L16">        this.x = x;  // Initialize x coordinate</span>
+<span class="nc" id="L17">        this.y = y;  // Initialize y coordinate</span>
+<span class="nc" id="L18">    }</span>
+
+    @Override
+    public void render(int x, int y, PApplet app) {
+<span class="nc" id="L22">        PImage rotatedImage = image;</span>
+    
+<span class="nc" id="L24">        boolean topIsPath = board.isPathTile(this.x, this.y - 1);</span>
+<span class="nc" id="L25">        boolean bottomIsPath = board.isPathTile(this.x, this.y + 1);</span>
+<span class="nc" id="L26">        boolean leftIsPath = board.isPathTile(this.x - 1, this.y);</span>
+    
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (topIsPath) {</span>
+<span class="nc" id="L29">            rotatedImage = ((App) app).rotateImageByDegrees(image, 270);</span>
+        }
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        else if (bottomIsPath){</span>
+<span class="nc" id="L32">            rotatedImage = ((App) app).rotateImageByDegrees(image, 90);</span>
+        }
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        else if (leftIsPath){</span>
+<span class="nc" id="L35">            rotatedImage = ((App) app).rotateImageByDegrees(image, 180);</span>
+        }
+        else {
+<span class="nc" id="L38">            rotatedImage = ((App) app).rotateImageByDegrees(image, 0);</span>
+        }
+    
+        // Adjust the position to center the WizardHouseTile
+<span class="nc" id="L42">        app.image(rotatedImage, x - 8, y - 8);</span>
+<span class="nc" id="L43">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

@@ -78,6 +78,10 @@ public class App extends PApplet {
     private JSONObject currentLevelConfig;
     private JSONObject config;
 
+    // New level transition
+    private boolean isTransitioning = false;
+    private float transitionTimer = 0.0f;
+    private float transitionDuration = 2.0f; // 2 seconds transition
 
 
 
@@ -443,25 +447,45 @@ public class App extends PApplet {
         return; // Exit the draw function
     }
 
+    // Check for Win Condition
     if (currentWaveIndex == waves.size() && activeMonsters.isEmpty()) {
         System.out.println("Current Wave Index: " + currentWaveIndex);
         System.out.println("Total Waves: " + waves.size());
         System.out.println("Active Monsters: " + activeMonsters.size());
-    
-        if (config.hasKey("levels") && currentLevelIndex < levels.size() - 1) {
-            currentLevelIndex++;
-            currentLevelConfig = levels.getJSONObject(currentLevelIndex);
-            initializeLevel();
-        } else {
+
+        if (!isTransitioning) {
+            if (config.hasKey("levels") && currentLevelIndex < levels.size() - 1) {
+                isTransitioning = true;
+            } else {
+                textSize(32);
+                textAlign(CENTER, CENTER);
+                fill(0, 255, 0); // Set text color to green
+                text("YOU WIN", WIDTH / 2, HEIGHT / 2);
+                textAlign(LEFT, BASELINE); // Reset the text alignment
+                noLoop(); // Stop the game loop
+                return;  // Return here to prevent further rendering
+            }
+        }
+
+        if (isTransitioning) {
+            transitionTimer += 1.0 / FPS;
             textSize(32);
             textAlign(CENTER, CENTER);
-            fill(0, 255, 0); // Set text color to green
-            text("YOU WIN", WIDTH / 2, HEIGHT / 2);
+            fill(0, 0, 255); // Set text color to blue
+            text("Next Level in: " + Math.ceil(transitionDuration - transitionTimer), WIDTH / 2, HEIGHT / 2);
             textAlign(LEFT, BASELINE); // Reset the text alignment
-            noLoop(); // Stop the game loop
-            return;  // Return here to prevent further rendering
+
+            if (transitionTimer >= transitionDuration) {
+                isTransitioning = false;
+                transitionTimer = 0.0f;
+                currentLevelIndex++;
+                currentLevelConfig = levels.getJSONObject(currentLevelIndex);
+                initializeLevel();
+            }
+            return;
         }
     }
+
     
     // Renderings (should be done once per frame)
     background(255);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="WizardTD.SidebarTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.046">
+  <properties/>
+  <testcase name="testTogglePauseMode()" classname="WizardTD.SidebarTest" time="0.006"/>
+  <testcase name="testToggleSpeedUpgradeMode()" classname="WizardTD.SidebarTest" time="0.004"/>
+  <testcase name="testToggleTowerPlacementMode()" classname="WizardTD.SidebarTest" time="0.01"/>
+  <testcase name="testIsInAnyUpgradeMode()" classname="WizardTD.SidebarTest" time="0.002"/>
+  <testcase name="testToggleSpeedMode()" classname="WizardTD.SidebarTest" time="0.002"/>
+  <testcase name="testToggleDamageUpgradeMode()" classname="WizardTD.SidebarTest" time="0.002"/>
+  <testcase name="testToggleRangeUpgradeMode()" classname="WizardTD.SidebarTest" time="0.003"/>
+  <system-out><![CDATA[Speed upgrade mode toggled: true
+Speed upgrade mode toggled: false
+Range upgrade mode toggled: true
+Speed upgrade mode toggled: true
+Damage upgrade mode toggled: true
+Toggled speed mode to: true
+Toggled speed mode to: false
+Damage upgrade mode toggled: true
+Damage upgrade mode toggled: false
+Range upgrade mode toggled: true
+Range upgrade mode toggled: false
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

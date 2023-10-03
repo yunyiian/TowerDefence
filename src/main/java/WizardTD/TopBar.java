@@ -94,6 +94,12 @@ public class TopBar {
         return this.mana;
     }
 
+
+    public int getManaCap() {
+        return this.manaCap;
+    }
+
+
     public void setManaCap(int newManaCap) {
         this.manaCap = newManaCap;
     }

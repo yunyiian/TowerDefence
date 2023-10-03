@@ -243,6 +243,33 @@ public class TowerTile extends Tile {
         
         app.textSize(App.CELLSIZE);  // Reset text size
     }
+    public PImage getImage() {
+        return image;
+    }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
+    }
+    
+    public List<Fireball> getFireballs() {
+        return fireballs;
+    }
+    
+    public float getTowerFiringSpeed() {
+        return towerFiringSpeed;
+    }
+    
+    public float getTowerDamage() {
+        return towerDamage;
+    }
+
+    public float getTowerRange() {
+        return towerRange;
+    }
     
     
 }

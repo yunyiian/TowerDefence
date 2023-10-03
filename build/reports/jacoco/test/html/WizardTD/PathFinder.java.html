@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PathFinder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">PathFinder.java</span></div><h1>PathFinder.java</h1><pre class="source lang-java linenums">package WizardTD;
+import java.util.*;
+
+import WizardTD.subtiles.PathTile;
+import WizardTD.subtiles.WizardHouseTile;
+/**
+ * PathFinder class
+ * 
+ * This class implements the A* pathfinding algorithm,
+ * 
+ * Reference:
+ * Hart, P. E., Nilsson, N. J., &amp; Raphael, B. (1968). 
+ * A formal basis for the heuristic determination of minimum cost paths. 
+ * IEEE transactions on Systems Science and Cybernetics, 4(2), 100-107.
+ */
+<span class="fc" id="L16">public class PathFinder {</span>
+
+    public class Node {
+        public int x, y;
+        public float g, h, f;
+        public Node parent;
+
+<span class="fc" id="L23">        public Node(int x, int y) {</span>
+<span class="fc" id="L24">            this.x = x;</span>
+<span class="fc" id="L25">            this.y = y;</span>
+<span class="fc" id="L26">            this.g = Float.POSITIVE_INFINITY;</span>
+<span class="fc" id="L27">            this.h = 0;</span>
+<span class="fc" id="L28">            this.f = 0;</span>
+<span class="fc" id="L29">            this.parent = null;</span>
+<span class="fc" id="L30">        }</span>
+
+        @Override
+        public boolean equals(Object obj) {
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            if (this == obj) return true;</span>
+<span class="pc bpc" id="L35" title="2 of 4 branches missed.">            if (obj == null || getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L36">            Node node = (Node) obj;</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">            return x == node.x &amp;&amp; y == node.y;</span>
+        }
+
+        @Override
+        public int hashCode() {
+<span class="fc" id="L42">            return Objects.hash(x, y);</span>
+        }
+    }
+
+    public float heuristic(Node a, Node b) {
+<span class="fc" id="L47">        return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);</span>
+    }
+
+    public List&lt;Node&gt; getNeighbors(Node node, Tile[][] tiles) {
+<span class="nc" id="L51">        List&lt;Node&gt; neighbors = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L52">        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // Down, Right, Up, Left</span>
+
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        for (int[] dir : directions) {</span>
+<span class="nc" id="L55">            int x = node.x + dir[0];</span>
+<span class="nc" id="L56">            int y = node.y + dir[1];</span>
+<span class="nc bnc" id="L57" title="All 12 branches missed.">            if (x &gt;= 0 &amp;&amp; x &lt; tiles[0].length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; tiles.length &amp;&amp;</span>
+                (tiles[y][x] instanceof PathTile || tiles[y][x] instanceof WizardHouseTile)) {
+<span class="nc" id="L59">                neighbors.add(new Node(x, y));</span>
+            }
+        }
+<span class="nc" id="L62">        return neighbors;</span>
+    }
+
+    public List&lt;Node&gt; findPath(Node start, Node goal, Tile[][] tiles) {
+<span class="nc" id="L66">        Set&lt;Node&gt; openList = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L67">        Set&lt;Node&gt; closedList = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L68">        openList.add(start);</span>
+    
+<span class="nc" id="L70">        start.g = 0;</span>
+<span class="nc" id="L71">        start.h = heuristic(start, goal);</span>
+<span class="nc" id="L72">        start.f = start.h;</span>
+    
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        while (!openList.isEmpty()) {</span>
+<span class="nc" id="L75">            List&lt;Node&gt; currentNodes = getLowestFCostNodes(openList);</span>
+<span class="nc" id="L76">            Node current = currentNodes.get(new Random().nextInt(currentNodes.size()));</span>
+    
+            
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            if (current.equals(goal)) {</span>
+<span class="nc" id="L80">                return reconstructPath(current);</span>
+            }
+
+<span class="nc" id="L83">            openList.remove(current);</span>
+<span class="nc" id="L84">            closedList.add(current);</span>
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            for (Node neighbor : getNeighbors(current, tiles)) {</span>
+<span class="nc bnc" id="L87" title="All 2 branches missed.">                if (closedList.contains(neighbor)) {</span>
+<span class="nc" id="L88">                    continue;</span>
+                }
+                
+<span class="nc" id="L91">                float tentativeG = current.g + 1;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">                if (tentativeG &lt; neighbor.g) {</span>
+<span class="nc" id="L93">                    neighbor.parent = current;</span>
+<span class="nc" id="L94">                    neighbor.g = tentativeG;</span>
+<span class="nc" id="L95">                    neighbor.h = heuristic(neighbor, goal);</span>
+<span class="nc" id="L96">                    neighbor.f = neighbor.g + neighbor.h;</span>
+
+<span class="nc bnc" id="L98" title="All 2 branches missed.">                    if (!openList.contains(neighbor)) {</span>
+<span class="nc" id="L99">                        openList.add(neighbor);</span>
+                    }
+                }
+<span class="nc" id="L102">            }</span>
+<span class="nc" id="L103">        }</span>
+<span class="nc" id="L104">        return new ArrayList&lt;&gt;(); // Return an empty list if no path is found</span>
+    }
+
+    private List&lt;Node&gt; getLowestFCostNodes(Set&lt;Node&gt; nodes) {
+<span class="nc" id="L108">        List&lt;Node&gt; lowestNodes = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L109">        float lowestFCost = Float.POSITIVE_INFINITY;</span>
+    
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        for (Node node : nodes) {</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            if (node.f &lt; lowestFCost) {</span>
+<span class="nc" id="L113">                lowestFCost = node.f;</span>
+<span class="nc" id="L114">                lowestNodes.clear();</span>
+<span class="nc" id="L115">                lowestNodes.add(node);</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            } else if (node.f == lowestFCost) {</span>
+<span class="nc" id="L117">                lowestNodes.add(node);</span>
+            }
+<span class="nc" id="L119">        }</span>
+    
+<span class="nc" id="L121">        return lowestNodes;</span>
+    }
+
+    private List&lt;Node&gt; reconstructPath(Node node) {
+<span class="nc" id="L125">        List&lt;Node&gt; path = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">        while (node != null) {</span>
+<span class="nc" id="L127">            path.add(node);</span>
+<span class="nc" id="L128">            node = node.parent;</span>
+        }
+<span class="nc" id="L130">        Collections.reverse(path);</span>
+<span class="nc" id="L131">        return path;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

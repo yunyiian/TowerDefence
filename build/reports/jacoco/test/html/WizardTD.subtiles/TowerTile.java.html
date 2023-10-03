@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TowerTile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD.subtiles</a> &gt; <span class="el_source">TowerTile.java</span></div><h1>TowerTile.java</h1><pre class="source lang-java linenums">package WizardTD.subtiles;
+
+import WizardTD.*;
+import processing.core.PApplet;
+import processing.core.PImage;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class TowerTile extends Tile {
+    private PImage image;
+<span class="nc" id="L12">    private int rangeUpgradeLevel = 0;</span>
+<span class="nc" id="L13">    private int speedUpgradeLevel = 0;</span>
+<span class="nc" id="L14">    private int damageUpgradeLevel = 0;</span>
+    private PApplet app;
+<span class="nc" id="L16">    private int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red</span>
+    private float towerRange;
+    private float towerFiringSpeed;
+    private float towerDamage;
+    private float initialTowerDamage;
+<span class="nc" id="L21">    private float timeSinceLastShot = 0;  // To control the firing rate</span>
+
+    private int x;  // x coordinate
+    private int y;  // y coordinate
+<span class="nc" id="L25">    private List&lt;Fireball&gt; fireballs = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L27">    public TowerTile(PApplet app, int x, int y, float towerRange, float towerFiringSpeed, float towerDamage) {</span>
+<span class="nc" id="L28">        this.app = app;</span>
+<span class="nc" id="L29">        this.x = x;</span>
+<span class="nc" id="L30">        this.y = y;</span>
+<span class="nc" id="L31">        image = app.loadImage(&quot;src/main/resources/WizardTD/tower0.png&quot;);</span>
+<span class="nc" id="L32">        this.initialTowerDamage = towerDamage;</span>
+<span class="nc" id="L33">        this.towerRange = towerRange;</span>
+<span class="nc" id="L34">        this.towerFiringSpeed = towerFiringSpeed;</span>
+<span class="nc" id="L35">        this.towerDamage = towerDamage;</span>
+<span class="nc" id="L36">    }</span>
+
+    public int getCost() {
+<span class="nc" id="L39">        int cost = 100;  // Base cost from config</span>
+<span class="nc" id="L40">        int upgradeCount = rangeUpgradeLevel + speedUpgradeLevel + damageUpgradeLevel;</span>
+<span class="nc" id="L41">        cost += 20 * upgradeCount;  // Add 20 for each upgrade</span>
+<span class="nc" id="L42">        return cost;</span>
+    }
+
+    public int getUpgradeCost(int currentLevel) {
+<span class="nc" id="L46">        return 20 + (currentLevel * 10); // 20 for level 1, 30 for level 2, and so on...</span>
+    }
+    
+    
+
+    public Monster getClosestMonsterInRange(List&lt;Monster&gt; monsters) {
+<span class="nc" id="L52">        Monster closestMonster = null;</span>
+<span class="nc" id="L53">        float minDistance = Float.MAX_VALUE;</span>
+    
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        for (Monster monster : monsters) {</span>
+<span class="nc" id="L56">            float distance = PApplet.dist(x * App.CELLSIZE, y * App.CELLSIZE, monster.getX() * App.CELLSIZE, monster.getY() * App.CELLSIZE);</span>
+<span class="nc bnc" id="L57" title="All 4 branches missed.">            if (distance &lt; towerRange &amp;&amp; distance &lt; minDistance) {</span>
+<span class="nc" id="L58">                closestMonster = monster;</span>
+<span class="nc" id="L59">                minDistance = distance;</span>
+            }
+<span class="nc" id="L61">        }</span>
+<span class="nc" id="L62">        return closestMonster;</span>
+    }
+
+    public void shootMonster(Monster monster) {
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (monster.getCurrentHp() &lt;= 0) {</span>
+<span class="nc" id="L67">            return; // Do not shoot at dead monsters.</span>
+        }
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        if (timeSinceLastShot &gt;= 1.0 / towerFiringSpeed) {</span>
+<span class="nc" id="L70">            fireballs.add(new Fireball((x * App.CELLSIZE) + (App.CELLSIZE / 2.0f), (y * App.CELLSIZE) + (App.CELLSIZE / 2.0f) + App.TOPBAR, monster, app));</span>
+<span class="nc" id="L71">            timeSinceLastShot = 0;</span>
+        }
+<span class="nc" id="L73">    }</span>
+    
+
+    public void updateFireballs(boolean doubleSpeed) {
+<span class="nc" id="L77">        Iterator&lt;Fireball&gt; iterator = fireballs.iterator();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L79">            Fireball fireball = iterator.next();</span>
+<span class="nc" id="L80">            fireball.update(doubleSpeed);  // Pass the doubleSpeed value</span>
+            
+<span class="nc bnc" id="L82" title="All 4 branches missed.">            if (fireball.getTarget() != null &amp;&amp; fireball.hasHitTarget()) {</span>
+<span class="nc" id="L83">                fireball.getTarget().reduceHealth(towerDamage);</span>
+<span class="nc" id="L84">                iterator.remove();</span>
+            }
+<span class="nc" id="L86">        }</span>
+<span class="nc" id="L87">    }</span>
+
+    public void renderFireballs() {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        for (Fireball fireball : fireballs) {</span>
+<span class="nc" id="L91">            fireball.render();</span>
+<span class="nc" id="L92">        }</span>
+<span class="nc" id="L93">    }</span>
+
+    public void incrementTimeSinceLastShot(double increment) {
+<span class="nc" id="L96">        this.timeSinceLastShot += increment;</span>
+<span class="nc" id="L97">    }</span>
+
+    public boolean upgradeRange() {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if(app instanceof App) {</span>
+<span class="nc" id="L101">            App gameApp = (App) app;</span>
+<span class="nc" id="L102">            int upgradeCost = gameApp.calculateUpgradeCost(rangeUpgradeLevel);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            if(gameApp.canAfford(upgradeCost)) {</span>
+<span class="nc" id="L104">                rangeUpgradeLevel++;</span>
+<span class="nc" id="L105">                towerRange += 32;  // Increase tower range by 32 pixels</span>
+<span class="nc" id="L106">                updateTowerImage();</span>
+<span class="nc" id="L107">                return true;</span>
+            }
+        }
+<span class="nc" id="L110">        return false;</span>
+    }
+    
+    public boolean upgradeSpeed() {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        if(app instanceof App) {</span>
+<span class="nc" id="L115">            App gameApp = (App) app;</span>
+<span class="nc" id="L116">            int upgradeCost = gameApp.calculateUpgradeCost(speedUpgradeLevel);</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if(gameApp.canAfford(upgradeCost)) {</span>
+<span class="nc" id="L118">                speedUpgradeLevel++;</span>
+<span class="nc" id="L119">                towerFiringSpeed += 0.5f;  // Increase firing speed by 0.5 fireballs per second</span>
+<span class="nc" id="L120">                updateTowerImage();</span>
+<span class="nc" id="L121">                return true;</span>
+            }
+        }
+<span class="nc" id="L124">        return false;</span>
+    }
+    
+    public boolean upgradeDamage() {
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        if(app instanceof App) {</span>
+<span class="nc" id="L129">            App gameApp = (App) app;</span>
+<span class="nc" id="L130">            int upgradeCost = gameApp.calculateUpgradeCost(damageUpgradeLevel);</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            if(gameApp.canAfford(upgradeCost)) {</span>
+<span class="nc" id="L132">                damageUpgradeLevel++;</span>
+<span class="nc" id="L133">                towerDamage += initialTowerDamage / 2.0f;  // Increase damage by half of initial damage</span>
+<span class="nc" id="L134">                updateTowerImage();</span>
+<span class="nc" id="L135">                return true;</span>
+            }
+        }
+<span class="nc" id="L138">        return false;</span>
+    }
+
+    public int getRangeUpgradeLevel() {
+<span class="nc" id="L142">        return rangeUpgradeLevel;</span>
+    }
+    
+    public int getSpeedUpgradeLevel() {
+<span class="nc" id="L146">        return speedUpgradeLevel;</span>
+    }
+    
+    public int getDamageUpgradeLevel() {
+<span class="nc" id="L150">        return damageUpgradeLevel;</span>
+    }
+    
+    
+
+    private void updateTowerImage() {
+<span class="nc bnc" id="L156" title="All 6 branches missed.">        if (rangeUpgradeLevel &gt;= 2 &amp;&amp; speedUpgradeLevel &gt;= 2 &amp;&amp; damageUpgradeLevel &gt;= 2) {</span>
+<span class="nc" id="L157">            image = app.loadImage(&quot;src/main/resources/WizardTD/tower2.png&quot;);</span>
+<span class="nc" id="L158">            towerAppearanceState = 2;</span>
+<span class="nc bnc" id="L159" title="All 6 branches missed.">        } else if (rangeUpgradeLevel &gt;= 1 &amp;&amp; speedUpgradeLevel &gt;= 1 &amp;&amp; damageUpgradeLevel &gt;= 1) {</span>
+<span class="nc" id="L160">            image = app.loadImage(&quot;src/main/resources/WizardTD/tower1.png&quot;);</span>
+<span class="nc" id="L161">            towerAppearanceState = 1;</span>
+        } else {
+<span class="nc" id="L163">            image = app.loadImage(&quot;src/main/resources/WizardTD/tower0.png&quot;);</span>
+<span class="nc" id="L164">            towerAppearanceState = 0;</span>
+        }
+<span class="nc" id="L166">    }</span>
+
+    public boolean isMouseHovering(int mouseX, int mouseY) {
+<span class="nc" id="L169">        float towerCenterX = x * App.CELLSIZE + App.CELLSIZE / 2.0f;</span>
+<span class="nc" id="L170">        float towerCenterY = y * App.CELLSIZE + App.CELLSIZE / 2.0f;</span>
+        
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        return PApplet.dist(towerCenterX, towerCenterY, mouseX, mouseY) &lt;= App.CELLSIZE / 2.0f;</span>
+    }
+
+    public int getNextRangeUpgradeCost() {
+<span class="nc" id="L176">        return getUpgradeCost(rangeUpgradeLevel);</span>
+    }
+    
+    public int getNextSpeedUpgradeCost() {
+<span class="nc" id="L180">        return getUpgradeCost(speedUpgradeLevel);</span>
+    }
+    
+    public int getNextDamageUpgradeCost() {
+<span class="nc" id="L184">        return getUpgradeCost(damageUpgradeLevel);</span>
+    }
+
+    public void despawnFireballsTargeting(Monster monster) {
+<span class="nc" id="L188">        Iterator&lt;Fireball&gt; iterator = fireballs.iterator();</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        while (iterator.hasNext()) {</span>
+<span class="nc" id="L190">            Fireball fireball = iterator.next();</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            if (fireball.getTarget() == monster) {</span>
+<span class="nc" id="L192">                iterator.remove();</span>
+            }
+<span class="nc" id="L194">        }</span>
+<span class="nc" id="L195">    }</span>
+    
+    
+
+    @Override
+    public void render(int x, int y, PApplet app) {
+<span class="nc" id="L201">        app.image(image, x, y);</span>
+        
+<span class="nc" id="L203">        float textSize = App.CELLSIZE / 4;  // Reduce the size of the text by half</span>
+<span class="nc" id="L204">        app.textSize(textSize);</span>
+
+        
+        // Render range upgrade level
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        if (rangeUpgradeLevel &gt; towerAppearanceState) {</span>
+<span class="nc" id="L209">            app.fill(app.color(255, 0, 255));  // Magenta color</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">            for (int i = 0; i &lt; rangeUpgradeLevel - towerAppearanceState; i++) {</span>
+<span class="nc" id="L211">                app.text(&quot;O&quot;, x + (i * textSize), y + textSize);</span>
+            }
+        }
+
+        // Check if the mouse is hovering over this tower
+<span class="nc bnc" id="L216" title="All 2 branches missed.">        if (isMouseHovering(app.mouseX, app.mouseY - App.TOPBAR)) {</span>
+<span class="nc" id="L217">            app.noFill();</span>
+<span class="nc" id="L218">            app.stroke(255, 255, 0);  // Yellow color</span>
+<span class="nc" id="L219">            app.ellipse(x + App.CELLSIZE / 2.0f, y + App.CELLSIZE / 2.0f, towerRange * 2, towerRange * 2);  // Draw the range</span>
+<span class="nc" id="L220">            app.noStroke();  // Reset the stroke</span>
+        }
+
+        // Render speed upgrade level
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (speedUpgradeLevel &gt; 0) {</span>
+<span class="nc" id="L225">            app.stroke(173, 216, 230);  // Lighter blue color</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">            for (int i = 0; i &lt; speedUpgradeLevel - towerAppearanceState; i++) {</span>
+<span class="nc" id="L227">                app.strokeWeight(1);  // Keeping a constant stroke weight</span>
+<span class="nc" id="L228">                float radiusReduction = i * 4; // Adjust this value to change the gap between rings</span>
+<span class="nc" id="L229">                app.noFill();</span>
+<span class="nc" id="L230">                app.ellipse((float)x + App.CELLSIZE / 2.0f, (float)y + App.CELLSIZE / 2.0f, App.CELLSIZE / 2.0f - radiusReduction, App.CELLSIZE / 2.0f - radiusReduction);</span>
+            }
+<span class="nc" id="L232">            app.noStroke();</span>
+        }
+
+        
+        // Render damage upgrade level
+<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (damageUpgradeLevel &gt; towerAppearanceState) {</span>
+<span class="nc" id="L238">            app.fill(app.color(255, 0, 255));  // Magenta color</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">            for (int i = 0; i &lt; damageUpgradeLevel - towerAppearanceState; i++) {</span>
+<span class="nc" id="L240">                app.text(&quot;X&quot;, x + (i * textSize), y + App.CELLSIZE - textSize / 2);</span>
+            }
+        }
+        
+<span class="nc" id="L244">        app.textSize(App.CELLSIZE);  // Reset text size</span>
+<span class="nc" id="L245">    }</span>
+    public PImage getImage() {
+<span class="nc" id="L247">        return image;</span>
+    }
+    
+    public int getX() {
+<span class="nc" id="L251">        return x;</span>
+    }
+    
+    public int getY() {
+<span class="nc" id="L255">        return y;</span>
+    }
+    
+    public List&lt;Fireball&gt; getFireballs() {
+<span class="nc" id="L259">        return fireballs;</span>
+    }
+    
+    public float getTowerFiringSpeed() {
+<span class="nc" id="L263">        return towerFiringSpeed;</span>
+    }
+    
+    public float getTowerDamage() {
+<span class="nc" id="L267">        return towerDamage;</span>
+    }
+
+    public float getTowerRange() {
+<span class="nc" id="L271">        return towerRange;</span>
+    }
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

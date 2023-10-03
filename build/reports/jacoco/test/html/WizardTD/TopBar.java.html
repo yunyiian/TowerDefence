@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TopBar.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">TopBar.java</span></div><h1>TopBar.java</h1><pre class="source lang-java linenums">package WizardTD;
+
+import processing.core.PApplet;
+
+public class TopBar {
+    private int width;
+    private int height;
+    private int mana;
+    private int manaCap;
+
+<span class="nc" id="L11">    private int waveNumber = -1;</span>
+<span class="nc" id="L12">    private float timeRemaining = 0.0f;</span>
+
+<span class="nc" id="L14">    public TopBar(int width, int height, int initialMana, int manaCap) {</span>
+<span class="nc" id="L15">        this.width = width;</span>
+<span class="nc" id="L16">        this.height = height;</span>
+<span class="nc" id="L17">        this.mana = initialMana;</span>
+<span class="nc" id="L18">        this.manaCap = manaCap;</span>
+<span class="nc" id="L19">    }</span>
+
+    public void setWaveTimer(int waveNumber, float timeRemaining) {
+<span class="nc" id="L22">        this.waveNumber = waveNumber;</span>
+<span class="nc" id="L23">        this.timeRemaining = timeRemaining;</span>
+<span class="nc" id="L24">    }</span>
+
+
+    public void render(PApplet app) {
+        // Set color and draw the top bar background
+<span class="nc" id="L29">        app.fill(app.color(0x83, 0x74, 0x4A));</span>
+<span class="nc" id="L30">        app.rect(0, 0, this.width, this.height);</span>
+        
+        // Set the position and size for the mana bar
+<span class="nc" id="L33">        int manaBarWidth = 320;</span>
+<span class="nc" id="L34">        int manaBarHeight = 16;</span>
+<span class="nc" id="L35">        int manaBarX = this.width - manaBarWidth - 32;  // 32 pixels (1 tile) away from the right edge</span>
+<span class="nc" id="L36">        int manaBarY = (this.height - manaBarHeight) / 2;  // Centered vertically</span>
+        
+        // Adjusted the text's x position to shift &quot;MANA :&quot; to the left
+<span class="nc" id="L39">        app.fill(0);  // Black color for text</span>
+<span class="nc" id="L40">        app.textSize(18);</span>
+<span class="nc" id="L41">        app.text(&quot;MANA :&quot;, manaBarX - 74, manaBarY + 13);  // Adjusted y position to align text vertically with the bar</span>
+        
+        // Draw the background for the mana bar (white)
+<span class="nc" id="L44">        app.fill(255);</span>
+<span class="nc" id="L45">        app.noStroke();</span>
+<span class="nc" id="L46">        app.rect(manaBarX, manaBarY, manaBarWidth, manaBarHeight);</span>
+        
+        // Draw the actual mana bar with the specified color
+<span class="nc" id="L49">        app.fill(app.color(0x03, 0xD6, 0xD6));</span>
+<span class="nc" id="L50">        float manaPercentage = (float) mana / manaCap;</span>
+<span class="nc" id="L51">        app.rect(manaBarX + 2, manaBarY + 2, manaPercentage * (manaBarWidth - 4), manaBarHeight - 3);  // Adjusted height to fill white space</span>
+        
+        // Draw the border around the mana bar
+<span class="nc" id="L54">        app.stroke(0);</span>
+<span class="nc" id="L55">        app.strokeWeight(3);</span>
+<span class="nc" id="L56">        app.noFill();</span>
+<span class="nc" id="L57">        app.rect(manaBarX, manaBarY, manaBarWidth, manaBarHeight);</span>
+        
+        // Reset stroke weight and disable stroke for other elements
+<span class="nc" id="L60">        app.strokeWeight(1);</span>
+<span class="nc" id="L61">        app.noStroke();</span>
+        
+        // Display the mana value in the center of the mana bar
+<span class="nc" id="L64">        String manaText = mana + &quot;/&quot; + manaCap;</span>
+<span class="nc" id="L65">        app.fill(0);  // Black color for text</span>
+<span class="nc" id="L66">        app.textSize(16);  // Reduced text size</span>
+<span class="nc" id="L67">        float textWidth = app.textWidth(manaText);</span>
+<span class="nc" id="L68">        app.text(manaText, manaBarX + (manaBarWidth - textWidth) / 2, manaBarY + 14);  // Slightly adjusted y-coordinate</span>
+        
+        // Render wave timer
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        if (waveNumber &gt; 0 &amp;&amp; timeRemaining &gt;= 0) {</span>
+<span class="nc" id="L72">            app.textSize(20);  // Increased text size for wave timer</span>
+<span class="nc" id="L73">            String waveText = &quot;Wave &quot; + waveNumber + &quot; starts: &quot; + Math.round(timeRemaining);</span>
+<span class="nc" id="L74">            app.text(waveText, 16, manaBarY + 13);</span>
+        }
+<span class="nc" id="L76">    }</span>
+    
+    
+    public void updateMana(float amount) {
+<span class="nc" id="L80">        this.mana += amount;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (this.mana &gt; manaCap) {</span>
+<span class="nc" id="L82">            this.mana = manaCap;</span>
+        }
+<span class="nc" id="L84">    }</span>
+
+    public void setMana(int mana) {
+<span class="nc" id="L87">        this.mana = mana;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (this.mana &gt; manaCap) {</span>
+<span class="nc" id="L89">            this.mana = manaCap;</span>
+        }
+<span class="nc" id="L91">    }</span>
+    
+    public int getMana() {
+<span class="nc" id="L94">        return this.mana;</span>
+    }
+
+
+    public int getManaCap() {
+<span class="nc" id="L99">        return this.manaCap;</span>
+    }
+
+
+    public void setManaCap(int newManaCap) {
+<span class="nc" id="L104">        this.manaCap = newManaCap;</span>
+<span class="nc" id="L105">    }</span>
+    
+    
+}
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

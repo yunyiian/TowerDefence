@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Fireball.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">Fireball.java</span></div><h1>Fireball.java</h1><pre class="source lang-java linenums">package WizardTD;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+
+public class Fireball {
+    float x, y;  // Current position
+    float dx, dy;  // x and y increments
+<span class="nc" id="L9">    float speed = 5;  // Fireball speed</span>
+    Monster target;  // Target monster
+    PImage fireballImage;
+    PApplet app;
+
+<span class="nc" id="L14">    public Fireball(float startX, float startY, Monster target, PApplet app) {</span>
+<span class="nc" id="L15">        this.x = startX;</span>
+<span class="nc" id="L16">        this.y = startY;</span>
+<span class="nc" id="L17">        this.target = target;</span>
+<span class="nc" id="L18">        this.app = app;</span>
+
+        // Load fireball image
+<span class="nc" id="L21">        fireballImage = app.loadImage(&quot;src/main/resources/WizardTD/fireball.png&quot;);</span>
+<span class="nc" id="L22">        initialTrajectory();</span>
+<span class="nc" id="L23">    }</span>
+
+    private void initialTrajectory() {
+        // Initial prediction of where the monster will be after a certain time
+<span class="nc" id="L27">        float distanceToMonster = PApplet.dist(x, y, target.getX() * App.CELLSIZE, target.getY() * App.CELLSIZE);</span>
+<span class="nc" id="L28">        float predictedTime = distanceToMonster / speed;</span>
+<span class="nc" id="L29">        float predictedMonsterX = target.getX() * App.CELLSIZE + target.getSpeed() * predictedTime * PApplet.cos(PApplet.radians(target.getDirectionAngle()));</span>
+<span class="nc" id="L30">        float predictedMonsterY = target.getY() * App.CELLSIZE + target.getSpeed() * predictedTime * PApplet.sin(PApplet.radians(target.getDirectionAngle()));</span>
+        
+        // Adjust trajectory towards the predicted position
+<span class="nc" id="L33">        float angle = PApplet.atan2(predictedMonsterY - y, predictedMonsterX - x);</span>
+<span class="nc" id="L34">        dx = speed * PApplet.cos(angle);</span>
+<span class="nc" id="L35">        dy = speed * PApplet.sin(angle);</span>
+<span class="nc" id="L36">    }</span>
+
+    public void update(boolean doubleSpeed)  {
+        // Homing logic: Adjust the trajectory every frame to aim towards the monster's current position
+<span class="nc" id="L40">        float angle = PApplet.atan2(target.getY() * App.CELLSIZE + App.CELLSIZE / 2 - y, target.getX() * App.CELLSIZE + App.CELLSIZE / 2 - x);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        float adjustedSpeed = doubleSpeed ? speed * 2 : speed;</span>
+<span class="nc" id="L42">        dx = adjustedSpeed * PApplet.cos(angle);</span>
+<span class="nc" id="L43">        dy = adjustedSpeed * PApplet.sin(angle);</span>
+    
+<span class="nc" id="L45">        x += dx;</span>
+<span class="nc" id="L46">        y += dy;</span>
+<span class="nc" id="L47">    }</span>
+
+    public boolean hasHitTarget() {
+<span class="nc" id="L50">        float targetCenterX = target.getX() * App.CELLSIZE + App.CELLSIZE / 2;</span>
+<span class="nc" id="L51">        float targetCenterY = target.getY() * App.CELLSIZE + App.CELLSIZE / 2;</span>
+<span class="nc" id="L52">        float monsterHitboxRadius = target.getImage().width * 1.0f / 2;  // Using 100% of monster's width for the hitbox</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        return PApplet.dist(x, y, targetCenterX, targetCenterY) &lt;= (fireballImage.width / 2 + monsterHitboxRadius);</span>
+    }
+    
+
+
+    public Monster getTarget() {
+<span class="nc" id="L59">        return this.target;</span>
+    }
+
+
+    public void render() {
+<span class="nc" id="L64">        app.image(fireballImage, x - fireballImage.width / 2, y - fireballImage.height / 2);</span>
+<span class="nc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

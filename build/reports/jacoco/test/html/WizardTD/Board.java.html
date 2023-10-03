@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package WizardTD;
+
+import WizardTD.subtiles.*;
+import processing.core.PApplet;
+import java.util.List;
+import java.util.ArrayList;
+import processing.core.PImage;
+
+<span class="fc" id="L9">public class Board {</span>
+<span class="fc" id="L10">    private static Tile[][] tiles = new Tile[20][20]; // 20x20 board</span>
+
+    public void loadLayout(String filename, App app) {  // Change PApplet to App
+<span class="nc" id="L13">        String[] lines = app.loadStrings(filename);</span>
+        
+<span class="nc bnc" id="L15" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) { // always 20 rows</span>
+<span class="nc bnc" id="L16" title="All 2 branches missed.">            for (int j = 0; j &lt; 20; j++) { // always 20 columns</span>
+<span class="nc" id="L17">                char c = ' '; // default to GrassTile</span>
+<span class="nc bnc" id="L18" title="All 4 branches missed.">                if (i &lt; lines.length &amp;&amp; j &lt; lines[i].length()) { // if within bounds of the line</span>
+<span class="nc" id="L19">                    c = lines[i].charAt(j);</span>
+                }    
+<span class="nc bnc" id="L21" title="All 4 branches missed.">                switch (c) {</span>
+                    case 'S':
+<span class="nc" id="L23">                        tiles[i][j] = new ShrubTile(app);</span>
+<span class="nc" id="L24">                        break;</span>
+                    case 'X':
+<span class="nc" id="L26">                        tiles[i][j] = new PathTile(j, i, app, this);</span>
+<span class="nc" id="L27">                        break;</span>
+                    case 'W':
+<span class="nc" id="L29">                        tiles[i][j] = new WizardHouseTile(app, j, i, this); </span>
+<span class="nc" id="L30">                        break;</span>
+                    default:
+<span class="nc" id="L32">                        tiles[i][j] = new GrassTile(app);</span>
+                        break;
+                }
+            }
+        }
+
+        // Now, after all tiles are initialized, decide the image for PathTiles
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            for (int j = 0; j &lt; tiles[i].length; j++) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">                if (tiles[i][j] instanceof PathTile) {</span>
+<span class="nc" id="L42">                    ((PathTile) tiles[i][j]).decidePathImage(app);</span>
+                }
+            }
+        }
+<span class="nc" id="L46">    }</span>
+
+    public boolean isPathTile(int x, int y) {
+<span class="nc bnc" id="L49" title="All 8 branches missed.">        if (x &lt; 0 || x &gt;= tiles[0].length || y &lt; 0 || y &gt;= tiles.length) {</span>
+<span class="nc" id="L50">            return true;  // Treat the boundary as X</span>
+        }
+<span class="nc" id="L52">        Tile tile = tiles[y][x];</span>
+<span class="nc bnc" id="L53" title="All 4 branches missed.">        return tile instanceof PathTile || tile instanceof WizardHouseTile;</span>
+    }
+
+    public void render(PApplet app) {
+<span class="nc" id="L57">        app.noTint();</span>
+    
+        // First, render all tiles except tower tiles
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            for (int j = 0; j &lt; tiles[i].length; j++) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">                if (!(tiles[i][j] instanceof TowerTile)) {</span>
+<span class="nc" id="L63">                    tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);</span>
+                }
+            }
+        }
+    
+        // Then, render all tower tiles
+<span class="nc bnc" id="L69" title="All 2 branches missed.">        for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            for (int j = 0; j &lt; tiles[i].length; j++) {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                if (tiles[i][j] instanceof TowerTile) {</span>
+<span class="nc" id="L72">                    tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);</span>
+                }
+            }
+        }
+<span class="nc" id="L76">    }</span>
+    
+        
+    public void renderWizardHouse(PApplet app) {
+<span class="nc" id="L80">        GrassTile grass = new GrassTile(app); // Create an instance of GrassTile</span>
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            for (int j = 0; j &lt; tiles[i].length; j++) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">                if (tiles[i][j] instanceof WizardHouseTile) {</span>
+                    // First, render the GrassTile at the same position
+<span class="nc" id="L86">                    grass.render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);</span>
+
+                    // Then, render the WizardHouseTile on top of it
+<span class="nc" id="L89">                    tiles[i][j].render(j * App.CELLSIZE, i * App.CELLSIZE + App.TOPBAR, app);</span>
+                }
+            }
+        }
+<span class="nc" id="L93">    }</span>
+
+    public boolean isWizardHouseTile(int x, int y) {
+<span class="nc bnc" id="L96" title="All 8 branches missed.">        if (x &lt; 0 || x &gt;= tiles[0].length || y &lt; 0 || y &gt;= tiles.length) {</span>
+<span class="nc" id="L97">            return false;</span>
+        }
+<span class="nc" id="L99">        return tiles[y][x] instanceof WizardHouseTile;</span>
+    }
+    
+
+    public TowerTile placeTower(int x, int y, PApplet app, float towerRange, float towerFiringSpeed, float towerDamage) {
+<span class="nc bnc" id="L104" title="All 8 branches missed.">        if (x &gt;= 0 &amp;&amp; x &lt; tiles[0].length &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; tiles.length) {</span>
+<span class="nc" id="L105">            Tile tile = tiles[y][x];</span>
+            
+            // Check if it's a GrassTile
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (tile instanceof GrassTile) {</span>
+                // Replace with a TowerTile and pass the coordinates
+<span class="nc" id="L110">                TowerTile tower = new TowerTile(app, x, y, towerRange, towerFiringSpeed, towerDamage);</span>
+<span class="nc" id="L111">                tiles[y][x] = tower;</span>
+<span class="nc" id="L112">                return tower;  // Successfully placed the tower and return it</span>
+            }
+        }
+<span class="nc" id="L115">        return null;  // Failed to place the tower</span>
+    }
+
+    public void notifyFireballsToDespawn(Monster monster) {
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">            for (int j = 0; j &lt; tiles[i].length; j++) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">                if (tiles[i][j] instanceof TowerTile) {</span>
+<span class="nc" id="L122">                    ((TowerTile) tiles[i][j]).despawnFireballsTargeting(monster);</span>
+                }
+            }
+        }
+<span class="nc" id="L126">    }</span>
+    
+    
+    public void upgradeTowerRange(int mouseX, int mouseY, PApplet app) {
+<span class="nc" id="L130">        int tileX = mouseX / App.CELLSIZE;</span>
+<span class="nc" id="L131">        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;</span>
+<span class="nc" id="L132">        System.out.println(&quot;Trying to upgrade range at tile: (&quot; + tileX + &quot;, &quot; + tileY + &quot;)&quot;);  // Debugging line</span>
+        
+<span class="nc bnc" id="L134" title="All 8 branches missed.">        if (tileX &gt;= 0 &amp;&amp; tileX &lt; tiles[0].length &amp;&amp; tileY &gt;= 0 &amp;&amp; tileY &lt; tiles.length) {</span>
+<span class="nc" id="L135">            Tile tile = tiles[tileY][tileX];</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">            if (tile instanceof TowerTile) {</span>
+<span class="nc" id="L137">                System.out.println(&quot;Upgrading a TowerTile for Range&quot;);  // Debugging line</span>
+<span class="nc" id="L138">                ((TowerTile) tile).upgradeRange();</span>
+            }
+            else {
+<span class="nc" id="L141">                System.out.println(&quot;Clicked tile is not a TowerTile&quot;);  // Debugging line</span>
+            }
+        }
+<span class="nc" id="L144">    }</span>
+
+    public void upgradeTowerSpeed(int mouseX, int mouseY, PApplet app) {
+<span class="nc" id="L147">        int tileX = mouseX / App.CELLSIZE;</span>
+<span class="nc" id="L148">        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;</span>
+<span class="nc" id="L149">        System.out.println(&quot;Trying to upgrade speed at tile: (&quot; + tileX + &quot;, &quot; + tileY + &quot;)&quot;);  // Debugging line</span>
+        
+<span class="nc bnc" id="L151" title="All 8 branches missed.">        if (tileX &gt;= 0 &amp;&amp; tileX &lt; tiles[0].length &amp;&amp; tileY &gt;= 0 &amp;&amp; tileY &lt; tiles.length) {</span>
+<span class="nc" id="L152">            Tile tile = tiles[tileY][tileX];</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            if (tile instanceof TowerTile) {</span>
+<span class="nc" id="L154">                System.out.println(&quot;Upgrading a TowerTile for speed&quot;);  // Debugging line</span>
+<span class="nc" id="L155">                ((TowerTile) tile).upgradeSpeed();</span>
+            }
+            else {
+<span class="nc" id="L158">                System.out.println(&quot;Clicked tile is not a TowerTile&quot;);  // Debugging line</span>
+            }
+        }
+<span class="nc" id="L161">    }</span>
+    
+    public void upgradeTowerDamage(int mouseX, int mouseY, PApplet app) {
+<span class="nc" id="L164">        int tileX = mouseX / App.CELLSIZE;</span>
+<span class="nc" id="L165">        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;</span>
+<span class="nc" id="L166">        System.out.println(&quot;Trying to upgrade damage at tile: (&quot; + tileX + &quot;, &quot; + tileY + &quot;)&quot;);  // Debugging line</span>
+        
+<span class="nc bnc" id="L168" title="All 8 branches missed.">        if (tileX &gt;= 0 &amp;&amp; tileX &lt; tiles[0].length &amp;&amp; tileY &gt;= 0 &amp;&amp; tileY &lt; tiles.length) {</span>
+<span class="nc" id="L169">            Tile tile = tiles[tileY][tileX];</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            if (tile instanceof TowerTile) {</span>
+<span class="nc" id="L171">                System.out.println(&quot;Upgrading a TowerTile for damage&quot;);  // Debugging line</span>
+<span class="nc" id="L172">                ((TowerTile) tile).upgradeDamage();</span>
+            }
+            else {
+<span class="nc" id="L175">                System.out.println(&quot;Clicked tile is not a TowerTile&quot;);  // Debugging line</span>
+            }
+        }
+<span class="nc" id="L178">    } </span>
+    
+
+    public Tile[][] getTiles() {
+<span class="nc" id="L182">        return tiles;</span>
+    }
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

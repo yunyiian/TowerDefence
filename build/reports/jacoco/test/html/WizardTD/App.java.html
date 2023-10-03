@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">scaffold</a> &gt; <a href="index.source.html" class="el_package">WizardTD</a> &gt; <span class="el_source">App.java</span></div><h1>App.java</h1><pre class="source lang-java linenums">package WizardTD;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.data.JSONArray;
+import processing.data.JSONObject;
+import processing.event.MouseEvent;
+import WizardTD.subtiles.TowerTile;
+
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
+import java.io.*;
+import java.util.*;
+
+public class App extends PApplet {
+
+    public static final int CELLSIZE = 32;
+    public static final int SIDEBAR = 120;
+    public static final int TOPBAR = 40;
+    public static final int BOARD_WIDTH = 20;
+
+<span class="fc" id="L24">    public static int WIDTH = CELLSIZE*BOARD_WIDTH+SIDEBAR;</span>
+<span class="fc" id="L25">    public static int HEIGHT = BOARD_WIDTH*CELLSIZE+TOPBAR;</span>
+
+    public static final int FPS = 60;
+
+    public String configPath;
+
+<span class="fc" id="L31">    public Random random = new Random();</span>
+	
+	// Feel free to add any additional methods or attributes you want. Please put classes in different files.
+     // The board instance.
+    private Board board;
+    private TopBar topBar;
+    private Sidebar sidebar;
+    public int initialMana;
+    public int initialManaCap;
+    public int manaGainedPerSecond;
+    public int mana;
+<span class="fc" id="L42">    private float manaUpdateTimer = 0.0f;</span>
+
+    public float manaPoolSpellInitialCost;
+    public float manaPoolSpellCostIncreasePerUse;
+    public float manaPoolSpellCapMultiplier;
+    public float manaPoolSpellManaGainedMultiplier;
+    public float currentManaPoolSpellCost;  // To keep track of the current cost after multiple uses
+<span class="fc" id="L49">    private float manaMultiplier = 1.0f;  // New attribute to store the mana multiplier</span>
+
+
+
+<span class="fc" id="L53">    private float totalGameTime = 0.0f;  // Total game elapsed time in seconds</span>
+<span class="fc" id="L54">    private long lastFPressTime = 0;</span>
+
+
+
+    //Monsters
+    Monster monster;
+<span class="fc" id="L60">    private List&lt;Monster&gt; activeMonsters = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L61">    private List&lt;Wave&gt; waves = new ArrayList&lt;&gt;();  // List to manage waves</span>
+<span class="fc" id="L62">    private int currentWaveIndex = 0;  // Track the current wave</span>
+<span class="fc" id="L63">    private float waveTimer = 0;</span>
+
+    //towers
+<span class="fc" id="L66">    private boolean towerPlacementMode = false;</span>
+<span class="fc" id="L67">    private boolean gamePaused = false;</span>
+
+    public float initialTowerRange;
+    public float initialTowerFiringSpeed;
+    public float initialTowerDamage;
+    public int towerBaseCost;
+    private TowerTile selectedTower;
+
+    // New attributes for multilevel
+    private JSONArray levels;
+    private int currentLevelIndex;
+    private JSONObject currentLevelConfig;
+    private JSONObject config;
+
+
+
+
+<span class="fc" id="L84">    public App() {</span>
+<span class="fc" id="L85">        this.configPath = &quot;config.json&quot;;</span>
+<span class="fc" id="L86">    }</span>
+
+    /**
+     * Initialise the setting of the window size.
+     */
+	@Override
+    public void settings() {
+<span class="nc" id="L93">        size(WIDTH, HEIGHT);</span>
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
+     */
+    @Override
+    public void setup() {
+<span class="nc" id="L101">        frameRate(FPS);</span>
+<span class="nc" id="L102">        config = loadJSONObject(configPath);</span>
+    
+        // Load root-level configuration values
+<span class="nc" id="L105">        initialTowerRange = config.getInt(&quot;initial_tower_range&quot;);</span>
+<span class="nc" id="L106">        initialTowerFiringSpeed = config.getFloat(&quot;initial_tower_firing_speed&quot;);</span>
+<span class="nc" id="L107">        initialTowerDamage = config.getInt(&quot;initial_tower_damage&quot;);</span>
+<span class="nc" id="L108">        initialMana = config.getInt(&quot;initial_mana&quot;);</span>
+<span class="nc" id="L109">        mana = initialMana; // Initialize the mana to the initial value</span>
+<span class="nc" id="L110">        initialManaCap = config.getInt(&quot;initial_mana_cap&quot;);</span>
+<span class="nc" id="L111">        manaGainedPerSecond = config.getInt(&quot;initial_mana_gained_per_second&quot;);</span>
+<span class="nc" id="L112">        towerBaseCost = config.getInt(&quot;tower_cost&quot;);</span>
+<span class="nc" id="L113">        manaPoolSpellInitialCost = config.getFloat(&quot;mana_pool_spell_initial_cost&quot;);</span>
+<span class="nc" id="L114">        manaPoolSpellCostIncreasePerUse = config.getFloat(&quot;mana_pool_spell_cost_increase_per_use&quot;);</span>
+<span class="nc" id="L115">        manaPoolSpellCapMultiplier = config.getFloat(&quot;mana_pool_spell_cap_multiplier&quot;);</span>
+<span class="nc" id="L116">        manaPoolSpellManaGainedMultiplier = config.getFloat(&quot;mana_pool_spell_mana_gained_multiplier&quot;);</span>
+<span class="nc" id="L117">        currentManaPoolSpellCost = manaPoolSpellInitialCost;</span>
+    
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (config.hasKey(&quot;levels&quot;)) {</span>
+<span class="nc" id="L120">            levels = config.getJSONArray(&quot;levels&quot;);</span>
+<span class="nc" id="L121">            currentLevelIndex = 0;</span>
+<span class="nc" id="L122">            currentLevelConfig = levels.getJSONObject(currentLevelIndex);</span>
+        } else {
+<span class="nc" id="L124">            currentLevelConfig = config;</span>
+        }
+    
+<span class="nc" id="L127">        initializeLevel();</span>
+<span class="nc" id="L128">    }</span>
+    
+    
+    private void initializeLevel() {
+        // Only fetch level-specific keys here
+<span class="nc" id="L133">        board = new Board(); // initialize the board</span>
+<span class="nc" id="L134">        board.loadLayout(currentLevelConfig.getString(&quot;layout&quot;), this);  </span>
+<span class="nc" id="L135">        topBar = new TopBar(WIDTH, TOPBAR, mana, initialManaCap);</span>
+<span class="nc" id="L136">        sidebar = new Sidebar(SIDEBAR, HEIGHT, this);</span>
+    
+<span class="nc" id="L138">        JSONArray wavesConfig = currentLevelConfig.getJSONArray(&quot;waves&quot;);</span>
+<span class="nc" id="L139">        System.out.println(&quot;Initializing level with wave count: &quot; + wavesConfig.size());</span>
+
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        for (int i = 0; i &lt; wavesConfig.size(); i++) {</span>
+<span class="nc" id="L142">            JSONObject waveConfig = wavesConfig.getJSONObject(i);</span>
+<span class="nc" id="L143">            int duration = waveConfig.getInt(&quot;duration&quot;);</span>
+<span class="nc" id="L144">            float preWavePause = waveConfig.getFloat(&quot;pre_wave_pause&quot;);</span>
+<span class="nc" id="L145">            JSONArray monstersConfig = waveConfig.getJSONArray(&quot;monsters&quot;);</span>
+    
+<span class="nc bnc" id="L147" title="All 2 branches missed.">            for (int j = 0; j &lt; monstersConfig.size(); j++) {</span>
+<span class="nc" id="L148">                JSONObject monsterConfig = monstersConfig.getJSONObject(j);</span>
+<span class="nc" id="L149">                Wave wave = new Wave(duration, preWavePause, monsterConfig, board, this);</span>
+<span class="nc" id="L150">                waves.add(wave);</span>
+            }
+        }        
+<span class="nc" id="L153">    }</span>
+
+    public void resetGame() {
+        // Reset the game variables to their initial state
+<span class="nc" id="L157">        mana = initialMana;</span>
+<span class="nc" id="L158">        manaMultiplier = 1.0f;</span>
+<span class="nc" id="L159">        totalGameTime = 0.0f;</span>
+<span class="nc" id="L160">        lastFPressTime = 0;</span>
+<span class="nc" id="L161">        currentWaveIndex = 0;</span>
+<span class="nc" id="L162">        waveTimer = 0.0f;</span>
+<span class="nc" id="L163">        activeMonsters.clear();</span>
+<span class="nc" id="L164">        waves.clear();</span>
+<span class="nc" id="L165">        towerPlacementMode = false;</span>
+<span class="nc" id="L166">        gamePaused = false;</span>
+        
+        // Reload the initial setup
+<span class="nc" id="L169">        setup();</span>
+<span class="nc" id="L170">        }</span>
+
+    /**
+     * Receive key pressed signal from the keyboard.
+     */
+    @Override
+    public void keyPressed() {
+<span class="nc bnc" id="L177" title="All 4 branches missed.">        if (key == 'F' || key == 'f') {</span>
+<span class="nc" id="L178">            long currentTime = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            if (currentTime - lastFPressTime &lt; 300) {  // Double press within 300ms</span>
+<span class="nc" id="L180">                sidebar.toggleSpeedMode();</span>
+            }
+<span class="nc" id="L182">            lastFPressTime = currentTime;</span>
+        }
+
+<span class="nc bnc" id="L185" title="All 4 branches missed.">        if (key == 'P' || key == 'p') {</span>
+<span class="nc" id="L186">            sidebar.togglePauseMode();</span>
+<span class="nc" id="L187">            gamePaused = sidebar.isPauseActive();</span>
+        }
+
+<span class="nc bnc" id="L190" title="All 4 branches missed.">        if (key == 'R' || key == 'r') {</span>
+<span class="nc" id="L191">            resetGame();</span>
+<span class="nc" id="L192">            loop();  // Resume the game loop</span>
+        }
+
+<span class="nc bnc" id="L195" title="All 4 branches missed.">        if (key == 'T' || key == 't') {</span>
+<span class="nc" id="L196">            sidebar.toggleTowerPlacementMode();</span>
+<span class="nc" id="L197">            towerPlacementMode = sidebar.isInTowerPlacementMode();</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        } else if (key == '1') {</span>
+<span class="nc" id="L199">            sidebar.toggleRangeUpgradeMode();</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        } else if (key == '2') {</span>
+<span class="nc" id="L201">            sidebar.toggleSpeedUpgradeMode();</span>
+<span class="nc bnc" id="L202" title="All 2 branches missed.">        } else if (key == '3') {</span>
+<span class="nc" id="L203">            sidebar.toggleDamageUpgradeMode();</span>
+<span class="nc bnc" id="L204" title="All 4 branches missed.">        } else if (key == 'M' || key == 'm') {  </span>
+<span class="nc" id="L205">            activateManaPoolSpell();</span>
+        }
+<span class="nc" id="L207">    }</span>
+    
+    
+
+    /**
+     * Receive key released signal from the keyboard.
+     */
+	@Override
+    public void keyReleased(){
+<span class="nc" id="L216">    }</span>
+    
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+<span class="nc" id="L221">        int mouseX = e.getX();</span>
+<span class="nc" id="L222">        int mouseY = e.getY();</span>
+        
+        // &quot;2x Speed&quot; button
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        if (sidebar.isSpeedToggleClicked(mouseX, mouseY)) {</span>
+<span class="nc" id="L226">            sidebar.toggleSpeedMode();</span>
+<span class="nc" id="L227">            return;</span>
+        }
+
+        // &quot;Pause&quot; button
+<span class="nc bnc" id="L231" title="All 2 branches missed.">        if (sidebar.isPauseButtonClicked(mouseX, mouseY)) {</span>
+<span class="nc" id="L232">            sidebar.togglePauseMode();</span>
+<span class="nc" id="L233">            gamePaused = sidebar.isPauseActive();</span>
+<span class="nc" id="L234">            return;</span>
+        }
+
+        // &quot;Place Tower&quot; button
+<span class="nc bnc" id="L238" title="All 2 branches missed.">        if (sidebar.isButtonClicked(mouseX, mouseY, 2*(sidebar.buttonHeight + 10))) {</span>
+<span class="nc" id="L239">            sidebar.toggleTowerPlacementMode();</span>
+<span class="nc" id="L240">            return;</span>
+        } 
+
+        // &quot;Upgrade Range&quot; button
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        if (sidebar.isButtonClicked(mouseX, mouseY, 3*(sidebar.buttonHeight + 10))) {</span>
+<span class="nc" id="L245">            sidebar.toggleRangeUpgradeMode();</span>
+<span class="nc" id="L246">            return;</span>
+        } 
+
+        // &quot;Upgrade Speed&quot; button
+<span class="nc bnc" id="L250" title="All 2 branches missed.">        if (sidebar.isButtonClicked(mouseX, mouseY, 4*(sidebar.buttonHeight + 10))) {</span>
+<span class="nc" id="L251">            sidebar.toggleSpeedUpgradeMode();</span>
+<span class="nc" id="L252">            return;</span>
+        } 
+
+        // &quot;Upgrade Damage&quot; button
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        if (sidebar.isButtonClicked(mouseX, mouseY, 5*(sidebar.buttonHeight + 10))) {</span>
+<span class="nc" id="L257">            sidebar.toggleDamageUpgradeMode();</span>
+<span class="nc" id="L258">            return;</span>
+        } 
+
+        // &quot;Mana Pool Spell&quot; button
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if (sidebar.isManaPoolSpellButtonClicked(mouseX, mouseY)) {</span>
+<span class="nc" id="L263">            activateManaPoolSpell();</span>
+<span class="nc" id="L264">            return;</span>
+        }
+
+<span class="nc" id="L267">        int tileX = mouseX / App.CELLSIZE;</span>
+<span class="nc" id="L268">        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;</span>
+         // Check boundaries before doing anything
+<span class="nc bnc" id="L270" title="All 8 branches missed.">        if (tileX &lt; 0 || tileX &gt;= board.getTiles()[0].length || tileY &lt; 0 || tileY &gt;= board.getTiles().length) {</span>
+<span class="nc" id="L271">            return;  // Outside of board, so just return</span>
+        }
+
+        // First, check if the clicked tile is a tower
+<span class="nc" id="L275">        Tile clickedTile = board.getTiles()[tileY][tileX];</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">        if (clickedTile instanceof TowerTile) {</span>
+<span class="nc" id="L277">            TowerTile tower = (TowerTile) clickedTile;</span>
+<span class="nc" id="L278">            selectedTower = tower;</span>
+    
+<span class="nc bnc" id="L280" title="All 2 branches missed.">            if (sidebar.isInRangeUpgradeMode()) {</span>
+<span class="nc" id="L281">                int upgradeCost = calculateUpgradeCost(tower.getRangeUpgradeLevel());</span>
+<span class="nc bnc" id="L282" title="All 4 branches missed.">                if(canAfford(upgradeCost) &amp;&amp; tower.upgradeRange()) {</span>
+<span class="nc" id="L283">                    deductMana(upgradeCost);</span>
+                }
+            }
+<span class="nc bnc" id="L286" title="All 2 branches missed.">            if (sidebar.isInSpeedUpgradeMode()) {</span>
+<span class="nc" id="L287">                int upgradeCost = calculateUpgradeCost(tower.getSpeedUpgradeLevel());</span>
+<span class="nc bnc" id="L288" title="All 4 branches missed.">                if(canAfford(upgradeCost) &amp;&amp; tower.upgradeSpeed()) {</span>
+<span class="nc" id="L289">                    deductMana(upgradeCost);</span>
+                }
+            }
+<span class="nc bnc" id="L292" title="All 2 branches missed.">            if (sidebar.isInDamageUpgradeMode()) {</span>
+<span class="nc" id="L293">                int upgradeCost = calculateUpgradeCost(tower.getDamageUpgradeLevel());</span>
+<span class="nc bnc" id="L294" title="All 4 branches missed.">                if(canAfford(upgradeCost) &amp;&amp; tower.upgradeDamage()) {</span>
+<span class="nc" id="L295">                    deductMana(upgradeCost);</span>
+                }
+            }
+    
+<span class="nc" id="L299">            return;  // Return early since we have already handled the tower upgrade</span>
+        }
+    
+
+
+        // Next, handle tower placement with potential upgrades
+<span class="nc bnc" id="L305" title="All 2 branches missed.">        if (sidebar.isInTowerPlacementMode()) {</span>
+<span class="nc" id="L306">            int numUpgradesSelected = 0;</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">            if (sidebar.isInRangeUpgradeMode()) numUpgradesSelected++;</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">            if (sidebar.isInSpeedUpgradeMode()) numUpgradesSelected++;</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">            if (sidebar.isInDamageUpgradeMode()) numUpgradesSelected++;</span>
+
+<span class="nc" id="L311">            int towerPlacementCost = calculateTowerPlacementCost(numUpgradesSelected);</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">            if (mana &gt;= towerPlacementCost) {</span>
+<span class="nc" id="L313">                TowerTile newTower = board.placeTower(tileX, tileY, this, initialTowerRange, initialTowerFiringSpeed, initialTowerDamage);</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">                if (newTower != null) {  // If a tower was placed</span>
+<span class="nc" id="L315">                    mana -= towerPlacementCost;  // Deduct mana</span>
+<span class="nc" id="L316">                    topBar.setMana(mana);</span>
+<span class="nc bnc" id="L317" title="All 2 branches missed.">                    if (sidebar.isInRangeUpgradeMode()) {</span>
+<span class="nc" id="L318">                        newTower.upgradeRange();</span>
+                    }
+<span class="nc bnc" id="L320" title="All 2 branches missed.">                    if (sidebar.isInSpeedUpgradeMode()) {</span>
+<span class="nc" id="L321">                        newTower.upgradeSpeed();</span>
+                    }
+<span class="nc bnc" id="L323" title="All 2 branches missed.">                    if (sidebar.isInDamageUpgradeMode()) {</span>
+<span class="nc" id="L324">                        newTower.upgradeDamage();</span>
+                    }
+                }
+            }
+        }
+<span class="nc" id="L329">    }</span>
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+<span class="nc" id="L333">        int mouseX = e.getX();</span>
+<span class="nc" id="L334">        int mouseY = e.getY();</span>
+<span class="nc" id="L335">        int tileX = mouseX / App.CELLSIZE;</span>
+<span class="nc" id="L336">        int tileY = (mouseY - App.TOPBAR) / App.CELLSIZE;</span>
+    
+        // Check boundaries before doing anything
+<span class="nc bnc" id="L339" title="All 8 branches missed.">        if (tileX &lt; 0 || tileX &gt;= board.getTiles()[0].length || tileY &lt; 0 || tileY &gt;= board.getTiles().length) {</span>
+<span class="nc" id="L340">            selectedTower = null; // No tower selected</span>
+<span class="nc" id="L341">            return;</span>
+        }
+    
+        // Check if the hovered tile is a tower
+<span class="nc" id="L345">        Tile hoveredTile = board.getTiles()[tileY][tileX];</span>
+<span class="nc bnc" id="L346" title="All 2 branches missed.">        if (hoveredTile instanceof TowerTile) {</span>
+<span class="nc" id="L347">            selectedTower = (TowerTile) hoveredTile;</span>
+        } else {
+<span class="nc" id="L349">            selectedTower = null; // No tower selected</span>
+        }
+<span class="nc" id="L351">    }</span>
+    
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+<span class="nc" id="L357">    }</span>
+
+    public void mouseDragged(MouseEvent e) {
+<span class="nc" id="L360">    }</span>
+    
+    /**
+     * Draw all elements in the game by current frame.
+     */
+    @Override
+    public void draw() {
+<span class="nc bnc" id="L367" title="All 2 branches missed.">        if (!gamePaused) {</span>
+<span class="nc bnc" id="L368" title="All 2 branches missed.">            int updates = sidebar.isDoubleSpeedMode() ? 2 : 1;</span>
+        
+<span class="nc bnc" id="L370" title="All 2 branches missed.">            for (int u = 0; u &lt; updates; u++) {</span>
+
+                // Handle waves
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                if (currentWaveIndex &lt; waves.size()) {</span>
+<span class="nc" id="L374">                    Wave currentWave = waves.get(currentWaveIndex);</span>
+<span class="nc bnc" id="L375" title="All 2 branches missed.">                    if (waveTimer &lt; currentWave.getPreWavePause()) {</span>
+                        // We're in the pause phase of the wave, don't update monsters
+                    } else {
+<span class="nc" id="L378">                        currentWave.update();</span>
+                    }
+<span class="nc" id="L380">                    waveTimer += 1.0 / FPS;  // Increment timer by frame duration</span>
+<span class="nc bnc" id="L381" title="All 2 branches missed.">                    if (waveTimer &gt; (currentWave.getPreWavePause() + currentWave.getDuration())) {</span>
+<span class="nc" id="L382">                        waveTimer = 0;  // Reset timer</span>
+<span class="nc" id="L383">                        currentWaveIndex++;  // Move to the next wave</span>
+                        }
+                    }
+        
+                // Update all active monsters
+<span class="nc bnc" id="L388" title="All 2 branches missed.">                for (Monster monster : activeMonsters) {</span>
+<span class="nc" id="L389">                    monster.moveWithSpeed();</span>
+<span class="nc" id="L390">                    monster.update();</span>
+<span class="nc" id="L391">                }        </span>
+        
+                // Make towers shoot at monsters
+<span class="nc" id="L394">                Tile[][] tiles = board.getTiles();</span>
+<span class="nc bnc" id="L395" title="All 2 branches missed.">                for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">                    for (int j = 0; j &lt; tiles[0].length; j++) {</span>
+<span class="nc bnc" id="L397" title="All 2 branches missed.">                        if (tiles[i][j] instanceof TowerTile) {</span>
+<span class="nc" id="L398">                            TowerTile tower = (TowerTile) tiles[i][j];</span>
+<span class="nc" id="L399">                            tower.incrementTimeSinceLastShot(1.0 / FPS);</span>
+<span class="nc" id="L400">                            Monster target = tower.getClosestMonsterInRange(activeMonsters);</span>
+<span class="nc bnc" id="L401" title="All 2 branches missed.">                            if (target != null) {</span>
+<span class="nc" id="L402">                                tower.shootMonster(target);</span>
+                            }
+<span class="nc" id="L404">                            tower.updateFireballs(sidebar.isDoubleSpeedMode());   // Update the fireballs, but consider rendering outside the loop</span>
+                        }
+                    }
+                }
+        
+                // Remove dead monsters
+<span class="nc" id="L410">                Iterator&lt;Monster&gt; monsterIterator = activeMonsters.iterator();</span>
+<span class="nc bnc" id="L411" title="All 2 branches missed.">                while (monsterIterator.hasNext()) {</span>
+<span class="nc" id="L412">                    Monster monster = monsterIterator.next();</span>
+<span class="nc bnc" id="L413" title="All 4 branches missed.">                    if (monster.getX() == -1.0f &amp;&amp; monster.getY() == -1.0f) {</span>
+<span class="nc" id="L414">                        monsterIterator.remove();</span>
+                    }
+<span class="nc" id="L416">                }</span>
+        
+<span class="nc" id="L418">                totalGameTime += 1.0 / FPS;</span>
+<span class="nc" id="L419">                manaUpdateTimer += 1.0 / FPS;</span>
+<span class="nc bnc" id="L420" title="All 2 branches missed.">                if (manaUpdateTimer &gt;= 1.0f) {</span>
+<span class="nc" id="L421">                    mana += manaGainedPerSecond * manaMultiplier;  // Updated to consider multiplier</span>
+<span class="nc" id="L422">                    manaUpdateTimer -= 1.0f; // reset the timer for the next second</span>
+                }
+<span class="nc" id="L424">                topBar.setMana(Math.round(mana));     </span>
+<span class="nc" id="L425">                updateWaveTimer(); </span>
+            }
+
+        }    
+    // Check for Loss Condition
+<span class="nc bnc" id="L430" title="All 2 branches missed.">    if (mana &lt; 0) {</span>
+<span class="nc" id="L431">        mana = 0; // Set mana to 0 for display purposes</span>
+<span class="nc" id="L432">        topBar.setMana(mana); // Update the display</span>
+<span class="nc" id="L433">        topBar.render(this);</span>
+
+<span class="nc" id="L435">        textSize(32);</span>
+<span class="nc" id="L436">        textAlign(CENTER, CENTER);</span>
+<span class="nc" id="L437">        fill(255, 0, 0); // Set text color to red</span>
+<span class="nc" id="L438">        text(&quot;YOU LOST&quot;, WIDTH / 2, HEIGHT / 2);</span>
+<span class="nc" id="L439">        textSize(24);</span>
+<span class="nc" id="L440">        text(&quot;Press 'r' to restart&quot;, WIDTH / 2, HEIGHT / 2 + 40); // Display instruction to restart</span>
+<span class="nc" id="L441">        textAlign(LEFT, BASELINE); // Reset the text alignment</span>
+<span class="nc" id="L442">        noLoop(); // Stop the game loop</span>
+<span class="nc" id="L443">        return; // Exit the draw function</span>
+    }
+
+<span class="nc bnc" id="L446" title="All 4 branches missed.">    if (currentWaveIndex == waves.size() &amp;&amp; activeMonsters.isEmpty()) {</span>
+<span class="nc" id="L447">        System.out.println(&quot;Current Wave Index: &quot; + currentWaveIndex);</span>
+<span class="nc" id="L448">        System.out.println(&quot;Total Waves: &quot; + waves.size());</span>
+<span class="nc" id="L449">        System.out.println(&quot;Active Monsters: &quot; + activeMonsters.size());</span>
+    
+<span class="nc bnc" id="L451" title="All 4 branches missed.">        if (config.hasKey(&quot;levels&quot;) &amp;&amp; currentLevelIndex &lt; levels.size() - 1) {</span>
+<span class="nc" id="L452">            currentLevelIndex++;</span>
+<span class="nc" id="L453">            currentLevelConfig = levels.getJSONObject(currentLevelIndex);</span>
+<span class="nc" id="L454">            initializeLevel();</span>
+        } else {
+<span class="nc" id="L456">            textSize(32);</span>
+<span class="nc" id="L457">            textAlign(CENTER, CENTER);</span>
+<span class="nc" id="L458">            fill(0, 255, 0); // Set text color to green</span>
+<span class="nc" id="L459">            text(&quot;YOU WIN&quot;, WIDTH / 2, HEIGHT / 2);</span>
+<span class="nc" id="L460">            textAlign(LEFT, BASELINE); // Reset the text alignment</span>
+<span class="nc" id="L461">            noLoop(); // Stop the game loop</span>
+<span class="nc" id="L462">            return;  // Return here to prevent further rendering</span>
+        }
+    }
+    
+    // Renderings (should be done once per frame)
+<span class="nc" id="L467">    background(255);</span>
+<span class="nc" id="L468">    board.render(this);</span>
+
+    // Render fireballs here:
+<span class="nc" id="L471">    Tile[][] tiles = board.getTiles();</span>
+<span class="nc bnc" id="L472" title="All 2 branches missed.">    for (int i = 0; i &lt; tiles.length; i++) {</span>
+<span class="nc bnc" id="L473" title="All 2 branches missed.">        for (int j = 0; j &lt; tiles[0].length; j++) {</span>
+<span class="nc bnc" id="L474" title="All 2 branches missed.">            if (tiles[i][j] instanceof TowerTile) {</span>
+<span class="nc" id="L475">                TowerTile tower = (TowerTile) tiles[i][j];</span>
+<span class="nc" id="L476">                tower.renderFireballs();</span>
+            }
+        }
+    }
+
+<span class="nc bnc" id="L481" title="All 2 branches missed.">    for (Monster monster : activeMonsters) {</span>
+<span class="nc" id="L482">        monster.render(this);</span>
+<span class="nc" id="L483">    }  </span>
+<span class="nc" id="L484">    sidebar.render(this, selectedTower);</span>
+<span class="nc" id="L485">    topBar.render(this);</span>
+<span class="nc" id="L486">    board.renderWizardHouse(this);</span>
+<span class="nc" id="L487">    }</span>
+
+
+    public void addActiveMonster(Monster monster) {
+<span class="nc" id="L491">        activeMonsters.add(monster);</span>
+<span class="nc" id="L492">    }</span>
+
+    private void updateWaveTimer() {
+<span class="nc" id="L495">        float elapsedTime = totalGameTime;</span>
+<span class="nc" id="L496">        float timeForNextWave = 0.0f;</span>
+        
+<span class="nc bnc" id="L498" title="All 2 branches missed.">        for (int i = 0; i &lt; waves.size(); i++) {</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">            float waveTotalTime = waves.get(i).getPreWavePause() + (i == waves.size() - 1 ? 0 : waves.get(i).getDuration());</span>
+            
+<span class="nc bnc" id="L501" title="All 2 branches missed.">            if (i == 0) {</span>
+                // For the first wave
+<span class="nc" id="L503">                timeForNextWave = waves.get(i).getPreWavePause();</span>
+            } else {
+                // For subsequent waves
+<span class="nc" id="L506">                timeForNextWave = waves.get(i).getPreWavePause() + waves.get(i - 1).getDuration();</span>
+            }
+            
+<span class="nc bnc" id="L509" title="All 2 branches missed.">            if (elapsedTime &lt; timeForNextWave) {</span>
+<span class="nc" id="L510">                topBar.setWaveTimer(i + 1, timeForNextWave - elapsedTime);</span>
+<span class="nc" id="L511">                return;</span>
+            } else {
+<span class="nc" id="L513">                elapsedTime -= timeForNextWave;</span>
+            }
+        }
+    
+        // All waves completed
+<span class="nc" id="L518">        topBar.setWaveTimer(-1, 0);</span>
+<span class="nc" id="L519">    }</span>
+
+    public void addMana(float amount) {
+<span class="nc" id="L522">        this.mana += amount;</span>
+<span class="nc" id="L523">    }</span>
+
+    public void deductMana(int cost) {
+<span class="nc" id="L526">        mana -= cost;</span>
+<span class="nc" id="L527">    }</span>
+    
+
+    private void activateManaPoolSpell() {
+<span class="nc bnc" id="L531" title="All 2 branches missed.">        if (mana &gt;= currentManaPoolSpellCost) {</span>
+<span class="nc" id="L532">            mana -= currentManaPoolSpellCost;</span>
+<span class="nc" id="L533">            initialManaCap *= manaPoolSpellCapMultiplier;</span>
+<span class="nc" id="L534">            topBar.setManaCap(initialManaCap);</span>
+<span class="nc" id="L535">            manaMultiplier += manaPoolSpellManaGainedMultiplier;  // Increase the mana multiplier</span>
+<span class="nc" id="L536">            currentManaPoolSpellCost += manaPoolSpellCostIncreasePerUse;</span>
+        }
+<span class="nc" id="L538">    }</span>
+
+    public float getCurrentManaMultiplier() {
+<span class="nc" id="L541">        return manaMultiplier;</span>
+    }
+
+    // Calculate the cost to place a tower with the given number of upgrades
+    public int calculateTowerPlacementCost(int numUpgrades) {
+<span class="nc" id="L546">        return towerBaseCost + numUpgrades * 20;  // 100 is the base cost of placing a tower, each upgrade costs 20 more</span>
+    }
+
+    // Calculate the upgrade cost for a tower based on the current upgrade level
+    public int calculateUpgradeCost(int currentUpgradeLevel) {
+<span class="nc" id="L551">        return 20 + currentUpgradeLevel * 10;  // 20 is the base cost for the first upgrade, subsequent upgrades cost 10 more</span>
+    }
+
+    public boolean canAfford(int cost) {
+<span class="nc bnc" id="L555" title="All 2 branches missed.">        return mana &gt;= cost;</span>
+    }
+
+    public float getCurrentManaPoolSpellCost() {
+<span class="nc" id="L559">        return currentManaPoolSpellCost;</span>
+    }
+
+    
+    
+    
+    public static void main(String[] args) {
+<span class="nc" id="L566">        PApplet.main(&quot;WizardTD.App&quot;);</span>
+<span class="nc" id="L567">    }</span>
+
+    /**
+     * Source: https://stackoverflow.com/questions/37758061/rotate-a-buffered-image-in-java
+     * @param pimg The image to be rotated
+     * @param angle between 0 and 360 degrees
+     * @return the new rotated image
+     */
+    public PImage rotateImageByDegrees(PImage pimg, double angle) {
+<span class="nc" id="L576">        BufferedImage img = (BufferedImage) pimg.getNative();</span>
+<span class="nc" id="L577">        double rads = Math.toRadians(angle);</span>
+<span class="nc" id="L578">        double sin = Math.abs(Math.sin(rads)), cos = Math.abs(Math.cos(rads));</span>
+<span class="nc" id="L579">        int w = img.getWidth();</span>
+<span class="nc" id="L580">        int h = img.getHeight();</span>
+<span class="nc" id="L581">        int newWidth = (int) Math.floor(w * cos + h * sin);</span>
+<span class="nc" id="L582">        int newHeight = (int) Math.floor(h * cos + w * sin);</span>
+
+<span class="nc" id="L584">        PImage result = this.createImage(newWidth, newHeight, ARGB);</span>
+        //BufferedImage rotated = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+<span class="nc" id="L586">        BufferedImage rotated = (BufferedImage) result.getNative();</span>
+<span class="nc" id="L587">        Graphics2D g2d = rotated.createGraphics();</span>
+<span class="nc" id="L588">        AffineTransform at = new AffineTransform();</span>
+<span class="nc" id="L589">        at.translate((newWidth - w) / 2, (newHeight - h) / 2);</span>
+
+<span class="nc" id="L591">        int x = w / 2;</span>
+<span class="nc" id="L592">        int y = h / 2;</span>
+
+<span class="nc" id="L594">        at.rotate(rads, x, y);</span>
+<span class="nc" id="L595">        g2d.setTransform(at);</span>
+<span class="nc" id="L596">        g2d.drawImage(img, 0, 0, null);</span>
+<span class="nc" id="L597">        g2d.dispose();</span>
+<span class="nc bnc" id="L598" title="All 2 branches missed.">        for (int i = 0; i &lt; newWidth; i++) {</span>
+<span class="nc bnc" id="L599" title="All 2 branches missed.">            for (int j = 0; j &lt; newHeight; j++) {</span>
+<span class="nc" id="L600">                result.set(i, j, rotated.getRGB(i, j));</span>
+            }
+        }
+
+<span class="nc" id="L604">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
