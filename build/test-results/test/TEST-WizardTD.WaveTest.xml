@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.WaveTest" tests="3" skipped="0" failures="1" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.01">
+<testsuite name="WizardTD.WaveTest" tests="3" skipped="0" failures="1" errors="0" timestamp="2023-10-06T13:13:55" hostname="Ians-MacBook-Pro.local" time="0.008">
   <properties/>
-  <testcase name="testRender()" classname="WizardTD.WaveTest" time="0.004"/>
-  <testcase name="testUpdate()" classname="WizardTD.WaveTest" time="0.004">
+  <testcase name="testRender()" classname="WizardTD.WaveTest" time="0.003"/>
+  <testcase name="testUpdate()" classname="WizardTD.WaveTest" time="0.002">
     <failure message="org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;" type="org.opentest4j.AssertionFailedError">org.opentest4j.AssertionFailedError: expected: &lt;1&gt; but was: &lt;0&gt;
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:55)
 	at org.junit.jupiter.api.AssertionUtils.failNotEqual(AssertionUtils.java:62)

@@ -4,6 +4,7 @@ import WizardTD.subtiles.TowerTile;
 import WizardTD.Monster;
 import WizardTD.Board;
 import WizardTD.App;
+import processing.core.PImage;
 import processing.core.PApplet;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,12 +13,16 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
+
 public class TowerTileTest {
 
     PApplet app;
     TowerTile tower;
     Board board;
     Monster monster;
+    App mainApp; 
 
     @BeforeEach
     public void setUp() {
@@ -88,6 +93,58 @@ public class TowerTileTest {
         int upgradeCost = tower.getUpgradeCost(1);
         assertEquals(30, upgradeCost);  // For level 1, the upgrade cost should be 30
     }
+
+        // BoardTest
+
+    @Test
+    public void testPlaceTowerBoundary() {
+        // Test placing a tower at an out-of-bound location
+        TowerTile invalidTower = board.placeTower(-1, -1, mainApp, 100.0f, 1.0f, 50.0f);
+        assertNull(invalidTower);
+    }
+
+    @Test
+    public void testInvalidUpgradeTower() {
+        // Test upgrading a non-existing tower
+        board.upgradeTowerRange(-1, -1, mainApp);
+        // Assert any expected state or behavior after an invalid upgrade attempt.
+    }
+
+    // TowerTileTest
+
+    @Test
+    public void testDespawnFireballs() {
+        tower.shootMonster(monster);
+        assertFalse(tower.getFireballs().isEmpty());
+
+        tower.despawnFireballsTargeting(monster);
+        assertTrue(tower.getFireballs().isEmpty());
+    }
+
+    @Test
+    public void testNotShootingOutOfReachMonster() {
+        // Assuming that the monster is out of range
+        Monster outOfReachMonster = new Monster(board, app, 1000.0f, 4, 100, 1.0f, 10, "monsterType", new App());
+        
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(outOfReachMonster);
+
+        tower.shootMonster(outOfReachMonster);
+        assertTrue(tower.getFireballs().isEmpty());
+    }
+
+    @Test
+    public void testNotTargetingOutOfReachMonster() {
+        // Assuming that the monster is out of range
+        Monster outOfReachMonster = new Monster(board, app, 1000.0f, 4, 100, 1.0f, 10, "monsterType", new App());
+        
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(outOfReachMonster);
+
+        Monster targetedMonster = tower.getClosestMonsterInRange(monsters);
+        assertNull(targetedMonster);
+    }
+
 
     // Add more tests as necessary for different behaviors of the TowerTile.
 

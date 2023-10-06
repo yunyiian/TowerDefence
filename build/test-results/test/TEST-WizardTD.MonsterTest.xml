@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.MonsterTest" tests="2" skipped="0" failures="2" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.006">
+<testsuite name="WizardTD.MonsterTest" tests="2" skipped="0" failures="2" errors="0" timestamp="2023-10-06T13:13:55" hostname="Ians-MacBook-Pro.local" time="0.004">
   <properties/>
   <testcase name="testReduceHealth()" classname="WizardTD.MonsterTest" time="0.003">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException

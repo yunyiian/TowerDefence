@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.TopBarTest" tests="3" skipped="0" failures="3" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.018">
+<testsuite name="WizardTD.TopBarTest" tests="3" skipped="0" failures="3" errors="0" timestamp="2023-10-06T13:13:55" hostname="Ians-MacBook-Pro.local" time="0.006">
   <properties/>
-  <testcase name="testSetManaCap()" classname="WizardTD.TopBarTest" time="0.002">
+  <testcase name="testSetManaCap()" classname="WizardTD.TopBarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
-	at WizardTD.App.setup(App.java:101)
+	at WizardTD.App.setup(App.java:105)
 	at WizardTD.TopBarTest.setUp(TopBarTest.java:15)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -99,7 +99,7 @@
   <testcase name="testUpdateMana()" classname="WizardTD.TopBarTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
-	at WizardTD.App.setup(App.java:101)
+	at WizardTD.App.setup(App.java:105)
 	at WizardTD.TopBarTest.setUp(TopBarTest.java:15)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -191,10 +191,10 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testSetMana()" classname="WizardTD.TopBarTest" time="0.011">
+  <testcase name="testSetMana()" classname="WizardTD.TopBarTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
-	at WizardTD.App.setup(App.java:101)
+	at WizardTD.App.setup(App.java:105)
 	at WizardTD.TopBarTest.setUp(TopBarTest.java:15)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)

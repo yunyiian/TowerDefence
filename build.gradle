@@ -32,6 +32,9 @@ dependencies {
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+
+    // Add Mockito for mocking dependencies in unit tests
+    testImplementation 'org.mockito:mockito-core:3.11.2'
 }
 
 application {

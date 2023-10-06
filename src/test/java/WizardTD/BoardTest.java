@@ -77,7 +77,5 @@ public class BoardTest {
         board.upgradeTowerRange(3 * App.CELLSIZE, 3 * App.CELLSIZE + App.TOPBAR, mainApp);
         assertTrue(tower.getTowerDamage() > initialRange);
     }
-
-    // Similarly, you can write tests for upgradeTowerSpeed() and upgradeTowerDamage()
 }
 

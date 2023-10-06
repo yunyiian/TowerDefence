@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.PathFinderTest" tests="5" skipped="0" failures="1" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.101">
+<testsuite name="WizardTD.PathFinderTest" tests="5" skipped="0" failures="1" errors="0" timestamp="2023-10-06T13:13:55" hostname="Ians-MacBook-Pro.local" time="0.015">
   <properties/>
-  <testcase name="testNodeConstructor()" classname="WizardTD.PathFinderTest" time="0.042"/>
-  <testcase name="testNodeEquals()" classname="WizardTD.PathFinderTest" time="0.024"/>
+  <testcase name="testNodeConstructor()" classname="WizardTD.PathFinderTest" time="0.006"/>
+  <testcase name="testNodeEquals()" classname="WizardTD.PathFinderTest" time="0.002"/>
   <testcase name="testNodeHashCode()" classname="WizardTD.PathFinderTest" time="0.0"/>
   <testcase name="testHeuristic()" classname="WizardTD.PathFinderTest" time="0.001"/>
-  <testcase name="testGetNeighbors()" classname="WizardTD.PathFinderTest" time="0.006">
+  <testcase name="testGetNeighbors()" classname="WizardTD.PathFinderTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.subtiles.GrassTile.&lt;init&gt;(GrassTile.java:12)
 	at WizardTD.PathFinderTest.testGetNeighbors(PathFinderTest.java:60)

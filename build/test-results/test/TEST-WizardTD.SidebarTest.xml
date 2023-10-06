@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.SidebarTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.046">
+<testsuite name="WizardTD.SidebarTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-10-06T13:13:55" hostname="Ians-MacBook-Pro.local" time="0.012">
   <properties/>
-  <testcase name="testTogglePauseMode()" classname="WizardTD.SidebarTest" time="0.006"/>
-  <testcase name="testToggleSpeedUpgradeMode()" classname="WizardTD.SidebarTest" time="0.004"/>
-  <testcase name="testToggleTowerPlacementMode()" classname="WizardTD.SidebarTest" time="0.01"/>
-  <testcase name="testIsInAnyUpgradeMode()" classname="WizardTD.SidebarTest" time="0.002"/>
-  <testcase name="testToggleSpeedMode()" classname="WizardTD.SidebarTest" time="0.002"/>
-  <testcase name="testToggleDamageUpgradeMode()" classname="WizardTD.SidebarTest" time="0.002"/>
-  <testcase name="testToggleRangeUpgradeMode()" classname="WizardTD.SidebarTest" time="0.003"/>
+  <testcase name="testTogglePauseMode()" classname="WizardTD.SidebarTest" time="0.002"/>
+  <testcase name="testToggleSpeedUpgradeMode()" classname="WizardTD.SidebarTest" time="0.002"/>
+  <testcase name="testToggleTowerPlacementMode()" classname="WizardTD.SidebarTest" time="0.001"/>
+  <testcase name="testIsInAnyUpgradeMode()" classname="WizardTD.SidebarTest" time="0.001"/>
+  <testcase name="testToggleSpeedMode()" classname="WizardTD.SidebarTest" time="0.001"/>
+  <testcase name="testToggleDamageUpgradeMode()" classname="WizardTD.SidebarTest" time="0.001"/>
+  <testcase name="testToggleRangeUpgradeMode()" classname="WizardTD.SidebarTest" time="0.0"/>
   <system-out><![CDATA[Speed upgrade mode toggled: true
 Speed upgrade mode toggled: false
 Range upgrade mode toggled: true

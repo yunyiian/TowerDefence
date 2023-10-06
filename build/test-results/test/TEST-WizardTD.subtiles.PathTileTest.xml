@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.subtiles.PathTileTest" tests="2" skipped="0" failures="1" errors="0" timestamp="2023-10-02T12:33:53" hostname="Ians-MacBook-Pro.local" time="0.379">
+<testsuite name="WizardTD.subtiles.PathTileTest" tests="2" skipped="0" failures="1" errors="0" timestamp="2023-10-06T13:13:55" hostname="Ians-MacBook-Pro.local" time="0.562">
   <properties/>
-  <testcase name="testDecidePathImage_HorizontalPath()" classname="WizardTD.subtiles.PathTileTest" time="0.375">
+  <testcase name="testDecidePathImage_HorizontalPath()" classname="WizardTD.subtiles.PathTileTest" time="0.56">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
