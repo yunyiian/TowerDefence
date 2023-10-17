@@ -4,297 +4,300 @@ import processing.core.PApplet;
 import WizardTD.subtiles.TowerTile;
 
 public class Sidebar {
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
-<span class="fc" id="L10">    private boolean towerPlacementMode = false;</span>
-<span class="fc" id="L11">    private boolean rangeUpgradeMode = false;</span>
-<span class="fc" id="L12">    private boolean speedUpgradeMode = false;</span>
-<span class="fc" id="L13">    private boolean damageUpgradeMode = false;</span>
-<span class="fc" id="L14">    private boolean speedToggleActive = false;</span>
-<span class="fc" id="L15">    private boolean pauseActive = false;</span>
-
-
-<span class="fc" id="L18">    public int buttonWidth = 40;</span>
-<span class="fc" id="L19">    public int buttonHeight = 40;</span>
-    private int buttonX;
-    private int buttonY;
-    private App mainApp;
+<span class="nc" id="L10">    protected boolean towerPlacementMode = false;</span>
+<span class="nc" id="L11">    protected boolean rangeUpgradeMode = false;</span>
+<span class="nc" id="L12">    protected boolean speedUpgradeMode = false;</span>
+<span class="nc" id="L13">    protected boolean damageUpgradeMode = false;</span>
+<span class="nc" id="L14">    protected boolean speedToggleActive = false;</span>
+<span class="nc" id="L15">    protected boolean pauseActive = false;</span>
 
 
-<span class="fc" id="L25">    public Sidebar(int width, int height, App app) {</span>
-<span class="fc" id="L26">        this.width = width;</span>
-<span class="fc" id="L27">        this.height = height;</span>
-<span class="fc" id="L28">        this.buttonX = App.WIDTH - this.width + 10;</span>
-<span class="fc" id="L29">        this.buttonY = App.TOPBAR + 10;</span>
-<span class="fc" id="L30">        this.mainApp = app;</span>
-<span class="fc" id="L31">    }</span>
+
+<span class="nc" id="L19">    public int buttonWidth = 40;</span>
+<span class="nc" id="L20">    public int buttonHeight = 40;</span>
+    protected int buttonX;
+    protected int buttonY;
+    protected App mainApp;
+
+
+<span class="nc" id="L26">    public Sidebar(int width, int height, App app) {</span>
+<span class="nc" id="L27">        this.width = width;</span>
+<span class="nc" id="L28">        this.height = height;</span>
+<span class="nc" id="L29">        this.buttonX = App.WIDTH - this.width + 10;</span>
+<span class="nc" id="L30">        this.buttonY = App.TOPBAR + 10;</span>
+<span class="nc" id="L31">        this.mainApp = app;</span>
+<span class="nc" id="L32">    }</span>
 
     public void toggleTowerPlacementMode() {
-<span class="fc bfc" id="L34" title="All 2 branches covered.">        towerPlacementMode = !towerPlacementMode;</span>
-<span class="fc" id="L35">    }</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        towerPlacementMode = !towerPlacementMode;</span>
+<span class="nc" id="L36">    }</span>
 
     public boolean isInTowerPlacementMode() {
-<span class="fc" id="L38">        return towerPlacementMode;</span>
+<span class="nc" id="L39">        return towerPlacementMode;</span>
     }
 
     public void toggleRangeUpgradeMode() {
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        rangeUpgradeMode = !rangeUpgradeMode;</span>
-<span class="fc" id="L43">        System.out.println(&quot;Range upgrade mode toggled: &quot; + rangeUpgradeMode);  // Debugging line</span>
-<span class="fc" id="L44">    }</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        rangeUpgradeMode = !rangeUpgradeMode;</span>
+<span class="nc" id="L44">        System.out.println(&quot;Range upgrade mode toggled: &quot; + rangeUpgradeMode);  // Debugging line</span>
+<span class="nc" id="L45">    }</span>
 
     public boolean isInRangeUpgradeMode() {
-<span class="fc" id="L47">        return rangeUpgradeMode;</span>
+<span class="nc" id="L48">        return rangeUpgradeMode;</span>
     }
 
     public void toggleSpeedUpgradeMode() {
-<span class="fc bfc" id="L51" title="All 2 branches covered.">        speedUpgradeMode = !speedUpgradeMode;</span>
-<span class="fc" id="L52">        System.out.println(&quot;Speed upgrade mode toggled: &quot; + speedUpgradeMode);  // Debugging line</span>
-<span class="fc" id="L53">    }</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        speedUpgradeMode = !speedUpgradeMode;</span>
+<span class="nc" id="L53">        System.out.println(&quot;Speed upgrade mode toggled: &quot; + speedUpgradeMode);  // Debugging line</span>
+<span class="nc" id="L54">    }</span>
 
     public boolean isInSpeedUpgradeMode() {
-<span class="fc" id="L56">        return speedUpgradeMode;</span>
+<span class="nc" id="L57">        return speedUpgradeMode;</span>
     }
     public void toggleDamageUpgradeMode() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        damageUpgradeMode = !damageUpgradeMode;</span>
-<span class="fc" id="L60">        System.out.println(&quot;Damage upgrade mode toggled: &quot; + damageUpgradeMode);  // Debugging line</span>
-<span class="fc" id="L61">    }</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        damageUpgradeMode = !damageUpgradeMode;</span>
+<span class="nc" id="L61">        System.out.println(&quot;Damage upgrade mode toggled: &quot; + damageUpgradeMode);  // Debugging line</span>
+<span class="nc" id="L62">    }</span>
     
 
     public boolean isInDamageUpgradeMode() {
-<span class="fc" id="L65">        return damageUpgradeMode;</span>
+<span class="nc" id="L66">        return damageUpgradeMode;</span>
     }
 
     public boolean isInAnyUpgradeMode() {
-<span class="pc bpc" id="L69" title="2 of 6 branches missed.">        return isInRangeUpgradeMode() || isInSpeedUpgradeMode() || isInDamageUpgradeMode();</span>
+<span class="nc bnc" id="L70" title="All 6 branches missed.">        return isInRangeUpgradeMode() || isInSpeedUpgradeMode() || isInDamageUpgradeMode();</span>
     }
 
     public boolean isManaPoolSpellButtonClicked(int mouseX, int mouseY) {
-<span class="nc" id="L73">        return isButtonClicked(mouseX, mouseY, 6 * (buttonHeight + 10));</span>
+<span class="nc" id="L74">        return isButtonClicked(mouseX, mouseY, 6 * (buttonHeight + 10));</span>
     }
 
     public boolean isSpeedToggleClicked(int mouseX, int mouseY) {
-<span class="nc" id="L77">        return isButtonClicked(mouseX, mouseY, 0);</span>
+<span class="nc" id="L78">        return isButtonClicked(mouseX, mouseY, 0);</span>
     }
 
     public void toggleSpeedMode() {
-<span class="fc bfc" id="L81" title="All 2 branches covered.">        speedToggleActive = !speedToggleActive;</span>
-<span class="fc" id="L82">        System.out.println(&quot;Toggled speed mode to: &quot; + speedToggleActive);</span>
-<span class="fc" id="L83">    }</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        speedToggleActive = !speedToggleActive;</span>
+<span class="nc" id="L83">        System.out.println(&quot;Toggled speed mode to: &quot; + speedToggleActive);</span>
+<span class="nc" id="L84">    }</span>
 
     public boolean isDoubleSpeedMode() {
-<span class="fc" id="L86">        return speedToggleActive;</span>
+<span class="nc" id="L87">        return speedToggleActive;</span>
     }
 
     public boolean isButtonHovered(int mouseX, int mouseY, int yOffset) {
-<span class="nc bnc" id="L90" title="All 8 branches missed.">        return mouseX &gt;= buttonX &amp;&amp; mouseX &lt;= buttonX + buttonWidth &amp;&amp;</span>
+<span class="nc bnc" id="L91" title="All 8 branches missed.">        return mouseX &gt;= buttonX &amp;&amp; mouseX &lt;= buttonX + buttonWidth &amp;&amp;</span>
                mouseY &gt;= buttonY + yOffset &amp;&amp; mouseY &lt;= buttonY + yOffset + buttonHeight;
     }
 
     public boolean isPauseButtonClicked(int mouseX, int mouseY) {
-<span class="nc" id="L95">        return isButtonClicked(mouseX, mouseY, 1 * (buttonHeight + 10));</span>
+<span class="nc" id="L96">        return isButtonClicked(mouseX, mouseY, 1 * (buttonHeight + 10));</span>
     }
 
     public void togglePauseMode() {
-<span class="fc bfc" id="L99" title="All 2 branches covered.">        pauseActive = !pauseActive;</span>
-<span class="fc" id="L100">    }</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        pauseActive = !pauseActive;</span>
+<span class="nc" id="L101">    }</span>
 
     public boolean isPauseActive() {
-<span class="fc" id="L103">        return pauseActive;</span>
+<span class="nc" id="L104">        return pauseActive;</span>
     }
+
+    
         
 
-    private void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
-<span class="nc" id="L108">        int startX = app.width - this.width + 10;  // Adjust to the left side of the sidebar</span>
-<span class="nc" id="L109">        int startY = app.height - 110; // Adjust starting position at bottom left</span>
-<span class="nc" id="L110">        int boxWidth = 100;  // Reduced by 20 to make it slimmer</span>
+    protected void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
+<span class="nc" id="L111">        int startX = app.width - this.width + 10;  // Adjust to the left side of the sidebar</span>
+<span class="nc" id="L112">        int startY = app.height - 110; // Adjust starting position at bottom left</span>
+<span class="nc" id="L113">        int boxWidth = 100;  // Reduced by 20 to make it slimmer</span>
         
-<span class="nc" id="L112">        app.textSize(12);  // Make text slightly smaller</span>
+<span class="nc" id="L115">        app.textSize(12);  // Make text slightly smaller</span>
         
         // Top box: &quot;Upgrade Costs&quot;
-<span class="nc" id="L115">        app.fill(255);  // White color</span>
-<span class="nc" id="L116">        app.rect(startX, startY, boxWidth, 20);</span>
-<span class="nc" id="L117">        app.stroke(0);  // black color</span>
-<span class="nc" id="L118">        app.noFill();</span>
+<span class="nc" id="L118">        app.fill(255);  // White color</span>
 <span class="nc" id="L119">        app.rect(startX, startY, boxWidth, 20);</span>
-<span class="nc" id="L120">        startY += 20; // Move startY down after the &quot;Upgrade Costs&quot; box</span>
+<span class="nc" id="L120">        app.stroke(0);  // black color</span>
+<span class="nc" id="L121">        app.noFill();</span>
+<span class="nc" id="L122">        app.rect(startX, startY, boxWidth, 20);</span>
+<span class="nc" id="L123">        startY += 20; // Move startY down after the &quot;Upgrade Costs&quot; box</span>
     
-<span class="nc" id="L122">        int totalCost = 0;</span>
-<span class="nc" id="L123">        int yOffset = 0; // Adjust for each piece of text</span>
+<span class="nc" id="L125">        int totalCost = 0;</span>
+<span class="nc" id="L126">        int yOffset = 0; // Adjust for each piece of text</span>
     
-<span class="nc" id="L125">        StringBuilder upgradeDetails = new StringBuilder();</span>
+<span class="nc" id="L128">        StringBuilder upgradeDetails = new StringBuilder();</span>
     
-<span class="nc bnc" id="L127" title="All 2 branches missed.">        if (isInRangeUpgradeMode()) {</span>
-<span class="nc" id="L128">            int cost = selectedTower.getNextRangeUpgradeCost();</span>
-<span class="nc" id="L129">            upgradeDetails.append(&quot;Range: &quot;).append(cost).append(&quot;\n&quot;);</span>
-<span class="nc" id="L130">            totalCost += cost;</span>
-<span class="nc" id="L131">            yOffset += 20;</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (isInRangeUpgradeMode()) {</span>
+<span class="nc" id="L131">            int cost = selectedTower.getNextRangeUpgradeCost();</span>
+<span class="nc" id="L132">            upgradeDetails.append(&quot;Range: &quot;).append(cost).append(&quot;\n&quot;);</span>
+<span class="nc" id="L133">            totalCost += cost;</span>
+<span class="nc" id="L134">            yOffset += 20;</span>
         }
-<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (isInSpeedUpgradeMode()) {</span>
-<span class="nc" id="L134">            int cost = selectedTower.getNextSpeedUpgradeCost();</span>
-<span class="nc" id="L135">            upgradeDetails.append(&quot;Speed: &quot;).append(cost).append(&quot;\n&quot;);</span>
-<span class="nc" id="L136">            totalCost += cost;</span>
-<span class="nc" id="L137">            yOffset += 20;</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">        if (isInSpeedUpgradeMode()) {</span>
+<span class="nc" id="L137">            int cost = selectedTower.getNextSpeedUpgradeCost();</span>
+<span class="nc" id="L138">            upgradeDetails.append(&quot;Speed: &quot;).append(cost).append(&quot;\n&quot;);</span>
+<span class="nc" id="L139">            totalCost += cost;</span>
+<span class="nc" id="L140">            yOffset += 20;</span>
         }
-<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (isInDamageUpgradeMode()) {</span>
-<span class="nc" id="L140">            int cost = selectedTower.getNextDamageUpgradeCost();</span>
-<span class="nc" id="L141">            upgradeDetails.append(&quot;Damage: &quot;).append(cost).append(&quot;\n&quot;);</span>
-<span class="nc" id="L142">            totalCost += cost;</span>
-<span class="nc" id="L143">            yOffset += 20;</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (isInDamageUpgradeMode()) {</span>
+<span class="nc" id="L143">            int cost = selectedTower.getNextDamageUpgradeCost();</span>
+<span class="nc" id="L144">            upgradeDetails.append(&quot;Damage: &quot;).append(cost).append(&quot;\n&quot;);</span>
+<span class="nc" id="L145">            totalCost += cost;</span>
+<span class="nc" id="L146">            yOffset += 20;</span>
         }
     
         // Middle box: Individual upgrade costs
-<span class="nc" id="L147">        app.fill(255);  // White color</span>
-<span class="nc" id="L148">        app.rect(startX, startY, boxWidth, yOffset);</span>
-<span class="nc" id="L149">        app.stroke(0);  // black color</span>
-<span class="nc" id="L150">        app.noFill();</span>
+<span class="nc" id="L150">        app.fill(255);  // White color</span>
 <span class="nc" id="L151">        app.rect(startX, startY, boxWidth, yOffset);</span>
-<span class="nc" id="L152">        startY += yOffset;  // Move startY down after the individual costs box</span>
+<span class="nc" id="L152">        app.stroke(0);  // black color</span>
+<span class="nc" id="L153">        app.noFill();</span>
+<span class="nc" id="L154">        app.rect(startX, startY, boxWidth, yOffset);</span>
+<span class="nc" id="L155">        startY += yOffset;  // Move startY down after the individual costs box</span>
     
         // Bottom box: Total
-<span class="nc" id="L155">        app.fill(255);  // White color</span>
-<span class="nc" id="L156">        app.rect(startX, startY, boxWidth, 20);</span>
-<span class="nc" id="L157">        app.stroke(0);  // black color</span>
-<span class="nc" id="L158">        app.noFill();</span>
+<span class="nc" id="L158">        app.fill(255);  // White color</span>
 <span class="nc" id="L159">        app.rect(startX, startY, boxWidth, 20);</span>
+<span class="nc" id="L160">        app.stroke(0);  // black color</span>
+<span class="nc" id="L161">        app.noFill();</span>
+<span class="nc" id="L162">        app.rect(startX, startY, boxWidth, 20);</span>
     
         // Draw texts after all rectangles
-<span class="nc" id="L162">        app.fill(0);  // Black text color</span>
+<span class="nc" id="L165">        app.fill(0);  // Black text color</span>
     
         // &quot;Upgrade Costs&quot; text
-<span class="nc" id="L165">        app.text(&quot;Upgrade Costs&quot;, startX + 10, app.height - 110 + 15 - 3);</span>
+<span class="nc" id="L168">        app.text(&quot;Upgrade Costs&quot;, startX + 10, app.height - 110 + 15 - 3);</span>
     
         // Individual upgrade costs text
-<span class="nc" id="L168">        float textHeight = app.textAscent() + app.textDescent();  // Calculate text height</span>
-<span class="nc" id="L169">        app.text(upgradeDetails.toString(), startX + 10, app.height - 110 + 20 + 10 + (yOffset - upgradeDetails.toString().split(&quot;\n&quot;).length * textHeight) / 2);</span>
+<span class="nc" id="L171">        float textHeight = app.textAscent() + app.textDescent();  // Calculate text height</span>
+<span class="nc" id="L172">        app.text(upgradeDetails.toString(), startX + 10, app.height - 110 + 20 + 10 + (yOffset - upgradeDetails.toString().split(&quot;\n&quot;).length * textHeight) / 2);</span>
     
         // &quot;Total&quot; text
-<span class="nc" id="L172">        app.text(&quot;Total: &quot; + totalCost, startX + 10, app.height - 110 + 20 + yOffset + 15 - 3);</span>
+<span class="nc" id="L175">        app.text(&quot;Total: &quot; + totalCost, startX + 10, app.height - 110 + 20 + yOffset + 15 - 3);</span>
     
         // Reset graphics settings
-<span class="nc" id="L175">        app.noStroke();</span>
-<span class="nc" id="L176">        app.fill(255);</span>
-<span class="nc" id="L177">    }</span>
+<span class="nc" id="L178">        app.noStroke();</span>
+<span class="nc" id="L179">        app.fill(255);</span>
+<span class="nc" id="L180">    }</span>
 
     
-    private void renderManaPoolSpellCost(PApplet app) {
-<span class="nc bnc" id="L181" title="All 2 branches missed.">        if (isButtonHovered(app.mouseX, app.mouseY, 6 * (buttonHeight + 10))) {</span>
-<span class="nc" id="L182">            int costBoxWidth = 65;  // Reduced width</span>
-<span class="nc" id="L183">            int costBoxHeight = 25;  // Reduced height</span>
-<span class="nc" id="L184">            int startX = buttonX - costBoxWidth - 20;  // Shifted further to the left</span>
-<span class="nc" id="L185">            int startY = buttonY + 6 * (buttonHeight + 10);</span>
+    protected void renderManaPoolSpellCost(PApplet app) {
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        if (isButtonHovered(app.mouseX, app.mouseY, 6 * (buttonHeight + 10))) {</span>
+<span class="nc" id="L185">            int costBoxWidth = 65;  // Reduced width</span>
+<span class="nc" id="L186">            int costBoxHeight = 25;  // Reduced height</span>
+<span class="nc" id="L187">            int startX = buttonX - costBoxWidth - 20;  // Shifted further to the left</span>
+<span class="nc" id="L188">            int startY = buttonY + 6 * (buttonHeight + 10);</span>
         
-<span class="nc" id="L187">            app.fill(app.color(255));  // White color</span>
-<span class="nc" id="L188">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
+<span class="nc" id="L190">            app.fill(app.color(255));  // White color</span>
+<span class="nc" id="L191">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
             
             // Add a thin black outline
-<span class="nc" id="L191">            app.stroke(0);</span>
-<span class="nc" id="L192">            app.strokeWeight(1);</span>
-<span class="nc" id="L193">            app.noFill();</span>
-<span class="nc" id="L194">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
+<span class="nc" id="L194">            app.stroke(0);</span>
+<span class="nc" id="L195">            app.strokeWeight(1);</span>
+<span class="nc" id="L196">            app.noFill();</span>
+<span class="nc" id="L197">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
             
-<span class="nc" id="L196">            app.noStroke();  // Reset stroke</span>
-<span class="nc" id="L197">            app.fill(0);  // Text color (black)</span>
-<span class="nc" id="L198">            app.textSize(12);  // Reduced font size</span>
-<span class="nc" id="L199">            app.text(&quot;Cost: &quot; + (int)mainApp.getCurrentManaPoolSpellCost(), startX + 5, startY + 17);  // Adjusted text position</span>
+<span class="nc" id="L199">            app.noStroke();  // Reset stroke</span>
+<span class="nc" id="L200">            app.fill(0);  // Text color (black)</span>
+<span class="nc" id="L201">            app.textSize(12);  // Reduced font size</span>
+<span class="nc" id="L202">            app.text(&quot;Cost: &quot; + (int)mainApp.getCurrentManaPoolSpellCost(), startX + 5, startY + 17);  // Adjusted text position</span>
         }
-<span class="nc" id="L201">    }</span>
+<span class="nc" id="L204">    }</span>
     
 
     // Check which button was clicked
     public boolean isButtonClicked(int mouseX, int mouseY, int yOffset) {
-<span class="nc bnc" id="L206" title="All 8 branches missed.">        return mouseX &gt;= buttonX &amp;&amp; mouseX &lt;= buttonX + buttonWidth &amp;&amp;</span>
+<span class="nc bnc" id="L209" title="All 8 branches missed.">        return mouseX &gt;= buttonX &amp;&amp; mouseX &lt;= buttonX + buttonWidth &amp;&amp;</span>
                mouseY &gt;= buttonY + yOffset &amp;&amp; mouseY &lt;= buttonY + yOffset + buttonHeight;
     }
 
-    private void renderTowerCost(PApplet app) {
-<span class="nc bnc" id="L211" title="All 2 branches missed.">        if (isButtonHovered(app.mouseX, app.mouseY, 2*(buttonHeight + 10))) {</span>
-<span class="nc" id="L212">            int costBoxWidth = 65;  // Reduced width</span>
-<span class="nc" id="L213">            int costBoxHeight = 25;  // Reduced height</span>
-<span class="nc" id="L214">            int startX = buttonX - costBoxWidth - 20;  // Shifted further to the left</span>
-<span class="nc" id="L215">            int startY = buttonY + 2 * (buttonHeight + 10);</span>
+    protected void renderTowerCost(PApplet app) {
+<span class="nc bnc" id="L214" title="All 2 branches missed.">        if (isButtonHovered(app.mouseX, app.mouseY, 2*(buttonHeight + 10))) {</span>
+<span class="nc" id="L215">            int costBoxWidth = 65;  // Reduced width</span>
+<span class="nc" id="L216">            int costBoxHeight = 25;  // Reduced height</span>
+<span class="nc" id="L217">            int startX = buttonX - costBoxWidth - 20;  // Shifted further to the left</span>
+<span class="nc" id="L218">            int startY = buttonY + 2 * (buttonHeight + 10);</span>
         
-<span class="nc" id="L217">            app.fill(app.color(255));  // White color</span>
-<span class="nc" id="L218">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
+<span class="nc" id="L220">            app.fill(app.color(255));  // White color</span>
+<span class="nc" id="L221">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
             
             // Add a thin black outline
-<span class="nc" id="L221">            app.stroke(0);</span>
-<span class="nc" id="L222">            app.strokeWeight(1);</span>
-<span class="nc" id="L223">            app.noFill();</span>
-<span class="nc" id="L224">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
+<span class="nc" id="L224">            app.stroke(0);</span>
+<span class="nc" id="L225">            app.strokeWeight(1);</span>
+<span class="nc" id="L226">            app.noFill();</span>
+<span class="nc" id="L227">            app.rect(startX, startY, costBoxWidth, costBoxHeight);</span>
             
-<span class="nc" id="L226">            app.noStroke();  // Reset stroke</span>
-<span class="nc" id="L227">            app.fill(0);  // Text color (black)</span>
-<span class="nc" id="L228">            app.textSize(12);  // Reduced font size</span>
-<span class="nc" id="L229">            app.text(&quot;Cost: &quot; + mainApp.towerBaseCost, startX + 5, startY + 17);  // Adjusted text position</span>
+<span class="nc" id="L229">            app.noStroke();  // Reset stroke</span>
+<span class="nc" id="L230">            app.fill(0);  // Text color (black)</span>
+<span class="nc" id="L231">            app.textSize(12);  // Reduced font size</span>
+<span class="nc" id="L232">            app.text(&quot;Cost: &quot; + mainApp.towerBaseCost, startX + 5, startY + 17);  // Adjusted text position</span>
         }
-<span class="nc" id="L231">    }</span>
+<span class="nc" id="L234">    }</span>
     
     // Update render method:
     public void render(PApplet app, TowerTile selectedTower) {
-<span class="nc" id="L235">        app.noTint();</span>
-<span class="nc" id="L236">        app.fill(app.color(0x83, 0x74, 0x4A));</span>
-<span class="nc" id="L237">        app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);</span>
+<span class="nc" id="L238">        app.noTint();</span>
+<span class="nc" id="L239">        app.fill(app.color(0x83, 0x74, 0x4A));</span>
+<span class="nc" id="L240">        app.rect(app.width - this.width, App.TOPBAR, this.width, this.height - App.TOPBAR);</span>
 
-<span class="nc" id="L239">        renderButton(app, &quot;FF&quot;, 0, speedToggleActive); </span>
-<span class="nc" id="L240">        renderDescription(app, &quot;2 x speed&quot;, 0);</span>
+<span class="nc" id="L242">        renderButton(app, &quot;FF&quot;, 0, speedToggleActive); </span>
+<span class="nc" id="L243">        renderDescription(app, &quot;2 x speed&quot;, 0);</span>
         
-<span class="nc" id="L242">        renderButton(app, &quot;P&quot;, buttonHeight + 10, pauseActive);</span>
-<span class="nc" id="L243">        renderDescription(app, &quot;PAUSE&quot;, buttonHeight + 10);</span>
+<span class="nc" id="L245">        renderButton(app, &quot;P&quot;, buttonHeight + 10, pauseActive);</span>
+<span class="nc" id="L246">        renderDescription(app, &quot;PAUSE&quot;, buttonHeight + 10);</span>
         
-<span class="nc" id="L245">        renderButton(app, &quot;T&quot;, 2*(buttonHeight + 10), towerPlacementMode);</span>
-<span class="nc" id="L246">        renderDescription(app, &quot;Build\ntower&quot;, 2*(buttonHeight + 10));</span>
+<span class="nc" id="L248">        renderButton(app, &quot;T&quot;, 2*(buttonHeight + 10), towerPlacementMode);</span>
+<span class="nc" id="L249">        renderDescription(app, &quot;Build\ntower&quot;, 2*(buttonHeight + 10));</span>
         
-<span class="nc" id="L248">        renderButton(app, &quot;U1&quot;, 3*(buttonHeight + 10), rangeUpgradeMode);</span>
-<span class="nc" id="L249">        renderDescription(app, &quot;Upgrade\nrange&quot;, 3*(buttonHeight + 10));</span>
+<span class="nc" id="L251">        renderButton(app, &quot;U1&quot;, 3*(buttonHeight + 10), rangeUpgradeMode);</span>
+<span class="nc" id="L252">        renderDescription(app, &quot;Upgrade\nrange&quot;, 3*(buttonHeight + 10));</span>
         
-<span class="nc" id="L251">        renderButton(app, &quot;U2&quot;, 4*(buttonHeight + 10), speedUpgradeMode);</span>
-<span class="nc" id="L252">        renderDescription(app, &quot;Upgrade\nspeed&quot;, 4*(buttonHeight + 10));</span>
+<span class="nc" id="L254">        renderButton(app, &quot;U2&quot;, 4*(buttonHeight + 10), speedUpgradeMode);</span>
+<span class="nc" id="L255">        renderDescription(app, &quot;Upgrade\nspeed&quot;, 4*(buttonHeight + 10));</span>
         
-<span class="nc" id="L254">        renderButton(app, &quot;U3&quot;, 5*(buttonHeight + 10), damageUpgradeMode);</span>
-<span class="nc" id="L255">        renderDescription(app, &quot;Upgrade\ndamage&quot;, 5*(buttonHeight + 10));</span>
+<span class="nc" id="L257">        renderButton(app, &quot;U3&quot;, 5*(buttonHeight + 10), damageUpgradeMode);</span>
+<span class="nc" id="L258">        renderDescription(app, &quot;Upgrade\ndamage&quot;, 5*(buttonHeight + 10));</span>
         
-<span class="nc" id="L257">        renderButton(app, &quot;M&quot;, 6 * (buttonHeight + 10), false);</span>
-<span class="nc" id="L258">        renderDescription(app, &quot;Mana pool\ncost: &quot; + (int)mainApp.getCurrentManaPoolSpellCost(), 6*(buttonHeight + 10));</span>
+<span class="nc" id="L260">        renderButton(app, &quot;M&quot;, 6 * (buttonHeight + 10), false);</span>
+<span class="nc" id="L261">        renderDescription(app, &quot;Mana pool\ncost: &quot; + (int)mainApp.getCurrentManaPoolSpellCost(), 6*(buttonHeight + 10));</span>
 
-<span class="nc" id="L260">        renderManaPoolSpellCost(app);</span>
-<span class="nc" id="L261">        renderTowerCost(app);  </span>
+<span class="nc" id="L263">        renderManaPoolSpellCost(app);</span>
+<span class="nc" id="L264">        renderTowerCost(app);  </span>
 
-<span class="nc bnc" id="L263" title="All 4 branches missed.">        if (selectedTower != null &amp;&amp; isInAnyUpgradeMode()) {</span>
-<span class="nc" id="L264">            renderUpgradeCosts(app, selectedTower);</span>
+<span class="nc bnc" id="L266" title="All 4 branches missed.">        if (selectedTower != null &amp;&amp; isInAnyUpgradeMode()) {</span>
+<span class="nc" id="L267">            renderUpgradeCosts(app, selectedTower);</span>
         }
-<span class="nc" id="L266">    }</span>
+<span class="nc" id="L269">    }</span>
 
-    private void renderDescription(PApplet app, String description, int yOffset) {
-<span class="nc" id="L269">        app.fill(0);  // Black color for text</span>
-<span class="nc" id="L270">        app.textSize(12);  // Smaller text size for descriptions</span>
-<span class="nc" id="L271">        float descX = buttonX + buttonWidth + 5;  // Right of the button</span>
-<span class="nc" id="L272">        float descY = buttonY + 15 + yOffset;  // Vertically align with the top of the button</span>
-<span class="nc" id="L273">        app.text(description, descX, descY);</span>
-<span class="nc" id="L274">    }</span>
+    protected void renderDescription(PApplet app, String description, int yOffset) {
+<span class="nc" id="L272">        app.fill(0);  // Black color for text</span>
+<span class="nc" id="L273">        app.textSize(12);  // Smaller text size for descriptions</span>
+<span class="nc" id="L274">        float descX = buttonX + buttonWidth + 5;  // Right of the button</span>
+<span class="nc" id="L275">        float descY = buttonY + 15 + yOffset;  // Vertically align with the top of the button</span>
+<span class="nc" id="L276">        app.text(description, descX, descY);</span>
+<span class="nc" id="L277">    }</span>
     
-    private void renderButton(PApplet app, String text, int yOffset, boolean active) {
-<span class="nc bnc" id="L277" title="All 2 branches missed.">        if (active) {</span>
-<span class="nc" id="L278">            app.fill(app.color(0xfb, 0xfb, 0x0d));</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">        } else if (isButtonHovered(app.mouseX, app.mouseY, yOffset)) {</span>
-<span class="nc" id="L280">            app.fill(app.color(200, 200, 200));  // Gray color when hovered</span>
+    protected void renderButton(PApplet app, String text, int yOffset, boolean active) {
+<span class="nc bnc" id="L280" title="All 2 branches missed.">        if (active) {</span>
+<span class="nc" id="L281">            app.fill(app.color(0xfb, 0xfb, 0x0d));</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">        } else if (isButtonHovered(app.mouseX, app.mouseY, yOffset)) {</span>
+<span class="nc" id="L283">            app.fill(app.color(200, 200, 200));  // Gray color when hovered</span>
         } else {
-<span class="nc" id="L282">            app.fill(app.color(0x83, 0x74, 0x4A));</span>
+<span class="nc" id="L285">            app.fill(app.color(0x83, 0x74, 0x4A));</span>
         }        
-<span class="nc" id="L284">        app.rect(buttonX, buttonY + yOffset, buttonWidth, buttonHeight);</span>
+<span class="nc" id="L287">        app.rect(buttonX, buttonY + yOffset, buttonWidth, buttonHeight);</span>
 
-<span class="nc" id="L286">        app.stroke(0);</span>
-<span class="nc" id="L287">        app.strokeWeight(2);</span>
-<span class="nc" id="L288">        app.noFill();</span>
-<span class="nc" id="L289">        app.rect(buttonX, buttonY + yOffset, buttonWidth, buttonHeight);</span>
-<span class="nc" id="L290">        app.noStroke();</span>
+<span class="nc" id="L289">        app.stroke(0);</span>
+<span class="nc" id="L290">        app.strokeWeight(2);</span>
+<span class="nc" id="L291">        app.noFill();</span>
+<span class="nc" id="L292">        app.rect(buttonX, buttonY + yOffset, buttonWidth, buttonHeight);</span>
+<span class="nc" id="L293">        app.noStroke();</span>
 
-<span class="nc" id="L292">        app.fill(0);</span>
-<span class="nc" id="L293">        app.textSize(App.CELLSIZE * 0.8f);  // Decreased text size</span>
-<span class="nc" id="L294">        float textWidth = app.textWidth(text);</span>
-<span class="nc" id="L295">        float textX = buttonX + (buttonWidth - textWidth) / 2;   // Center text horizontally</span>
-<span class="nc" id="L296">        float textY = buttonY + 28 + yOffset;  // Adjusted for vertical alignment</span>
-<span class="nc" id="L297">        app.text(text, textX, textY);</span>
-<span class="nc" id="L298">    }</span>
+<span class="nc" id="L295">        app.fill(0);</span>
+<span class="nc" id="L296">        app.textSize(App.CELLSIZE * 0.8f);  // Decreased text size</span>
+<span class="nc" id="L297">        float textWidth = app.textWidth(text);</span>
+<span class="nc" id="L298">        float textX = buttonX + (buttonWidth - textWidth) / 2;   // Center text horizontally</span>
+<span class="nc" id="L299">        float textY = buttonY + 28 + yOffset;  // Adjusted for vertical alignment</span>
+<span class="nc" id="L300">        app.text(text, textX, textY);</span>
+<span class="nc" id="L301">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

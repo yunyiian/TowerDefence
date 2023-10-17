@@ -3,13 +3,13 @@ package WizardTD;
 import processing.core.PApplet;
 
 public class TopBar {
-    private int width;
-    private int height;
-    private int mana;
-    private int manaCap;
+    protected int width;
+    protected int height;
+    protected int mana;
+    protected int manaCap;
 
-    private int waveNumber = -1;
-    private float timeRemaining = 0.0f;
+    protected int waveNumber = -1;
+    protected float timeRemaining = 0.0f;
 
     public TopBar(int width, int height, int initialMana, int manaCap) {
         this.width = width;

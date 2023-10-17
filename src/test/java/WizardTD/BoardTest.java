@@ -77,5 +77,15 @@ public class BoardTest {
         board.upgradeTowerRange(3 * App.CELLSIZE, 3 * App.CELLSIZE + App.TOPBAR, mainApp);
         assertTrue(tower.getTowerDamage() > initialRange);
     }
+
+    @Test
+    public void testPlaceTowerAtBoundary() {
+        board.loadLayout("test_layout.txt", mainApp);
+        assertNotNull(board.placeTower(0, 0, mainApp, 100.0f, 1.0f, 50.0f));  // Lower-left corner
+        assertNotNull(board.placeTower(19, 19, mainApp, 100.0f, 1.0f, 50.0f)); // Upper-right corner
+        assertNull(board.placeTower(-1, -1, mainApp, 100.0f, 1.0f, 50.0f));    // Outside boundary
+        assertNull(board.placeTower(20, 20, mainApp, 100.0f, 1.0f, 50.0f));    // Outside boundary
+    }
+
 }
 

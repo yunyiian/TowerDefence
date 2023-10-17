@@ -10,30 +10,30 @@ import WizardTD.PathFinder.Node;
 
 public class Monster {
 
-    private PImage image;
-    private App game;
-    private float x, y, targetX, targetY; 
-    private Board board;
-    private String direction = "";  // Can be "up", "down", "left", "right"
+    protected PImage image;
+    protected App game;
+    protected float x, y, targetX, targetY; 
+    protected Board board;
+    protected String direction = "";  // Can be "up", "down", "left", "right"
     List<String> pathToWizard;
     int pathIndex = 0;
-    private PathFinder pathFinder = new PathFinder();
-    private float speed;  // speed of the monster in pixels per frame
-    private float leftoverMove = 0.0f;  
-    private int spawnDelay; 
-    private static final float EPSILON = 0.05f; 
-    private List<Node> currentPath = null;
+    protected PathFinder pathFinder = new PathFinder();
+    protected float speed;  // speed of the monster in pixels per frame
+    protected float leftoverMove = 0.0f;  
+    protected int spawnDelay; 
+    protected static final float EPSILON = 0.05f; 
+    protected List<Node> currentPath = null;
 
 
 
-    private float hp;  // Max hit points (initial health)
-    private float currentHp;  // Current health
-    private float armour;  // Percentage multiplier to damage received
-    private float manaGainedOnKill;  // Mana gained when this monster is killed
-    private String type;  // The sprite image to use for the monster
-    private PImage deathImages[];  // Images for death animation
-    private int deathFrameCount = 0;  // Frame counter for death animation
-    private float manaMultiplier = 1.0f; 
+    protected float hp;  // Max hit points (initial health)
+    protected float currentHp;  // Current health
+    protected float armour;  // Percentage multiplier to damage received
+    protected float manaGainedOnKill;  // Mana gained when this monster is killed
+    protected String type;  // The sprite image to use for the monster
+    protected PImage deathImages[];  // Images for death animation
+    protected int deathFrameCount = 0;  // Frame counter for death animation
+    protected float manaMultiplier = 1.0f; 
 
 
     public Monster(Board board, PApplet app, float speed, int spawnDelay, float hp, float armour, float manaGainedOnKill, String type, App game) {
@@ -66,7 +66,7 @@ public class Monster {
         deathImages = deathImageList.toArray(new PImage[0]);
     }
 
-    private PImage safeLoadImage(PApplet app, String path) {
+    protected PImage safeLoadImage(PApplet app, String path) {
     try {
         return app.loadImage(path);
     } catch (Exception e) {
@@ -75,7 +75,7 @@ public class Monster {
     }
     }
 
-    private List<int[]> getSpawnPoints() {
+    protected List<int[]> getSpawnPoints() {
         List<int[]> spawnPoints = new ArrayList<>();
         Tile[][] tiles = board.getTiles();
     
@@ -134,7 +134,7 @@ public class Monster {
         }
     }
     
-    private void moveOutside(Tile[][] tiles) {
+    protected void moveOutside(Tile[][] tiles) {
         if (y == -1) direction = "down";
         else if (y == tiles.length) direction = "up";
         else if (x == -1) direction = "right";
@@ -143,7 +143,7 @@ public class Monster {
         moveInDirection();
     }
     
-    private void moveInDirection() {
+    protected void moveInDirection() {
         switch (direction) {
             case "up":
                 y -= 1.0f / 32;
@@ -160,7 +160,7 @@ public class Monster {
         }
     }
 
-    private void resetMonsterPosition() {
+    protected void resetMonsterPosition() {
         List<int[]> spawnPoints = getSpawnPoints();
         int[] chosenSpawn = spawnPoints.get((int) (Math.random() * spawnPoints.size()));
         this.x = (float) chosenSpawn[0];
@@ -170,14 +170,14 @@ public class Monster {
         this.targetX = 0;
         this.targetY = 0;
     } 
-    private boolean isNearTarget() {
+    protected boolean isNearTarget() {
     return Math.abs(x - targetX) < EPSILON && Math.abs(y - targetY) < EPSILON;
     }
-    private boolean isAlignedWithTile() {
+    protected boolean isAlignedWithTile() {
         return Math.abs(x - Math.round(x)) < EPSILON && Math.abs(y - Math.round(y)) < EPSILON;
     }
 
-    private Node findWizardHouseTileGoal(Tile[][] tiles) {
+    protected Node findWizardHouseTileGoal(Tile[][] tiles) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 if (tiles[i][j] instanceof WizardHouseTile) {
@@ -194,7 +194,7 @@ public class Monster {
      *
      * For details on the A* algorithm, refer to the credits in the PathFinder class.
      */
-     private void moveInside(Tile[][] tiles) {
+     protected void moveInside(Tile[][] tiles) {
         if (isNearTarget() || targetX == 0 && targetY == 0) {
             if (currentPath == null || currentPath.isEmpty()) {
                 Node start = pathFinder.new Node((int) x, (int) y);
@@ -293,6 +293,15 @@ public class Monster {
     public float getY() {
         return this.y;
     }
+    
+    public void setX(float x) {
+        this.x = x;
+    }
+    
+    public void setY(float y) {
+        this.y = y;
+    }
+    
 
     public float getSpeed() {
         return this.speed;
@@ -302,6 +311,17 @@ public class Monster {
         return this.image;
     }
     
+    public float getArmour() {
+        return armour;
+    }
+
+    public float getManaGainedOnKill() {
+        return manaGainedOnKill;
+    }
+
+    public String getType() {
+        return type;
+    }
 
     
     public void render(PApplet app) {
@@ -331,7 +351,6 @@ public class Monster {
             }
         }      
     }
-
 
     
 }

@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TowerTile extends Tile {
-    private PImage image;
-<span class="nc" id="L12">    private int rangeUpgradeLevel = 0;</span>
-<span class="nc" id="L13">    private int speedUpgradeLevel = 0;</span>
-<span class="nc" id="L14">    private int damageUpgradeLevel = 0;</span>
-    private PApplet app;
-<span class="nc" id="L16">    private int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red</span>
-    private float towerRange;
-    private float towerFiringSpeed;
-    private float towerDamage;
-    private float initialTowerDamage;
-<span class="nc" id="L21">    private float timeSinceLastShot = 0;  // To control the firing rate</span>
+    protected PImage image;
+<span class="nc" id="L12">    protected int rangeUpgradeLevel = 0;</span>
+<span class="nc" id="L13">    protected int speedUpgradeLevel = 0;</span>
+<span class="nc" id="L14">    protected int damageUpgradeLevel = 0;</span>
+    protected PApplet app;
+<span class="nc" id="L16">    protected int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red</span>
+    protected float towerRange;
+    protected float towerFiringSpeed;
+    protected float towerDamage;
+    protected float initialTowerDamage;
+<span class="nc" id="L21">    protected float timeSinceLastShot = 0;  // To control the firing rate</span>
 
-    private int x;  // x coordinate
-    private int y;  // y coordinate
-<span class="nc" id="L25">    private List&lt;Fireball&gt; fireballs = new ArrayList&lt;&gt;();</span>
+    protected int x;  // x coordinate
+    protected int y;  // y coordinate
+<span class="nc" id="L25">    protected List&lt;Fireball&gt; fireballs = new ArrayList&lt;&gt;();</span>
 
 <span class="nc" id="L27">    public TowerTile(PApplet app, int x, int y, float towerRange, float towerFiringSpeed, float towerDamage) {</span>
 <span class="nc" id="L28">        this.app = app;</span>
@@ -152,7 +152,7 @@ public class TowerTile extends Tile {
     
     
 
-    private void updateTowerImage() {
+    protected void updateTowerImage() {
 <span class="nc bnc" id="L156" title="All 6 branches missed.">        if (rangeUpgradeLevel &gt;= 2 &amp;&amp; speedUpgradeLevel &gt;= 2 &amp;&amp; damageUpgradeLevel &gt;= 2) {</span>
 <span class="nc" id="L157">            image = app.loadImage(&quot;src/main/resources/WizardTD/tower2.png&quot;);</span>
 <span class="nc" id="L158">            towerAppearanceState = 2;</span>

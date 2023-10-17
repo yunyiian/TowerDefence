@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TowerTile extends Tile {
-    private PImage image;
-    private int rangeUpgradeLevel = 0;
-    private int speedUpgradeLevel = 0;
-    private int damageUpgradeLevel = 0;
-    private PApplet app;
-    private int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red
-    private float towerRange;
-    private float towerFiringSpeed;
-    private float towerDamage;
-    private float initialTowerDamage;
-    private float timeSinceLastShot = 0;  // To control the firing rate
+    protected PImage image;
+    protected int rangeUpgradeLevel = 0;
+    protected int speedUpgradeLevel = 0;
+    protected int damageUpgradeLevel = 0;
+    protected PApplet app;
+    protected int towerAppearanceState = 0; // 0 for initial, 1 for orange, 2 for red
+    protected float towerRange;
+    protected float towerFiringSpeed;
+    protected float towerDamage;
+    protected float initialTowerDamage;
+    protected float timeSinceLastShot = 0;  // To control the firing rate
 
-    private int x;  // x coordinate
-    private int y;  // y coordinate
-    private List<Fireball> fireballs = new ArrayList<>();
+    protected int x;  // x coordinate
+    protected int y;  // y coordinate
+    protected List<Fireball> fireballs = new ArrayList<>();
 
     public TowerTile(PApplet app, int x, int y, float towerRange, float towerFiringSpeed, float towerDamage) {
         this.app = app;
@@ -152,7 +152,7 @@ public class TowerTile extends Tile {
     
     
 
-    private void updateTowerImage() {
+    protected void updateTowerImage() {
         if (rangeUpgradeLevel >= 2 && speedUpgradeLevel >= 2 && damageUpgradeLevel >= 2) {
             image = app.loadImage("src/main/resources/WizardTD/tower2.png");
             towerAppearanceState = 2;

@@ -4,22 +4,23 @@ import processing.core.PApplet;
 import WizardTD.subtiles.TowerTile;
 
 public class Sidebar {
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
-    private boolean towerPlacementMode = false;
-    private boolean rangeUpgradeMode = false;
-    private boolean speedUpgradeMode = false;
-    private boolean damageUpgradeMode = false;
-    private boolean speedToggleActive = false;
-    private boolean pauseActive = false;
+    protected boolean towerPlacementMode = false;
+    protected boolean rangeUpgradeMode = false;
+    protected boolean speedUpgradeMode = false;
+    protected boolean damageUpgradeMode = false;
+    protected boolean speedToggleActive = false;
+    protected boolean pauseActive = false;
+
 
 
     public int buttonWidth = 40;
     public int buttonHeight = 40;
-    private int buttonX;
-    private int buttonY;
-    private App mainApp;
+    protected int buttonX;
+    protected int buttonY;
+    protected App mainApp;
 
 
     public Sidebar(int width, int height, App app) {
@@ -102,9 +103,11 @@ public class Sidebar {
     public boolean isPauseActive() {
         return pauseActive;
     }
+
+    
         
 
-    private void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
+    protected void renderUpgradeCosts(PApplet app, TowerTile selectedTower) {
         int startX = app.width - this.width + 10;  // Adjust to the left side of the sidebar
         int startY = app.height - 110; // Adjust starting position at bottom left
         int boxWidth = 100;  // Reduced by 20 to make it slimmer
@@ -177,7 +180,7 @@ public class Sidebar {
     }
 
     
-    private void renderManaPoolSpellCost(PApplet app) {
+    protected void renderManaPoolSpellCost(PApplet app) {
         if (isButtonHovered(app.mouseX, app.mouseY, 6 * (buttonHeight + 10))) {
             int costBoxWidth = 65;  // Reduced width
             int costBoxHeight = 25;  // Reduced height
@@ -207,7 +210,7 @@ public class Sidebar {
                mouseY >= buttonY + yOffset && mouseY <= buttonY + yOffset + buttonHeight;
     }
 
-    private void renderTowerCost(PApplet app) {
+    protected void renderTowerCost(PApplet app) {
         if (isButtonHovered(app.mouseX, app.mouseY, 2*(buttonHeight + 10))) {
             int costBoxWidth = 65;  // Reduced width
             int costBoxHeight = 25;  // Reduced height
@@ -265,7 +268,7 @@ public class Sidebar {
         }
     }
 
-    private void renderDescription(PApplet app, String description, int yOffset) {
+    protected void renderDescription(PApplet app, String description, int yOffset) {
         app.fill(0);  // Black color for text
         app.textSize(12);  // Smaller text size for descriptions
         float descX = buttonX + buttonWidth + 5;  // Right of the button
@@ -273,7 +276,7 @@ public class Sidebar {
         app.text(description, descX, descY);
     }
     
-    private void renderButton(PApplet app, String text, int yOffset, boolean active) {
+    protected void renderButton(PApplet app, String text, int yOffset, boolean active) {
         if (active) {
             app.fill(app.color(0xfb, 0xfb, 0x0d));
         } else if (isButtonHovered(app.mouseX, app.mouseY, yOffset)) {

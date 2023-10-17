@@ -10,30 +10,30 @@ import WizardTD.PathFinder.Node;
 
 public class Monster {
 
-    private PImage image;
-    private App game;
-    private float x, y, targetX, targetY; 
-    private Board board;
-<span class="fc" id="L17">    private String direction = &quot;&quot;;  // Can be &quot;up&quot;, &quot;down&quot;, &quot;left&quot;, &quot;right&quot;</span>
+    protected PImage image;
+    protected App game;
+    protected float x, y, targetX, targetY; 
+    protected Board board;
+<span class="fc" id="L17">    protected String direction = &quot;&quot;;  // Can be &quot;up&quot;, &quot;down&quot;, &quot;left&quot;, &quot;right&quot;</span>
     List&lt;String&gt; pathToWizard;
 <span class="fc" id="L19">    int pathIndex = 0;</span>
-<span class="fc" id="L20">    private PathFinder pathFinder = new PathFinder();</span>
-    private float speed;  // speed of the monster in pixels per frame
-<span class="fc" id="L22">    private float leftoverMove = 0.0f;  </span>
-    private int spawnDelay; 
-    private static final float EPSILON = 0.05f; 
-<span class="fc" id="L25">    private List&lt;Node&gt; currentPath = null;</span>
+<span class="fc" id="L20">    protected PathFinder pathFinder = new PathFinder();</span>
+    protected float speed;  // speed of the monster in pixels per frame
+<span class="fc" id="L22">    protected float leftoverMove = 0.0f;  </span>
+    protected int spawnDelay; 
+    protected static final float EPSILON = 0.05f; 
+<span class="fc" id="L25">    protected List&lt;Node&gt; currentPath = null;</span>
 
 
 
-    private float hp;  // Max hit points (initial health)
-    private float currentHp;  // Current health
-    private float armour;  // Percentage multiplier to damage received
-    private float manaGainedOnKill;  // Mana gained when this monster is killed
-    private String type;  // The sprite image to use for the monster
-    private PImage deathImages[];  // Images for death animation
-<span class="fc" id="L35">    private int deathFrameCount = 0;  // Frame counter for death animation</span>
-<span class="fc" id="L36">    private float manaMultiplier = 1.0f; </span>
+    protected float hp;  // Max hit points (initial health)
+    protected float currentHp;  // Current health
+    protected float armour;  // Percentage multiplier to damage received
+    protected float manaGainedOnKill;  // Mana gained when this monster is killed
+    protected String type;  // The sprite image to use for the monster
+    protected PImage deathImages[];  // Images for death animation
+<span class="fc" id="L35">    protected int deathFrameCount = 0;  // Frame counter for death animation</span>
+<span class="fc" id="L36">    protected float manaMultiplier = 1.0f; </span>
 
 
 <span class="fc" id="L39">    public Monster(Board board, PApplet app, float speed, int spawnDelay, float hp, float armour, float manaGainedOnKill, String type, App game) {</span>
@@ -66,7 +66,7 @@ public class Monster {
 <span class="nc" id="L66">        deathImages = deathImageList.toArray(new PImage[0]);</span>
 <span class="nc" id="L67">    }</span>
 
-    private PImage safeLoadImage(PApplet app, String path) {
+    protected PImage safeLoadImage(PApplet app, String path) {
     try {
 <span class="nc" id="L71">        return app.loadImage(path);</span>
 <span class="nc" id="L72">    } catch (Exception e) {</span>
@@ -75,7 +75,7 @@ public class Monster {
     }
     }
 
-    private List&lt;int[]&gt; getSpawnPoints() {
+    protected List&lt;int[]&gt; getSpawnPoints() {
 <span class="nc" id="L79">        List&lt;int[]&gt; spawnPoints = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L80">        Tile[][] tiles = board.getTiles();</span>
     
@@ -134,7 +134,7 @@ public class Monster {
         }
 <span class="nc" id="L135">    }</span>
     
-    private void moveOutside(Tile[][] tiles) {
+    protected void moveOutside(Tile[][] tiles) {
 <span class="nc bnc" id="L138" title="All 2 branches missed.">        if (y == -1) direction = &quot;down&quot;;</span>
 <span class="nc bnc" id="L139" title="All 2 branches missed.">        else if (y == tiles.length) direction = &quot;up&quot;;</span>
 <span class="nc bnc" id="L140" title="All 2 branches missed.">        else if (x == -1) direction = &quot;right&quot;;</span>
@@ -143,7 +143,7 @@ public class Monster {
 <span class="nc" id="L143">        moveInDirection();</span>
 <span class="nc" id="L144">    }</span>
     
-    private void moveInDirection() {
+    protected void moveInDirection() {
 <span class="nc bnc" id="L147" title="All 5 branches missed.">        switch (direction) {</span>
             case &quot;up&quot;:
 <span class="nc" id="L149">                y -= 1.0f / 32;</span>
@@ -160,7 +160,7 @@ public class Monster {
         }
 <span class="nc" id="L161">    }</span>
 
-    private void resetMonsterPosition() {
+    protected void resetMonsterPosition() {
 <span class="nc" id="L164">        List&lt;int[]&gt; spawnPoints = getSpawnPoints();</span>
 <span class="nc" id="L165">        int[] chosenSpawn = spawnPoints.get((int) (Math.random() * spawnPoints.size()));</span>
 <span class="nc" id="L166">        this.x = (float) chosenSpawn[0];</span>
@@ -170,14 +170,14 @@ public class Monster {
 <span class="nc" id="L170">        this.targetX = 0;</span>
 <span class="nc" id="L171">        this.targetY = 0;</span>
 <span class="nc" id="L172">    } </span>
-    private boolean isNearTarget() {
+    protected boolean isNearTarget() {
 <span class="nc bnc" id="L174" title="All 4 branches missed.">    return Math.abs(x - targetX) &lt; EPSILON &amp;&amp; Math.abs(y - targetY) &lt; EPSILON;</span>
     }
-    private boolean isAlignedWithTile() {
+    protected boolean isAlignedWithTile() {
 <span class="nc bnc" id="L177" title="All 4 branches missed.">        return Math.abs(x - Math.round(x)) &lt; EPSILON &amp;&amp; Math.abs(y - Math.round(y)) &lt; EPSILON;</span>
     }
 
-    private Node findWizardHouseTileGoal(Tile[][] tiles) {
+    protected Node findWizardHouseTileGoal(Tile[][] tiles) {
 <span class="nc bnc" id="L181" title="All 2 branches missed.">        for (int i = 0; i &lt; tiles.length; i++) {</span>
 <span class="nc bnc" id="L182" title="All 2 branches missed.">            for (int j = 0; j &lt; tiles[0].length; j++) {</span>
 <span class="nc bnc" id="L183" title="All 2 branches missed.">                if (tiles[i][j] instanceof WizardHouseTile) {</span>
@@ -194,7 +194,7 @@ public class Monster {
      *
      * For details on the A* algorithm, refer to the credits in the PathFinder class.
      */
-     private void moveInside(Tile[][] tiles) {
+     protected void moveInside(Tile[][] tiles) {
 <span class="nc bnc" id="L198" title="All 6 branches missed.">        if (isNearTarget() || targetX == 0 &amp;&amp; targetY == 0) {</span>
 <span class="nc bnc" id="L199" title="All 4 branches missed.">            if (currentPath == null || currentPath.isEmpty()) {</span>
 <span class="nc" id="L200">                Node start = pathFinder.new Node((int) x, (int) y);</span>
@@ -293,45 +293,64 @@ public class Monster {
     public float getY() {
 <span class="nc" id="L294">        return this.y;</span>
     }
+    
+    public void setX(float x) {
+<span class="nc" id="L298">        this.x = x;</span>
+<span class="nc" id="L299">    }</span>
+    
+    public void setY(float y) {
+<span class="nc" id="L302">        this.y = y;</span>
+<span class="nc" id="L303">    }</span>
+    
 
     public float getSpeed() {
-<span class="nc" id="L298">        return this.speed;</span>
+<span class="nc" id="L307">        return this.speed;</span>
     }
 
     public PImage getImage() {
-<span class="nc" id="L302">        return this.image;</span>
+<span class="nc" id="L311">        return this.image;</span>
     }
     
+    public float getArmour() {
+<span class="nc" id="L315">        return armour;</span>
+    }
+
+    public float getManaGainedOnKill() {
+<span class="nc" id="L319">        return manaGainedOnKill;</span>
+    }
+
+    public String getType() {
+<span class="nc" id="L323">        return type;</span>
+    }
 
     
     public void render(PApplet app) {
-<span class="nc" id="L308">        app.noTint();</span>
-<span class="nc bnc" id="L309" title="All 4 branches missed.">        if (x != -1.0f &amp;&amp; y != -1.0f) { // Only render if the monster hasn't disappeared</span>
-<span class="nc" id="L310">            int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);</span>
-<span class="nc" id="L311">            int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);</span>
+<span class="nc" id="L328">        app.noTint();</span>
+<span class="nc bnc" id="L329" title="All 4 branches missed.">        if (x != -1.0f &amp;&amp; y != -1.0f) { // Only render if the monster hasn't disappeared</span>
+<span class="nc" id="L330">            int drawX = (int) (x * App.CELLSIZE + App.CELLSIZE / 2 - image.width / 2);</span>
+<span class="nc" id="L331">            int drawY = (int) (y * App.CELLSIZE + App.CELLSIZE / 2 - image.height / 2 + App.TOPBAR);</span>
 
             // Display HP bar
-<span class="nc" id="L314">            float hpPercentage = PApplet.constrain(currentHp / hp, 0, 1);  // Clamp between 0 and 1</span>
-<span class="nc" id="L315">            app.fill(255, 0, 0);  // Red color for missing HP</span>
-<span class="nc" id="L316">            app.rect(drawX, drawY - 10, image.width, 5);</span>
-<span class="nc" id="L317">            app.fill(0, 255, 0);  // Green color for current HP</span>
-<span class="nc" id="L318">            app.rect(drawX, drawY - 10, image.width * hpPercentage, 5);</span>
+<span class="nc" id="L334">            float hpPercentage = PApplet.constrain(currentHp / hp, 0, 1);  // Clamp between 0 and 1</span>
+<span class="nc" id="L335">            app.fill(255, 0, 0);  // Red color for missing HP</span>
+<span class="nc" id="L336">            app.rect(drawX, drawY - 10, image.width, 5);</span>
+<span class="nc" id="L337">            app.fill(0, 255, 0);  // Green color for current HP</span>
+<span class="nc" id="L338">            app.rect(drawX, drawY - 10, image.width * hpPercentage, 5);</span>
 
-<span class="nc bnc" id="L320" title="All 2 branches missed.">            if (deathFrameCount == 0) {</span>
+<span class="nc bnc" id="L340" title="All 2 branches missed.">            if (deathFrameCount == 0) {</span>
                 // If not in death animation, display the normal monster image
-<span class="nc" id="L322">                app.image(image, drawX, drawY);</span>
-<span class="nc bnc" id="L323" title="All 2 branches missed.">            } else if (deathFrameCount &lt; deathImages.length * 4) {  </span>
+<span class="nc" id="L342">                app.image(image, drawX, drawY);</span>
+<span class="nc bnc" id="L343" title="All 2 branches missed.">            } else if (deathFrameCount &lt; deathImages.length * 4) {  </span>
                 // If in death animation, display the death images based on the frame count
-<span class="nc" id="L325">                int deathImageIndex = (deathFrameCount / 4) % deathImages.length;</span>
-<span class="nc" id="L326">                app.image(deathImages[deathImageIndex], drawX, drawY);</span>
-<span class="nc" id="L327">            } else {</span>
+<span class="nc" id="L345">                int deathImageIndex = (deathFrameCount / 4) % deathImages.length;</span>
+<span class="nc" id="L346">                app.image(deathImages[deathImageIndex], drawX, drawY);</span>
+<span class="nc" id="L347">            } else {</span>
                 // After the death animation is over, remove the monster from the game
-<span class="nc" id="L329">                x = -1.0f;</span>
-<span class="nc" id="L330">                y = -1.0f;</span>
+<span class="nc" id="L349">                x = -1.0f;</span>
+<span class="nc" id="L350">                y = -1.0f;</span>
             }
         }      
-<span class="nc" id="L333">    }</span>
-
+<span class="nc" id="L353">    }</span>
 
     
 }
