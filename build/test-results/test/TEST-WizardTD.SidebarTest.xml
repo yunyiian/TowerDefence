@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.SidebarTest" tests="34" skipped="0" failures="34" errors="0" timestamp="2023-10-17T05:38:08" hostname="Ians-MacBook-Pro.local" time="0.133">
+<testsuite name="WizardTD.SidebarTest" tests="34" skipped="0" failures="34" errors="0" timestamp="2023-10-17T06:03:38" hostname="Ians-MacBook-Pro.local" time="0.085">
   <properties/>
   <testcase name="testTogglePauseMode()" classname="WizardTD.SidebarTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
@@ -96,7 +96,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testTowerPlacementCost()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testTowerPlacementCost()" classname="WizardTD.SidebarTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -191,7 +191,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testTowerPlacementMode()" classname="WizardTD.SidebarTest" time="0.002">
+  <testcase name="testTowerPlacementMode()" classname="WizardTD.SidebarTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -381,7 +381,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testIsSpeedToggleClicked()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testIsSpeedToggleClicked()" classname="WizardTD.SidebarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -476,7 +476,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testUpgradeModeConsistency()" classname="WizardTD.SidebarTest" time="0.0">
+  <testcase name="testUpgradeModeConsistency()" classname="WizardTD.SidebarTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -666,7 +666,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testClickOutsideSidebarBoundary()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testClickOutsideSidebarBoundary()" classname="WizardTD.SidebarTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -761,7 +761,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testToggleSpeedUpgradeMode()" classname="WizardTD.SidebarTest" time="0.037">
+  <testcase name="testToggleSpeedUpgradeMode()" classname="WizardTD.SidebarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -951,7 +951,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testIsInAnyUpgradeMode()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testIsInAnyUpgradeMode()" classname="WizardTD.SidebarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -1046,7 +1046,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testButtonClicked()" classname="WizardTD.SidebarTest" time="0.004">
+  <testcase name="testButtonClicked()" classname="WizardTD.SidebarTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -1236,7 +1236,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testButtonHovered()" classname="WizardTD.SidebarTest" time="0.009">
+  <testcase name="testButtonHovered()" classname="WizardTD.SidebarTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -1615,7 +1615,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testManaPoolSpellButtonClick()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testManaPoolSpellButtonClick()" classname="WizardTD.SidebarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -1709,7 +1709,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testManaPoolSpellButtonHover()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testManaPoolSpellButtonHover()" classname="WizardTD.SidebarTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -1897,7 +1897,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testDamageUpgradeMode()" classname="WizardTD.SidebarTest" time="0.0">
+  <testcase name="testDamageUpgradeMode()" classname="WizardTD.SidebarTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2085,7 +2085,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testRangeUpgradeMode()" classname="WizardTD.SidebarTest" time="0.003">
+  <testcase name="testRangeUpgradeMode()" classname="WizardTD.SidebarTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2179,7 +2179,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testPauseButton()" classname="WizardTD.SidebarTest" time="0.005">
+  <testcase name="testPauseButton()" classname="WizardTD.SidebarTest" time="0.009">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2273,7 +2273,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testSpeedToggle()" classname="WizardTD.SidebarTest" time="0.004">
+  <testcase name="testSpeedToggle()" classname="WizardTD.SidebarTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2367,7 +2367,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testExclusiveModes()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testExclusiveModes()" classname="WizardTD.SidebarTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2649,7 +2649,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testInitialStates()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testInitialStates()" classname="WizardTD.SidebarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2743,7 +2743,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testTowerUpgradeCost()" classname="WizardTD.SidebarTest" time="0.004">
+  <testcase name="testTowerUpgradeCost()" classname="WizardTD.SidebarTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)
@@ -2931,7 +2931,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testButtonClick()" classname="WizardTD.SidebarTest" time="0.001">
+  <testcase name="testButtonClick()" classname="WizardTD.SidebarTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at processing.core.PApplet.frameRate(PApplet.java:3342)
 	at WizardTD.App.setup(App.java:105)

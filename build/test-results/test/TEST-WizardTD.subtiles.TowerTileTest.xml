@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.subtiles.TowerTileTest" tests="40" skipped="0" failures="40" errors="0" timestamp="2023-10-17T05:38:09" hostname="Ians-MacBook-Pro.local" time="0.141">
+<testsuite name="WizardTD.subtiles.TowerTileTest" tests="40" skipped="0" failures="40" errors="0" timestamp="2023-10-17T06:03:39" hostname="Ians-MacBook-Pro.local" time="0.144">
   <properties/>
   <testcase name="testDespawnFireballsTargeting()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
@@ -486,7 +486,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testUpgradeDamage()" classname="WizardTD.subtiles.TowerTileTest" time="0.002">
+  <testcase name="testUpgradeDamage()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -777,7 +777,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testShootingMonster()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testShootingMonster()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -1456,7 +1456,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testDamageIncrease()" classname="WizardTD.subtiles.TowerTileTest" time="0.002">
+  <testcase name="testDamageIncrease()" classname="WizardTD.subtiles.TowerTileTest" time="0.017">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -1553,7 +1553,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testNotTargetingOutOfReachMonster()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testNotTargetingOutOfReachMonster()" classname="WizardTD.subtiles.TowerTileTest" time="0.003">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -1841,7 +1841,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMultipleUpgradesInSequence()" classname="WizardTD.subtiles.TowerTileTest" time="0.002">
+  <testcase name="testMultipleUpgradesInSequence()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -1937,7 +1937,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testUpgradeRange()" classname="WizardTD.subtiles.TowerTileTest" time="0.003">
+  <testcase name="testUpgradeRange()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -2033,7 +2033,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testUpgradeSpeed()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testUpgradeSpeed()" classname="WizardTD.subtiles.TowerTileTest" time="0.003">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -2129,7 +2129,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testFiringSpeedIncrement()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testFiringSpeedIncrement()" classname="WizardTD.subtiles.TowerTileTest" time="0.018">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -2609,7 +2609,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testReduceHealth()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testReduceHealth()" classname="WizardTD.subtiles.TowerTileTest" time="0.002">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -2897,7 +2897,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testInitialFireballsList()" classname="WizardTD.subtiles.TowerTileTest" time="0.035">
+  <testcase name="testInitialFireballsList()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -2993,7 +2993,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testIncrementTimeSinceLastShot()" classname="WizardTD.subtiles.TowerTileTest" time="0.002">
+  <testcase name="testIncrementTimeSinceLastShot()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -3089,7 +3089,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testTowerStateAfterMonsterDeath()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testTowerStateAfterMonsterDeath()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -3185,7 +3185,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testFireballDespawn()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
+  <testcase name="testFireballDespawn()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -3473,7 +3473,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testNegativeUpgrades()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
+  <testcase name="testNegativeUpgrades()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -3569,7 +3569,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testNoFireballCreationBeforeThreshold()" classname="WizardTD.subtiles.TowerTileTest" time="0.014">
+  <testcase name="testNoFireballCreationBeforeThreshold()" classname="WizardTD.subtiles.TowerTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -3665,7 +3665,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testCostCalculation()" classname="WizardTD.subtiles.TowerTileTest" time="0.002">
+  <testcase name="testCostCalculation()" classname="WizardTD.subtiles.TowerTileTest" time="0.005">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -3761,7 +3761,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testImageUpdateOnUpgrade()" classname="WizardTD.subtiles.TowerTileTest" time="0.003">
+  <testcase name="testImageUpdateOnUpgrade()" classname="WizardTD.subtiles.TowerTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.subtiles.WizardHouseTileTest" tests="6" skipped="0" failures="6" errors="0" timestamp="2023-10-17T05:38:09" hostname="Ians-MacBook-Pro.local" time="0.033">
+<testsuite name="WizardTD.subtiles.WizardHouseTileTest" tests="6" skipped="0" failures="6" errors="0" timestamp="2023-10-17T06:03:39" hostname="Ians-MacBook-Pro.local" time="0.023">
   <properties/>
-  <testcase name="testIsPathTile_validPathTile_returnsTrue()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.001">
+  <testcase name="testIsPathTile_validPathTile_returnsTrue()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.004">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -94,7 +94,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testIsWizardHouseTile_validWizardHouseTile_returnsTrue()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.004">
+  <testcase name="testIsWizardHouseTile_validWizardHouseTile_returnsTrue()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.0">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -187,7 +187,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testRenderWithTopPath()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.006">
+  <testcase name="testRenderWithTopPath()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.001">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -280,7 +280,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testIsPathTile_validNonPathTile_returnsFalse()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.003">
+  <testcase name="testIsPathTile_validNonPathTile_returnsFalse()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.002">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)
@@ -373,7 +373,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testIsWizardHouseTile_validNonWizardHouseTile_returnsFalse()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.001">
+  <testcase name="testIsWizardHouseTile_validNonWizardHouseTile_returnsFalse()" classname="WizardTD.subtiles.WizardHouseTileTest" time="0.002">
     <failure message="java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called." type="java.lang.RuntimeException">java.lang.RuntimeException: Files must be loaded inside setup() or after it has been called.
 	at processing.core.PApplet.createInputRaw(PApplet.java:7030)
 	at processing.core.PApplet.createInput(PApplet.java:7002)

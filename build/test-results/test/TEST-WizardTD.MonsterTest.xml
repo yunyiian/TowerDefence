@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="WizardTD.MonsterTest" tests="50" skipped="0" failures="50" errors="0" timestamp="2023-10-17T05:38:07" hostname="Ians-MacBook-Pro.local" time="0.271">
+<testsuite name="WizardTD.MonsterTest" tests="50" skipped="0" failures="50" errors="0" timestamp="2023-10-17T06:03:38" hostname="Ians-MacBook-Pro.local" time="0.227">
   <properties/>
-  <testcase name="testMonsterSpeedMovementCalculation()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterSpeedMovementCalculation()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterSpeedMovementCalculation(MonsterTest.java:368)
@@ -181,7 +181,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDeathSequenceFrameCount()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterDeathSequenceFrameCount()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDeathSequenceFrameCount(MonsterTest.java:360)
@@ -271,7 +271,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testFindWizardHouseTileGoal()" classname="WizardTD.MonsterTest" time="0.005">
+  <testcase name="testFindWizardHouseTileGoal()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testFindWizardHouseTileGoal(MonsterTest.java:184)
@@ -361,7 +361,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterNearTarget()" classname="WizardTD.MonsterTest" time="0.004">
+  <testcase name="testMonsterNearTarget()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterNearTarget(MonsterTest.java:167)
@@ -451,7 +451,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterMovementTowardWizardHouse()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterMovementTowardWizardHouse()" classname="WizardTD.MonsterTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterMovementTowardWizardHouse(MonsterTest.java:436)
@@ -631,7 +631,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterArmourEffectOnDamage()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterArmourEffectOnDamage()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterArmourEffectOnDamage(MonsterTest.java:95)
@@ -721,7 +721,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterPathfindingUpdate()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterPathfindingUpdate()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterPathfindingUpdate(MonsterTest.java:323)
@@ -811,7 +811,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterMoveOutside()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterMoveOutside()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterMoveOutside(MonsterTest.java:52)
@@ -991,7 +991,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterMovementOutside()" classname="WizardTD.MonsterTest" time="0.003">
+  <testcase name="testMonsterMovementOutside()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterMovementOutside(MonsterTest.java:148)
@@ -1081,7 +1081,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDirectionAfterResetPosition()" classname="WizardTD.MonsterTest" time="0.014">
+  <testcase name="testMonsterDirectionAfterResetPosition()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDirectionAfterResetPosition(MonsterTest.java:464)
@@ -1171,7 +1171,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMoveInsideToTarget()" classname="WizardTD.MonsterTest" time="0.005">
+  <testcase name="testMoveInsideToTarget()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMoveInsideToTarget(MonsterTest.java:209)
@@ -1261,7 +1261,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testHealthDoesNotGoNegative()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testHealthDoesNotGoNegative()" classname="WizardTD.MonsterTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testHealthDoesNotGoNegative(MonsterTest.java:45)
@@ -1351,7 +1351,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterImageLoading()" classname="WizardTD.MonsterTest" time="0.004">
+  <testcase name="testMonsterImageLoading()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterImageLoading(MonsterTest.java:443)
@@ -1441,7 +1441,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMoveInsideWithNoPath()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMoveInsideWithNoPath()" classname="WizardTD.MonsterTest" time="0.006">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMoveInsideWithNoPath(MonsterTest.java:198)
@@ -1531,7 +1531,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterImageLoadingFailure()" classname="WizardTD.MonsterTest" time="0.0">
+  <testcase name="testMonsterImageLoadingFailure()" classname="WizardTD.MonsterTest" time="0.003">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterImageLoadingFailure(MonsterTest.java:375)
@@ -1621,7 +1621,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterPositionReset()" classname="WizardTD.MonsterTest" time="0.002">
+  <testcase name="testMonsterPositionReset()" classname="WizardTD.MonsterTest" time="0.005">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterPositionReset(MonsterTest.java:396)
@@ -1801,7 +1801,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterManaMultiplier()" classname="WizardTD.MonsterTest" time="0.002">
+  <testcase name="testMonsterManaMultiplier()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterManaMultiplier(MonsterTest.java:102)
@@ -1891,7 +1891,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterManaMultiplierEffect()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterManaMultiplierEffect()" classname="WizardTD.MonsterTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterManaMultiplierEffect(MonsterTest.java:301)
@@ -2071,7 +2071,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterLeftoverMovement()" classname="WizardTD.MonsterTest" time="0.005">
+  <testcase name="testMonsterLeftoverMovement()" classname="WizardTD.MonsterTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterLeftoverMovement(MonsterTest.java:352)
@@ -2161,7 +2161,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterArmourBoundaries()" classname="WizardTD.MonsterTest" time="0.008">
+  <testcase name="testMonsterArmourBoundaries()" classname="WizardTD.MonsterTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterArmourBoundaries(MonsterTest.java:449)
@@ -2341,7 +2341,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDirectionAngle()" classname="WizardTD.MonsterTest" time="0.0">
+  <testcase name="testMonsterDirectionAngle()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDirectionAngle(MonsterTest.java:118)
@@ -2431,7 +2431,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterSpeedAccumulation()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterSpeedAccumulation()" classname="WizardTD.MonsterTest" time="0.01">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterSpeedAccumulation(MonsterTest.java:261)
@@ -2521,7 +2521,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDeathSequenceWithImages()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterDeathSequenceWithImages()" classname="WizardTD.MonsterTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDeathSequenceWithImages(MonsterTest.java:422)
@@ -2611,7 +2611,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterNearTargetEpsilon()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterNearTargetEpsilon()" classname="WizardTD.MonsterTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterNearTargetEpsilon(MonsterTest.java:414)
@@ -2701,7 +2701,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterAlignedWithTile()" classname="WizardTD.MonsterTest" time="0.019">
+  <testcase name="testMonsterAlignedWithTile()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterAlignedWithTile(MonsterTest.java:175)
@@ -2791,7 +2791,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterSpeedMovement()" classname="WizardTD.MonsterTest" time="0.002">
+  <testcase name="testMonsterSpeedMovement()" classname="WizardTD.MonsterTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterSpeedMovement(MonsterTest.java:156)
@@ -2971,7 +2971,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testReduceHealth()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testReduceHealth()" classname="WizardTD.MonsterTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testReduceHealth(MonsterTest.java:30)
@@ -3061,7 +3061,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterPositionAlignment()" classname="WizardTD.MonsterTest" time="0.004">
+  <testcase name="testMonsterPositionAlignment()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterPositionAlignment(MonsterTest.java:388)
@@ -3241,7 +3241,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testSetManaMultiplier()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testSetManaMultiplier()" classname="WizardTD.MonsterTest" time="0.0">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testSetManaMultiplier(MonsterTest.java:191)
@@ -3331,7 +3331,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterHPBarRenderingLogic()" classname="WizardTD.MonsterTest" time="0.004">
+  <testcase name="testMonsterHPBarRenderingLogic()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterHPBarRenderingLogic(MonsterTest.java:430)
@@ -3511,7 +3511,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDeathAnimationFrames()" classname="WizardTD.MonsterTest" time="0.0">
+  <testcase name="testMonsterDeathAnimationFrames()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDeathAnimationFrames(MonsterTest.java:250)
@@ -3601,7 +3601,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterInitialization()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterInitialization()" classname="WizardTD.MonsterTest" time="0.005">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterInitialization(MonsterTest.java:18)
@@ -3691,7 +3691,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterReachingWizardHouse()" classname="WizardTD.MonsterTest" time="0.002">
+  <testcase name="testMonsterReachingWizardHouse()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterReachingWizardHouse(MonsterTest.java:269)
@@ -3781,7 +3781,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterResetPositionToSpawnPoint()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterResetPositionToSpawnPoint()" classname="WizardTD.MonsterTest" time="0.006">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterResetPositionToSpawnPoint(MonsterTest.java:308)
@@ -3871,7 +3871,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterSpawnPoints()" classname="WizardTD.MonsterTest" time="0.003">
+  <testcase name="testMonsterSpawnPoints()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterSpawnPoints(MonsterTest.java:109)
@@ -4051,7 +4051,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDeath()" classname="WizardTD.MonsterTest" time="0.018">
+  <testcase name="testMonsterDeath()" classname="WizardTD.MonsterTest" time="0.001">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDeath(MonsterTest.java:76)
@@ -4141,7 +4141,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterSpeed()" classname="WizardTD.MonsterTest" time="0.0">
+  <testcase name="testMonsterSpeed()" classname="WizardTD.MonsterTest" time="0.003">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterSpeed(MonsterTest.java:38)
@@ -4231,7 +4231,7 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
-  <testcase name="testMonsterDirectionAngleCalculation()" classname="WizardTD.MonsterTest" time="0.001">
+  <testcase name="testMonsterDirectionAngleCalculation()" classname="WizardTD.MonsterTest" time="0.004">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at WizardTD.Monster.&lt;init&gt;(Monster.java:42)
 	at WizardTD.MonsterTest.testMonsterDirectionAngleCalculation(MonsterTest.java:243)
